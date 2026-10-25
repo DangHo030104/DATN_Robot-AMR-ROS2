@@ -9,9 +9,9 @@
 typedef struct
 {
     TIM_HandleTypeDef *tim;
-    uint16_t prev;              // Gia tri cua bo dem CNT truoc do    
-    int8_t sign;                // Dau hieu dao chieu (1: bth, -1: dao chieu)
-    int64_t total;              // Tong so xung da dem duoc
+    uint16_t prev;              // Lưu gia tri CNT truoc do    
+    int8_t sign;                // Chuẩn hóa chiều quay (1: thuan, -1: nghich)
+    int64_t total;              // tông số xung đã đếm được kể từ khi khởi tạo
 } Encoder;
 
 void Encoder_Init(Encoder *enc, TIM_HandleTypeDef *tim, int8_t sign);

@@ -5,45 +5,45 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .isr_vector   0000010c  08000000  08000000  00010000  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  1 .text         00003b34  0800010c  0800010c  0001010c  2**2
+  1 .text         00003af0  0800010c  0800010c  0001010c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000040  08003c40  08003c40  00013c40  2**2
+  2 .rodata       00000024  08003bfc  08003bfc  00013bfc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08003c80  08003c80  0002000c  2**0
+  3 .ARM.extab    00000000  08003c20  08003c20  0002000c  2**0
                   CONTENTS
-  4 .ARM          00000000  08003c80  08003c80  0002000c  2**0
+  4 .ARM          00000000  08003c20  08003c20  0002000c  2**0
                   CONTENTS
-  5 .preinit_array 00000000  08003c80  08003c80  0002000c  2**0
+  5 .preinit_array 00000000  08003c20  08003c20  0002000c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08003c80  08003c80  00013c80  2**2
+  6 .init_array   00000004  08003c20  08003c20  00013c20  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08003c84  08003c84  00013c84  2**2
+  7 .fini_array   00000004  08003c24  08003c24  00013c24  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         0000000c  20000000  08003c88  00020000  2**2
+  8 .data         0000000c  20000000  08003c28  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          0000027c  20000010  08003c94  00020010  2**3
+  9 .bss          0000027c  20000010  08003c34  00020010  2**3
                   ALLOC
- 10 ._user_heap_stack 00000604  2000028c  08003c94  0002028c  2**0
+ 10 ._user_heap_stack 00000604  2000028c  08003c34  0002028c  2**0
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000e895  00000000  00000000  00020035  2**0
+ 12 .debug_info   0000e72b  00000000  00000000  00020035  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00002540  00000000  00000000  0002e8ca  2**0
+ 13 .debug_abbrev 00002540  00000000  00000000  0002e760  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000b00  00000000  00000000  00030e10  2**3
+ 14 .debug_aranges 00000b00  00000000  00000000  00030ca0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 000009d8  00000000  00000000  00031910  2**3
+ 15 .debug_ranges 000009d8  00000000  00000000  000317a0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00017770  00000000  00000000  000322e8  2**0
+ 16 .debug_macro  0001780f  00000000  00000000  00032178  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000cbd6  00000000  00000000  00049a58  2**0
+ 17 .debug_line   0000cbb0  00000000  00000000  00049987  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008819a  00000000  00000000  0005662e  2**0
+ 18 .debug_str    00088400  00000000  00000000  00056537  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000de7c8  2**0
+ 19 .comment      00000053  00000000  00000000  000de937  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00002d98  00000000  00000000  000de81c  2**2
+ 20 .debug_frame  00002d6c  00000000  00000000  000de98c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -62,7 +62,7 @@ Disassembly of section .text:
  8000122:	bd10      	pop	{r4, pc}
  8000124:	20000010 	.word	0x20000010
  8000128:	00000000 	.word	0x00000000
- 800012c:	08003c28 	.word	0x08003c28
+ 800012c:	08003be4 	.word	0x08003be4
 
 08000130 <frame_dummy>:
  8000130:	b508      	push	{r3, lr}
@@ -74,7 +74,7 @@ Disassembly of section .text:
  800013e:	bd08      	pop	{r3, pc}
  8000140:	00000000 	.word	0x00000000
  8000144:	20000014 	.word	0x20000014
- 8000148:	08003c28 	.word	0x08003c28
+ 8000148:	08003be4 	.word	0x08003be4
 
 0800014c <__aeabi_frsub>:
  800014c:	f080 4000 	eor.w	r0, r0, #2147483648	; 0x80000000
@@ -681,13 +681,18 @@ int main(void)
  8000782:	4914      	ldr	r1, [pc, #80]	; (80007d4 <main+0x74>)
  8000784:	4814      	ldr	r0, [pc, #80]	; (80007d8 <main+0x78>)
  8000786:	f002 f94d 	bl	8002a24 <DriveBase_Init>
-  if (DriveBase_Start(&drive) != HAL_OK) Error_Handler();
+
+  if (DriveBase_Start(&drive) != HAL_OK)
  800078a:	4813      	ldr	r0, [pc, #76]	; (80007d8 <main+0x78>)
- 800078c:	f002 f9da 	bl	8002b44 <DriveBase_Start>
+ 800078c:	f002 f9ea 	bl	8002b64 <DriveBase_Start>
  8000790:	4603      	mov	r3, r0
  8000792:	2b00      	cmp	r3, #0
  8000794:	d001      	beq.n	800079a <main+0x3a>
+  {
+	  Error_Handler();
  8000796:	f000 f9f1 	bl	8000b7c <Error_Handler>
+  }
+
   last_tick = HAL_GetTick();
  800079a:	f000 fbcb 	bl	8000f34 <HAL_GetTick>
  800079e:	4603      	mov	r3, r0
@@ -701,24 +706,26 @@ int main(void)
     uint32_t now = HAL_GetTick();
  80007a4:	f000 fbc6 	bl	8000f34 <HAL_GetTick>
  80007a8:	6078      	str	r0, [r7, #4]
+
     uint32_t elapsed = now - last_tick;
  80007aa:	4b0c      	ldr	r3, [pc, #48]	; (80007dc <main+0x7c>)
  80007ac:	681b      	ldr	r3, [r3, #0]
  80007ae:	687a      	ldr	r2, [r7, #4]
  80007b0:	1ad3      	subs	r3, r2, r3
  80007b2:	603b      	str	r3, [r7, #0]
+    
     if (elapsed >= CTRL_PERIOD_MS) {
  80007b4:	683b      	ldr	r3, [r7, #0]
  80007b6:	2b09      	cmp	r3, #9
  80007b8:	d9f4      	bls.n	80007a4 <main+0x44>
-      last_tick = now;
+    	last_tick = now;
  80007ba:	4a08      	ldr	r2, [pc, #32]	; (80007dc <main+0x7c>)
  80007bc:	687b      	ldr	r3, [r7, #4]
  80007be:	6013      	str	r3, [r2, #0]
-      DriveBase_Update(&drive, elapsed);
+    	DriveBase_Update(&drive, elapsed);
  80007c0:	6839      	ldr	r1, [r7, #0]
  80007c2:	4805      	ldr	r0, [pc, #20]	; (80007d8 <main+0x78>)
- 80007c4:	f002 f9dc 	bl	8002b80 <DriveBase_Update>
+ 80007c4:	f002 f9ec 	bl	8002ba0 <DriveBase_Update>
   {
  80007c8:	e7ec      	b.n	80007a4 <main+0x44>
  80007ca:	bf00      	nop
@@ -743,7 +750,7 @@ void SystemClock_Config(void)
  80007ea:	2228      	movs	r2, #40	; 0x28
  80007ec:	2100      	movs	r1, #0
  80007ee:	4618      	mov	r0, r3
- 80007f0:	f003 f9ce 	bl	8003b90 <memset>
+ 80007f0:	f003 f9be 	bl	8003b70 <memset>
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
  80007f4:	1d3b      	adds	r3, r7, #4
  80007f6:	2200      	movs	r2, #0
@@ -845,7 +852,7 @@ static void MX_TIM2_Init(void)
  8000876:	2224      	movs	r2, #36	; 0x24
  8000878:	2100      	movs	r1, #0
  800087a:	4618      	mov	r0, r3
- 800087c:	f003 f988 	bl	8003b90 <memset>
+ 800087c:	f003 f978 	bl	8003b70 <memset>
   TIM_MasterConfigTypeDef sMasterConfig = {0};
  8000880:	1d3b      	adds	r3, r7, #4
  8000882:	2200      	movs	r2, #0
@@ -967,7 +974,7 @@ static void MX_TIM3_Init(void)
  800091e:	2224      	movs	r2, #36	; 0x24
  8000920:	2100      	movs	r1, #0
  8000922:	4618      	mov	r0, r3
- 8000924:	f003 f934 	bl	8003b90 <memset>
+ 8000924:	f003 f924 	bl	8003b70 <memset>
   TIM_MasterConfigTypeDef sMasterConfig = {0};
  8000928:	1d3b      	adds	r3, r7, #4
  800092a:	2200      	movs	r2, #0
@@ -1294,21 +1301,23 @@ static void MX_GPIO_Init(void)
  8000b1a:	687b      	ldr	r3, [r7, #4]
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1 | GPIO_PIN_2, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(MOTOR_LEFT_IN1_GPIO_Port,
  8000b1c:	2200      	movs	r2, #0
  8000b1e:	2106      	movs	r1, #6
  8000b20:	4814      	ldr	r0, [pc, #80]	; (8000b74 <MX_GPIO_Init+0xb4>)
  8000b22:	f000 fc79 	bl	8001418 <HAL_GPIO_WritePin>
+                    MOTOR_LEFT_IN1_Pin | MOTOR_LEFT_IN2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(MOTOR_RIGHT_IN1_GPIO_Port,
  8000b26:	2200      	movs	r2, #0
  8000b28:	2103      	movs	r1, #3
  8000b2a:	4813      	ldr	r0, [pc, #76]	; (8000b78 <MX_GPIO_Init+0xb8>)
  8000b2c:	f000 fc74 	bl	8001418 <HAL_GPIO_WritePin>
+                    MOTOR_RIGHT_IN1_Pin | MOTOR_RIGHT_IN2_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA1 PA2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1 | GPIO_PIN_2;
+  /*Configure GPIO pins : MOTOR_LEFT_IN1_Pin MOTOR_LEFT_IN2_Pin */
+  GPIO_InitStruct.Pin = MOTOR_LEFT_IN1_Pin | MOTOR_LEFT_IN2_Pin;
  8000b30:	2306      	movs	r3, #6
  8000b32:	613b      	str	r3, [r7, #16]
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -1320,14 +1329,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  8000b3c:	2302      	movs	r3, #2
  8000b3e:	61fb      	str	r3, [r7, #28]
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(MOTOR_LEFT_IN1_GPIO_Port, &GPIO_InitStruct);
  8000b40:	f107 0310 	add.w	r3, r7, #16
  8000b44:	4619      	mov	r1, r3
  8000b46:	480b      	ldr	r0, [pc, #44]	; (8000b74 <MX_GPIO_Init+0xb4>)
  8000b48:	f000 fae2 	bl	8001110 <HAL_GPIO_Init>
 
-  /*Configure GPIO pins : PB0 PB1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1;
+  /*Configure GPIO pins : MOTOR_RIGHT_IN1_Pin MOTOR_RIGHT_IN2_Pin */
+  GPIO_InitStruct.Pin = MOTOR_RIGHT_IN1_Pin | MOTOR_RIGHT_IN2_Pin;
  8000b4c:	2303      	movs	r3, #3
  8000b4e:	613b      	str	r3, [r7, #16]
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -1339,7 +1348,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  8000b58:	2302      	movs	r3, #2
  8000b5a:	61fb      	str	r3, [r7, #28]
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(MOTOR_RIGHT_IN1_GPIO_Port, &GPIO_InitStruct);
  8000b5c:	f107 0310 	add.w	r3, r7, #16
  8000b60:	4619      	mov	r1, r3
  8000b62:	4805      	ldr	r0, [pc, #20]	; (8000b78 <MX_GPIO_Init+0xb8>)
@@ -1530,7 +1539,7 @@ void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* htim_encoder)
     PA15     ------> TIM2_CH1
     PB3     ------> TIM2_CH2
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_15;
+    GPIO_InitStruct.Pin = ENCODER_RIGHT_A_Pin;
  8000c74:	f44f 4300 	mov.w	r3, #32768	; 0x8000
  8000c78:	61fb      	str	r3, [r7, #28]
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
@@ -1545,7 +1554,7 @@ void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* htim_encoder)
  8000c88:	4828      	ldr	r0, [pc, #160]	; (8000d2c <HAL_TIM_Encoder_MspInit+0x120>)
  8000c8a:	f000 fa41 	bl	8001110 <HAL_GPIO_Init>
 
-    GPIO_InitStruct.Pin = GPIO_PIN_3;
+    GPIO_InitStruct.Pin = ENCODER_RIGHT_B_Pin;
  8000c8e:	2308      	movs	r3, #8
  8000c90:	61fb      	str	r3, [r7, #28]
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
@@ -1611,7 +1620,7 @@ void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* htim_encoder)
  8000cfe:	f003 0304 	and.w	r3, r3, #4
  8000d02:	60bb      	str	r3, [r7, #8]
  8000d04:	68bb      	ldr	r3, [r7, #8]
-    GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+    GPIO_InitStruct.Pin = ENCODER_LEFT_A_Pin|ENCODER_LEFT_B_Pin;
  8000d06:	23c0      	movs	r3, #192	; 0xc0
  8000d08:	61fb      	str	r3, [r7, #28]
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
@@ -1725,7 +1734,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
     PB6     ------> TIM4_CH1
     PB7     ------> TIM4_CH2
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+    GPIO_InitStruct.Pin = MOTOR_LEFT_PWM_Pin|MOTOR_RIGHT_PWM_Pin;
  8000db0:	23c0      	movs	r3, #192	; 0xc0
  8000db2:	613b      	str	r3, [r7, #16]
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -2000,7 +2009,7 @@ LoopFillZerobss:
 
 /* Call static constructors */
     bl __libc_init_array
- 8000e62:	f002 fe71 	bl	8003b48 <__libc_init_array>
+ 8000e62:	f002 fe61 	bl	8003b28 <__libc_init_array>
 /* Call the application's entry point.*/
   bl main
  8000e66:	f7ff fc7b 	bl	8000760 <main>
@@ -2011,7 +2020,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  8000e70:	2000000c 	.word	0x2000000c
   ldr r2, =_sidata
- 8000e74:	08003c88 	.word	0x08003c88
+ 8000e74:	08003c28 	.word	0x08003c28
   ldr r2, =_sbss
  8000e78:	20000010 	.word	0x20000010
   ldr r4, =_ebss
@@ -4262,7 +4271,7 @@ if (((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_PCLK1) == RCC_CLOCKTYPE_PCLK
  8001b06:	bf00      	nop
  8001b08:	40022000 	.word	0x40022000
  8001b0c:	40021000 	.word	0x40021000
- 8001b10:	08003c5c 	.word	0x08003c5c
+ 8001b10:	08003bfc 	.word	0x08003bfc
  8001b14:	20000000 	.word	0x20000000
  8001b18:	20000004 	.word	0x20000004
 
@@ -4397,8 +4406,8 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  8001bae:	bf00      	nop
  8001bb0:	40021000 	.word	0x40021000
  8001bb4:	007a1200 	.word	0x007a1200
- 8001bb8:	08003c6c 	.word	0x08003c6c
- 8001bbc:	08003c7c 	.word	0x08003c7c
+ 8001bb8:	08003c0c 	.word	0x08003c0c
+ 8001bbc:	08003c1c 	.word	0x08003c1c
  8001bc0:	003d0900 	.word	0x003d0900
 
 08001bc4 <RCC_Delay>:
@@ -7081,8 +7090,8 @@ volatile uint8_t drive_fault;        // Trang thai loi (0: ok, 1: loop overrun, 
 
 void DriveBase_Init(DriveBase *base, TIM_HandleTypeDef *left_enc, TIM_HandleTypeDef *right_enc, TIM_HandleTypeDef *pwm)
 {
- 8002a24:	b5b0      	push	{r4, r5, r7, lr}
- 8002a26:	b09c      	sub	sp, #112	; 0x70
+ 8002a24:	b580      	push	{r7, lr}
+ 8002a26:	b09e      	sub	sp, #120	; 0x78
  8002a28:	af02      	add	r7, sp, #8
  8002a2a:	60f8      	str	r0, [r7, #12]
  8002a2c:	60b9      	str	r1, [r7, #8]
@@ -7091,2454 +7100,2454 @@ void DriveBase_Init(DriveBase *base, TIM_HandleTypeDef *left_enc, TIM_HandleType
     /* Cau hinh phan cung cho 2 banh xe */ 
     const WheelHw left_hw = {
  8002a32:	68bb      	ldr	r3, [r7, #8]
- 8002a34:	64fb      	str	r3, [r7, #76]	; 0x4c
+ 8002a34:	657b      	str	r3, [r7, #84]	; 0x54
  8002a36:	2301      	movs	r3, #1
- 8002a38:	f887 3050 	strb.w	r3, [r7, #80]	; 0x50
+ 8002a38:	f887 3058 	strb.w	r3, [r7, #88]	; 0x58
  8002a3c:	683b      	ldr	r3, [r7, #0]
- 8002a3e:	657b      	str	r3, [r7, #84]	; 0x54
+ 8002a3e:	65fb      	str	r3, [r7, #92]	; 0x5c
  8002a40:	2300      	movs	r3, #0
- 8002a42:	65bb      	str	r3, [r7, #88]	; 0x58
- 8002a44:	4b33      	ldr	r3, [pc, #204]	; (8002b14 <DriveBase_Init+0xf0>)
- 8002a46:	65fb      	str	r3, [r7, #92]	; 0x5c
+ 8002a42:	663b      	str	r3, [r7, #96]	; 0x60
+ 8002a44:	4b39      	ldr	r3, [pc, #228]	; (8002b2c <DriveBase_Init+0x108>)
+ 8002a46:	667b      	str	r3, [r7, #100]	; 0x64
  8002a48:	2302      	movs	r3, #2
- 8002a4a:	f8a7 3060 	strh.w	r3, [r7, #96]	; 0x60
+ 8002a4a:	f8a7 3068 	strh.w	r3, [r7, #104]	; 0x68
  8002a4e:	2304      	movs	r3, #4
- 8002a50:	f8a7 3062 	strh.w	r3, [r7, #98]	; 0x62
+ 8002a50:	f8a7 306a 	strh.w	r3, [r7, #106]	; 0x6a
  8002a54:	2301      	movs	r3, #1
- 8002a56:	f887 3064 	strb.w	r3, [r7, #100]	; 0x64
-        left_enc, 1, pwm, TIM_CHANNEL_1,
-        GPIOA, GPIO_PIN_1, GPIO_PIN_2, 1
+ 8002a56:	f887 306c 	strb.w	r3, [r7, #108]	; 0x6c
+        MOTOR_LEFT_IN1_Pin,
+        MOTOR_LEFT_IN2_Pin,
+        1
     };
 
     const WheelHw right_hw = {
  8002a5a:	687b      	ldr	r3, [r7, #4]
- 8002a5c:	633b      	str	r3, [r7, #48]	; 0x30
+ 8002a5c:	63bb      	str	r3, [r7, #56]	; 0x38
  8002a5e:	23ff      	movs	r3, #255	; 0xff
- 8002a60:	f887 3034 	strb.w	r3, [r7, #52]	; 0x34
+ 8002a60:	f887 303c 	strb.w	r3, [r7, #60]	; 0x3c
  8002a64:	683b      	ldr	r3, [r7, #0]
- 8002a66:	63bb      	str	r3, [r7, #56]	; 0x38
+ 8002a66:	643b      	str	r3, [r7, #64]	; 0x40
  8002a68:	2304      	movs	r3, #4
- 8002a6a:	63fb      	str	r3, [r7, #60]	; 0x3c
- 8002a6c:	4b2a      	ldr	r3, [pc, #168]	; (8002b18 <DriveBase_Init+0xf4>)
- 8002a6e:	643b      	str	r3, [r7, #64]	; 0x40
+ 8002a6a:	647b      	str	r3, [r7, #68]	; 0x44
+ 8002a6c:	4b30      	ldr	r3, [pc, #192]	; (8002b30 <DriveBase_Init+0x10c>)
+ 8002a6e:	64bb      	str	r3, [r7, #72]	; 0x48
  8002a70:	2301      	movs	r3, #1
- 8002a72:	f8a7 3044 	strh.w	r3, [r7, #68]	; 0x44
+ 8002a72:	f8a7 304c 	strh.w	r3, [r7, #76]	; 0x4c
  8002a76:	2302      	movs	r3, #2
- 8002a78:	f8a7 3046 	strh.w	r3, [r7, #70]	; 0x46
+ 8002a78:	f8a7 304e 	strh.w	r3, [r7, #78]	; 0x4e
  8002a7c:	23ff      	movs	r3, #255	; 0xff
- 8002a7e:	f887 3048 	strb.w	r3, [r7, #72]	; 0x48
-        right_enc, -1, pwm, TIM_CHANNEL_2,
-        GPIOB, GPIO_PIN_0, GPIO_PIN_1, -1
+ 8002a7e:	f887 3050 	strb.w	r3, [r7, #80]	; 0x50
+        MOTOR_RIGHT_IN2_Pin,
+        -1
     };
 
     /* Cau hinh PID */
-    const PidCfg pid_cfg = {
- 8002a82:	4b26      	ldr	r3, [pc, #152]	; (8002b1c <DriveBase_Init+0xf8>)
- 8002a84:	f107 0414 	add.w	r4, r7, #20
- 8002a88:	461d      	mov	r5, r3
- 8002a8a:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
- 8002a8c:	c40f      	stmia	r4!, {r0, r1, r2, r3}
- 8002a8e:	e895 0007 	ldmia.w	r5, {r0, r1, r2}
- 8002a92:	e884 0007 	stmia.w	r4, {r0, r1, r2}
-        PID_KP, PID_KP_FINE, PID_KI, PID_KD,
-        PID_FINE_BAND, -100.0f, 100.0f
+    const Pid pid_cfg = {
+ 8002a82:	f107 0314 	add.w	r3, r7, #20
+ 8002a86:	2224      	movs	r2, #36	; 0x24
+ 8002a88:	2100      	movs	r1, #0
+ 8002a8a:	4618      	mov	r0, r3
+ 8002a8c:	f001 f870 	bl	8003b70 <memset>
+ 8002a90:	4b28      	ldr	r3, [pc, #160]	; (8002b34 <DriveBase_Init+0x110>)
+ 8002a92:	617b      	str	r3, [r7, #20]
+ 8002a94:	4b28      	ldr	r3, [pc, #160]	; (8002b38 <DriveBase_Init+0x114>)
+ 8002a96:	61bb      	str	r3, [r7, #24]
+ 8002a98:	f04f 537e 	mov.w	r3, #1065353216	; 0x3f800000
+ 8002a9c:	61fb      	str	r3, [r7, #28]
+ 8002a9e:	f04f 4380 	mov.w	r3, #1073741824	; 0x40000000
+ 8002aa2:	627b      	str	r3, [r7, #36]	; 0x24
+ 8002aa4:	4b25      	ldr	r3, [pc, #148]	; (8002b3c <DriveBase_Init+0x118>)
+ 8002aa6:	633b      	str	r3, [r7, #48]	; 0x30
+ 8002aa8:	4b25      	ldr	r3, [pc, #148]	; (8002b40 <DriveBase_Init+0x11c>)
+ 8002aaa:	637b      	str	r3, [r7, #52]	; 0x34
+        .min = -100.0f,
+        .max = 100.0f
     };
 
     /* Khoi tao cac thanh phan */
     Wheel_Init(&base->left, &left_hw, WHEEL_CPR, &pid_cfg);
- 8002a96:	68f8      	ldr	r0, [r7, #12]
- 8002a98:	f107 0314 	add.w	r3, r7, #20
- 8002a9c:	f107 014c 	add.w	r1, r7, #76	; 0x4c
- 8002aa0:	4a1f      	ldr	r2, [pc, #124]	; (8002b20 <DriveBase_Init+0xfc>)
- 8002aa2:	f000 fb67 	bl	8003174 <Wheel_Init>
+ 8002aac:	68f8      	ldr	r0, [r7, #12]
+ 8002aae:	f107 0314 	add.w	r3, r7, #20
+ 8002ab2:	f107 0154 	add.w	r1, r7, #84	; 0x54
+ 8002ab6:	4a23      	ldr	r2, [pc, #140]	; (8002b44 <DriveBase_Init+0x120>)
+ 8002ab8:	f000 fb4d 	bl	8003156 <Wheel_Init>
     Wheel_Init(&base->right, &right_hw, WHEEL_CPR, &pid_cfg);
- 8002aa6:	68fb      	ldr	r3, [r7, #12]
- 8002aa8:	f103 00a0 	add.w	r0, r3, #160	; 0xa0
- 8002aac:	f107 0314 	add.w	r3, r7, #20
- 8002ab0:	f107 0130 	add.w	r1, r7, #48	; 0x30
- 8002ab4:	4a1a      	ldr	r2, [pc, #104]	; (8002b20 <DriveBase_Init+0xfc>)
- 8002ab6:	f000 fb5d 	bl	8003174 <Wheel_Init>
+ 8002abc:	68fb      	ldr	r3, [r7, #12]
+ 8002abe:	f103 00a0 	add.w	r0, r3, #160	; 0xa0
+ 8002ac2:	f107 0314 	add.w	r3, r7, #20
+ 8002ac6:	f107 0138 	add.w	r1, r7, #56	; 0x38
+ 8002aca:	4a1e      	ldr	r2, [pc, #120]	; (8002b44 <DriveBase_Init+0x120>)
+ 8002acc:	f000 fb43 	bl	8003156 <Wheel_Init>
 
     DiffDrive_Init(&base->model, WHEEL_RADIUS_M, WHEEL_TRACK_M, WHEEL_MAX_RPM);
- 8002aba:	68fb      	ldr	r3, [r7, #12]
- 8002abc:	f503 70a0 	add.w	r0, r3, #320	; 0x140
- 8002ac0:	4b18      	ldr	r3, [pc, #96]	; (8002b24 <DriveBase_Init+0x100>)
- 8002ac2:	4a19      	ldr	r2, [pc, #100]	; (8002b28 <DriveBase_Init+0x104>)
- 8002ac4:	4919      	ldr	r1, [pc, #100]	; (8002b2c <DriveBase_Init+0x108>)
- 8002ac6:	f000 ff08 	bl	80038da <DiffDrive_Init>
+ 8002ad0:	68fb      	ldr	r3, [r7, #12]
+ 8002ad2:	f503 70a0 	add.w	r0, r3, #320	; 0x140
+ 8002ad6:	4b1c      	ldr	r3, [pc, #112]	; (8002b48 <DriveBase_Init+0x124>)
+ 8002ad8:	4a1c      	ldr	r2, [pc, #112]	; (8002b4c <DriveBase_Init+0x128>)
+ 8002ada:	491d      	ldr	r1, [pc, #116]	; (8002b50 <DriveBase_Init+0x12c>)
+ 8002adc:	f000 feed 	bl	80038ba <DiffDrive_Init>
     
     MotionProfile_Init(&base->motion, DRIVE_MAX_V, DRIVE_MAX_W, DRIVE_ACC_V, DRIVE_ACC_W);
- 8002aca:	68fb      	ldr	r3, [r7, #12]
- 8002acc:	f503 70a6 	add.w	r0, r3, #332	; 0x14c
- 8002ad0:	4b17      	ldr	r3, [pc, #92]	; (8002b30 <DriveBase_Init+0x10c>)
- 8002ad2:	9300      	str	r3, [sp, #0]
- 8002ad4:	4b17      	ldr	r3, [pc, #92]	; (8002b34 <DriveBase_Init+0x110>)
- 8002ad6:	f04f 527c 	mov.w	r2, #1056964608	; 0x3f000000
- 8002ada:	4917      	ldr	r1, [pc, #92]	; (8002b38 <DriveBase_Init+0x114>)
- 8002adc:	f000 f93a 	bl	8002d54 <MotionProfile_Init>
+ 8002ae0:	68fb      	ldr	r3, [r7, #12]
+ 8002ae2:	f503 70a6 	add.w	r0, r3, #332	; 0x14c
+ 8002ae6:	4b1b      	ldr	r3, [pc, #108]	; (8002b54 <DriveBase_Init+0x130>)
+ 8002ae8:	9300      	str	r3, [sp, #0]
+ 8002aea:	4b13      	ldr	r3, [pc, #76]	; (8002b38 <DriveBase_Init+0x114>)
+ 8002aec:	f04f 527c 	mov.w	r2, #1056964608	; 0x3f000000
+ 8002af0:	4919      	ldr	r1, [pc, #100]	; (8002b58 <DriveBase_Init+0x134>)
+ 8002af2:	f000 f93f 	bl	8002d74 <MotionProfile_Init>
     
     Safety_Init(&base->safety);
- 8002ae0:	68fb      	ldr	r3, [r7, #12]
- 8002ae2:	f503 73b2 	add.w	r3, r3, #356	; 0x164
- 8002ae6:	4618      	mov	r0, r3
- 8002ae8:	f000 ffdc 	bl	8003aa4 <Safety_Init>
+ 8002af6:	68fb      	ldr	r3, [r7, #12]
+ 8002af8:	f503 73b2 	add.w	r3, r3, #356	; 0x164
+ 8002afc:	4618      	mov	r0, r3
+ 8002afe:	f000 ffc1 	bl	8003a84 <Safety_Init>
 
     /* Khoi tao trang thai dieu khien */
     base->v = 0.0f;
- 8002aec:	68fb      	ldr	r3, [r7, #12]
- 8002aee:	f04f 0200 	mov.w	r2, #0
- 8002af2:	f8c3 2168 	str.w	r2, [r3, #360]	; 0x168
+ 8002b02:	68fb      	ldr	r3, [r7, #12]
+ 8002b04:	f04f 0200 	mov.w	r2, #0
+ 8002b08:	f8c3 2168 	str.w	r2, [r3, #360]	; 0x168
     base->w = 0.0f;
- 8002af6:	68fb      	ldr	r3, [r7, #12]
- 8002af8:	f04f 0200 	mov.w	r2, #0
- 8002afc:	f8c3 216c 	str.w	r2, [r3, #364]	; 0x16c
+ 8002b0c:	68fb      	ldr	r3, [r7, #12]
+ 8002b0e:	f04f 0200 	mov.w	r2, #0
+ 8002b12:	f8c3 216c 	str.w	r2, [r3, #364]	; 0x16c
     drive_enable = 0;
- 8002b00:	4b0e      	ldr	r3, [pc, #56]	; (8002b3c <DriveBase_Init+0x118>)
- 8002b02:	2200      	movs	r2, #0
- 8002b04:	701a      	strb	r2, [r3, #0]
+ 8002b16:	4b11      	ldr	r3, [pc, #68]	; (8002b5c <DriveBase_Init+0x138>)
+ 8002b18:	2200      	movs	r2, #0
+ 8002b1a:	701a      	strb	r2, [r3, #0]
     drive_fault = DRIVE_OK;
- 8002b06:	4b0e      	ldr	r3, [pc, #56]	; (8002b40 <DriveBase_Init+0x11c>)
- 8002b08:	2200      	movs	r2, #0
- 8002b0a:	701a      	strb	r2, [r3, #0]
+ 8002b1c:	4b10      	ldr	r3, [pc, #64]	; (8002b60 <DriveBase_Init+0x13c>)
+ 8002b1e:	2200      	movs	r2, #0
+ 8002b20:	701a      	strb	r2, [r3, #0]
 }
- 8002b0c:	bf00      	nop
- 8002b0e:	3768      	adds	r7, #104	; 0x68
- 8002b10:	46bd      	mov	sp, r7
- 8002b12:	bdb0      	pop	{r4, r5, r7, pc}
- 8002b14:	40010800 	.word	0x40010800
- 8002b18:	40010c00 	.word	0x40010c00
- 8002b1c:	08003c40 	.word	0x08003c40
- 8002b20:	44a50000 	.word	0x44a50000
- 8002b24:	42700000 	.word	0x42700000
- 8002b28:	3e5c28f6 	.word	0x3e5c28f6
- 8002b2c:	3d051eb8 	.word	0x3d051eb8
- 8002b30:	3f4ccccd 	.word	0x3f4ccccd
- 8002b34:	3e19999a 	.word	0x3e19999a
- 8002b38:	3dcccccd 	.word	0x3dcccccd
- 8002b3c:	20000280 	.word	0x20000280
- 8002b40:	20000288 	.word	0x20000288
+ 8002b22:	bf00      	nop
+ 8002b24:	3770      	adds	r7, #112	; 0x70
+ 8002b26:	46bd      	mov	sp, r7
+ 8002b28:	bd80      	pop	{r7, pc}
+ 8002b2a:	bf00      	nop
+ 8002b2c:	40010800 	.word	0x40010800
+ 8002b30:	40010c00 	.word	0x40010c00
+ 8002b34:	3f19999a 	.word	0x3f19999a
+ 8002b38:	3e19999a 	.word	0x3e19999a
+ 8002b3c:	c2c80000 	.word	0xc2c80000
+ 8002b40:	42c80000 	.word	0x42c80000
+ 8002b44:	44a50000 	.word	0x44a50000
+ 8002b48:	42700000 	.word	0x42700000
+ 8002b4c:	3e5c28f6 	.word	0x3e5c28f6
+ 8002b50:	3d051eb8 	.word	0x3d051eb8
+ 8002b54:	3f4ccccd 	.word	0x3f4ccccd
+ 8002b58:	3dcccccd 	.word	0x3dcccccd
+ 8002b5c:	20000280 	.word	0x20000280
+ 8002b60:	20000288 	.word	0x20000288
 
-08002b44 <DriveBase_Start>:
+08002b64 <DriveBase_Start>:
 
 HAL_StatusTypeDef DriveBase_Start(DriveBase *base)
 {
- 8002b44:	b580      	push	{r7, lr}
- 8002b46:	b082      	sub	sp, #8
- 8002b48:	af00      	add	r7, sp, #0
- 8002b4a:	6078      	str	r0, [r7, #4]
+ 8002b64:	b580      	push	{r7, lr}
+ 8002b66:	b082      	sub	sp, #8
+ 8002b68:	af00      	add	r7, sp, #0
+ 8002b6a:	6078      	str	r0, [r7, #4]
     if (Wheel_Start(&base->left) != HAL_OK || Wheel_Start(&base->right) != HAL_OK) {
- 8002b4c:	687b      	ldr	r3, [r7, #4]
- 8002b4e:	4618      	mov	r0, r3
- 8002b50:	f000 fb84 	bl	800325c <Wheel_Start>
- 8002b54:	4603      	mov	r3, r0
- 8002b56:	2b00      	cmp	r3, #0
- 8002b58:	d107      	bne.n	8002b6a <DriveBase_Start+0x26>
- 8002b5a:	687b      	ldr	r3, [r7, #4]
- 8002b5c:	33a0      	adds	r3, #160	; 0xa0
- 8002b5e:	4618      	mov	r0, r3
- 8002b60:	f000 fb7c 	bl	800325c <Wheel_Start>
- 8002b64:	4603      	mov	r3, r0
- 8002b66:	2b00      	cmp	r3, #0
- 8002b68:	d004      	beq.n	8002b74 <DriveBase_Start+0x30>
+ 8002b6c:	687b      	ldr	r3, [r7, #4]
+ 8002b6e:	4618      	mov	r0, r3
+ 8002b70:	f000 fb65 	bl	800323e <Wheel_Start>
+ 8002b74:	4603      	mov	r3, r0
+ 8002b76:	2b00      	cmp	r3, #0
+ 8002b78:	d107      	bne.n	8002b8a <DriveBase_Start+0x26>
+ 8002b7a:	687b      	ldr	r3, [r7, #4]
+ 8002b7c:	33a0      	adds	r3, #160	; 0xa0
+ 8002b7e:	4618      	mov	r0, r3
+ 8002b80:	f000 fb5d 	bl	800323e <Wheel_Start>
+ 8002b84:	4603      	mov	r3, r0
+ 8002b86:	2b00      	cmp	r3, #0
+ 8002b88:	d004      	beq.n	8002b94 <DriveBase_Start+0x30>
         DriveBase_Stop(base);
- 8002b6a:	6878      	ldr	r0, [r7, #4]
- 8002b6c:	f000 f89c 	bl	8002ca8 <DriveBase_Stop>
+ 8002b8a:	6878      	ldr	r0, [r7, #4]
+ 8002b8c:	f000 f89c 	bl	8002cc8 <DriveBase_Stop>
         return HAL_ERROR;
- 8002b70:	2301      	movs	r3, #1
- 8002b72:	e000      	b.n	8002b76 <DriveBase_Start+0x32>
+ 8002b90:	2301      	movs	r3, #1
+ 8002b92:	e000      	b.n	8002b96 <DriveBase_Start+0x32>
     }
     return HAL_OK;
- 8002b74:	2300      	movs	r3, #0
+ 8002b94:	2300      	movs	r3, #0
 }
- 8002b76:	4618      	mov	r0, r3
- 8002b78:	3708      	adds	r7, #8
- 8002b7a:	46bd      	mov	sp, r7
- 8002b7c:	bd80      	pop	{r7, pc}
+ 8002b96:	4618      	mov	r0, r3
+ 8002b98:	3708      	adds	r7, #8
+ 8002b9a:	46bd      	mov	sp, r7
+ 8002b9c:	bd80      	pop	{r7, pc}
 	...
 
-08002b80 <DriveBase_Update>:
+08002ba0 <DriveBase_Update>:
 
 /* Cap nhat trang thai dieu khien */
 void DriveBase_Update(DriveBase *base, uint32_t elapsed_ms)
 {
- 8002b80:	b590      	push	{r4, r7, lr}
- 8002b82:	b08b      	sub	sp, #44	; 0x2c
- 8002b84:	af02      	add	r7, sp, #8
- 8002b86:	6078      	str	r0, [r7, #4]
- 8002b88:	6039      	str	r1, [r7, #0]
+ 8002ba0:	b590      	push	{r4, r7, lr}
+ 8002ba2:	b08b      	sub	sp, #44	; 0x2c
+ 8002ba4:	af02      	add	r7, sp, #8
+ 8002ba6:	6078      	str	r0, [r7, #4]
+ 8002ba8:	6039      	str	r1, [r7, #0]
     float v = cmd_v;
- 8002b8a:	4b42      	ldr	r3, [pc, #264]	; (8002c94 <DriveBase_Update+0x114>)
- 8002b8c:	681b      	ldr	r3, [r3, #0]
- 8002b8e:	61fb      	str	r3, [r7, #28]
+ 8002baa:	4b42      	ldr	r3, [pc, #264]	; (8002cb4 <DriveBase_Update+0x114>)
+ 8002bac:	681b      	ldr	r3, [r3, #0]
+ 8002bae:	61fb      	str	r3, [r7, #28]
     float w = cmd_w;
- 8002b90:	4b41      	ldr	r3, [pc, #260]	; (8002c98 <DriveBase_Update+0x118>)
- 8002b92:	681b      	ldr	r3, [r3, #0]
- 8002b94:	61bb      	str	r3, [r7, #24]
+ 8002bb0:	4b41      	ldr	r3, [pc, #260]	; (8002cb8 <DriveBase_Update+0x118>)
+ 8002bb2:	681b      	ldr	r3, [r3, #0]
+ 8002bb4:	61bb      	str	r3, [r7, #24]
     uint8_t safe = Safety_Check(&base->safety, elapsed_ms, v, w);
- 8002b96:	687b      	ldr	r3, [r7, #4]
- 8002b98:	f503 70b2 	add.w	r0, r3, #356	; 0x164
- 8002b9c:	69bb      	ldr	r3, [r7, #24]
- 8002b9e:	69fa      	ldr	r2, [r7, #28]
- 8002ba0:	6839      	ldr	r1, [r7, #0]
- 8002ba2:	f000 ff8b 	bl	8003abc <Safety_Check>
- 8002ba6:	4603      	mov	r3, r0
- 8002ba8:	75fb      	strb	r3, [r7, #23]
+ 8002bb6:	687b      	ldr	r3, [r7, #4]
+ 8002bb8:	f503 70b2 	add.w	r0, r3, #356	; 0x164
+ 8002bbc:	69bb      	ldr	r3, [r7, #24]
+ 8002bbe:	69fa      	ldr	r2, [r7, #28]
+ 8002bc0:	6839      	ldr	r1, [r7, #0]
+ 8002bc2:	f000 ff6b 	bl	8003a9c <Safety_Check>
+ 8002bc6:	4603      	mov	r3, r0
+ 8002bc8:	75fb      	strb	r3, [r7, #23]
     drive_fault = base->safety.fault;      
- 8002baa:	687b      	ldr	r3, [r7, #4]
- 8002bac:	f893 2164 	ldrb.w	r2, [r3, #356]	; 0x164
- 8002bb0:	4b3a      	ldr	r3, [pc, #232]	; (8002c9c <DriveBase_Update+0x11c>)
- 8002bb2:	701a      	strb	r2, [r3, #0]
+ 8002bca:	687b      	ldr	r3, [r7, #4]
+ 8002bcc:	f893 2164 	ldrb.w	r2, [r3, #356]	; 0x164
+ 8002bd0:	4b3a      	ldr	r3, [pc, #232]	; (8002cbc <DriveBase_Update+0x11c>)
+ 8002bd2:	701a      	strb	r2, [r3, #0]
 
     float left_target = 0.0f;
- 8002bb4:	f04f 0300 	mov.w	r3, #0
- 8002bb8:	613b      	str	r3, [r7, #16]
+ 8002bd4:	f04f 0300 	mov.w	r3, #0
+ 8002bd8:	613b      	str	r3, [r7, #16]
     float right_target = 0.0f;
- 8002bba:	f04f 0300 	mov.w	r3, #0
- 8002bbe:	60fb      	str	r3, [r7, #12]
+ 8002bda:	f04f 0300 	mov.w	r3, #0
+ 8002bde:	60fb      	str	r3, [r7, #12]
 
     if (safe && drive_enable && (v != 0.0f || w != 0.0f)) {
- 8002bc0:	7dfb      	ldrb	r3, [r7, #23]
- 8002bc2:	2b00      	cmp	r3, #0
- 8002bc4:	d037      	beq.n	8002c36 <DriveBase_Update+0xb6>
- 8002bc6:	4b36      	ldr	r3, [pc, #216]	; (8002ca0 <DriveBase_Update+0x120>)
- 8002bc8:	781b      	ldrb	r3, [r3, #0]
- 8002bca:	b2db      	uxtb	r3, r3
- 8002bcc:	2b00      	cmp	r3, #0
- 8002bce:	d032      	beq.n	8002c36 <DriveBase_Update+0xb6>
- 8002bd0:	f04f 0100 	mov.w	r1, #0
- 8002bd4:	69f8      	ldr	r0, [r7, #28]
- 8002bd6:	f7fd fd5b 	bl	8000690 <__aeabi_fcmpeq>
- 8002bda:	4603      	mov	r3, r0
- 8002bdc:	2b00      	cmp	r3, #0
- 8002bde:	d007      	beq.n	8002bf0 <DriveBase_Update+0x70>
- 8002be0:	f04f 0100 	mov.w	r1, #0
- 8002be4:	69b8      	ldr	r0, [r7, #24]
- 8002be6:	f7fd fd53 	bl	8000690 <__aeabi_fcmpeq>
- 8002bea:	4603      	mov	r3, r0
+ 8002be0:	7dfb      	ldrb	r3, [r7, #23]
+ 8002be2:	2b00      	cmp	r3, #0
+ 8002be4:	d037      	beq.n	8002c56 <DriveBase_Update+0xb6>
+ 8002be6:	4b36      	ldr	r3, [pc, #216]	; (8002cc0 <DriveBase_Update+0x120>)
+ 8002be8:	781b      	ldrb	r3, [r3, #0]
+ 8002bea:	b2db      	uxtb	r3, r3
  8002bec:	2b00      	cmp	r3, #0
- 8002bee:	d122      	bne.n	8002c36 <DriveBase_Update+0xb6>
+ 8002bee:	d032      	beq.n	8002c56 <DriveBase_Update+0xb6>
+ 8002bf0:	f04f 0100 	mov.w	r1, #0
+ 8002bf4:	69f8      	ldr	r0, [r7, #28]
+ 8002bf6:	f7fd fd4b 	bl	8000690 <__aeabi_fcmpeq>
+ 8002bfa:	4603      	mov	r3, r0
+ 8002bfc:	2b00      	cmp	r3, #0
+ 8002bfe:	d007      	beq.n	8002c10 <DriveBase_Update+0x70>
+ 8002c00:	f04f 0100 	mov.w	r1, #0
+ 8002c04:	69b8      	ldr	r0, [r7, #24]
+ 8002c06:	f7fd fd43 	bl	8000690 <__aeabi_fcmpeq>
+ 8002c0a:	4603      	mov	r3, r0
+ 8002c0c:	2b00      	cmp	r3, #0
+ 8002c0e:	d122      	bne.n	8002c56 <DriveBase_Update+0xb6>
         MotionProfile_Update(&base->motion, v, w, elapsed_ms * 0.001f);
- 8002bf0:	687b      	ldr	r3, [r7, #4]
- 8002bf2:	f503 74a6 	add.w	r4, r3, #332	; 0x14c
- 8002bf6:	6838      	ldr	r0, [r7, #0]
- 8002bf8:	f7fd fb5e 	bl	80002b8 <__aeabi_ui2f>
- 8002bfc:	4603      	mov	r3, r0
- 8002bfe:	4929      	ldr	r1, [pc, #164]	; (8002ca4 <DriveBase_Update+0x124>)
- 8002c00:	4618      	mov	r0, r3
- 8002c02:	f7fd fbb1 	bl	8000368 <__aeabi_fmul>
- 8002c06:	4603      	mov	r3, r0
- 8002c08:	69ba      	ldr	r2, [r7, #24]
- 8002c0a:	69f9      	ldr	r1, [r7, #28]
- 8002c0c:	4620      	mov	r0, r4
- 8002c0e:	f000 f8cc 	bl	8002daa <MotionProfile_Update>
+ 8002c10:	687b      	ldr	r3, [r7, #4]
+ 8002c12:	f503 74a6 	add.w	r4, r3, #332	; 0x14c
+ 8002c16:	6838      	ldr	r0, [r7, #0]
+ 8002c18:	f7fd fb4e 	bl	80002b8 <__aeabi_ui2f>
+ 8002c1c:	4603      	mov	r3, r0
+ 8002c1e:	4929      	ldr	r1, [pc, #164]	; (8002cc4 <DriveBase_Update+0x124>)
+ 8002c20:	4618      	mov	r0, r3
+ 8002c22:	f7fd fba1 	bl	8000368 <__aeabi_fmul>
+ 8002c26:	4603      	mov	r3, r0
+ 8002c28:	69ba      	ldr	r2, [r7, #24]
+ 8002c2a:	69f9      	ldr	r1, [r7, #28]
+ 8002c2c:	4620      	mov	r0, r4
+ 8002c2e:	f000 f8cc 	bl	8002dca <MotionProfile_Update>
         DiffDrive_ToWheels(&base->model, base->motion.v, base->motion.w, &left_target, &right_target);
- 8002c12:	687b      	ldr	r3, [r7, #4]
- 8002c14:	f503 70a0 	add.w	r0, r3, #320	; 0x140
- 8002c18:	687b      	ldr	r3, [r7, #4]
- 8002c1a:	f8d3 114c 	ldr.w	r1, [r3, #332]	; 0x14c
- 8002c1e:	687b      	ldr	r3, [r7, #4]
- 8002c20:	f8d3 2150 	ldr.w	r2, [r3, #336]	; 0x150
- 8002c24:	f107 0410 	add.w	r4, r7, #16
- 8002c28:	f107 030c 	add.w	r3, r7, #12
- 8002c2c:	9300      	str	r3, [sp, #0]
- 8002c2e:	4623      	mov	r3, r4
- 8002c30:	f000 fe68 	bl	8003904 <DiffDrive_ToWheels>
- 8002c34:	e00b      	b.n	8002c4e <DriveBase_Update+0xce>
+ 8002c32:	687b      	ldr	r3, [r7, #4]
+ 8002c34:	f503 70a0 	add.w	r0, r3, #320	; 0x140
+ 8002c38:	687b      	ldr	r3, [r7, #4]
+ 8002c3a:	f8d3 114c 	ldr.w	r1, [r3, #332]	; 0x14c
+ 8002c3e:	687b      	ldr	r3, [r7, #4]
+ 8002c40:	f8d3 2150 	ldr.w	r2, [r3, #336]	; 0x150
+ 8002c44:	f107 0410 	add.w	r4, r7, #16
+ 8002c48:	f107 030c 	add.w	r3, r7, #12
+ 8002c4c:	9300      	str	r3, [sp, #0]
+ 8002c4e:	4623      	mov	r3, r4
+ 8002c50:	f000 fe48 	bl	80038e4 <DiffDrive_ToWheels>
+ 8002c54:	e00b      	b.n	8002c6e <DriveBase_Update+0xce>
     } else {
         if (!safe) drive_enable = 0;
- 8002c36:	7dfb      	ldrb	r3, [r7, #23]
- 8002c38:	2b00      	cmp	r3, #0
- 8002c3a:	d102      	bne.n	8002c42 <DriveBase_Update+0xc2>
- 8002c3c:	4b18      	ldr	r3, [pc, #96]	; (8002ca0 <DriveBase_Update+0x120>)
- 8002c3e:	2200      	movs	r2, #0
- 8002c40:	701a      	strb	r2, [r3, #0]
+ 8002c56:	7dfb      	ldrb	r3, [r7, #23]
+ 8002c58:	2b00      	cmp	r3, #0
+ 8002c5a:	d102      	bne.n	8002c62 <DriveBase_Update+0xc2>
+ 8002c5c:	4b18      	ldr	r3, [pc, #96]	; (8002cc0 <DriveBase_Update+0x120>)
+ 8002c5e:	2200      	movs	r2, #0
+ 8002c60:	701a      	strb	r2, [r3, #0]
         MotionProfile_Reset(&base->motion);
- 8002c42:	687b      	ldr	r3, [r7, #4]
- 8002c44:	f503 73a6 	add.w	r3, r3, #332	; 0x14c
- 8002c48:	4618      	mov	r0, r3
- 8002c4a:	f000 f89d 	bl	8002d88 <MotionProfile_Reset>
+ 8002c62:	687b      	ldr	r3, [r7, #4]
+ 8002c64:	f503 73a6 	add.w	r3, r3, #332	; 0x14c
+ 8002c68:	4618      	mov	r0, r3
+ 8002c6a:	f000 f89d 	bl	8002da8 <MotionProfile_Reset>
     }
  
     /* Điều khiển bánh xe */
     Wheel_Update(&base->left, left_target, elapsed_ms);
- 8002c4e:	687b      	ldr	r3, [r7, #4]
- 8002c50:	6939      	ldr	r1, [r7, #16]
- 8002c52:	683a      	ldr	r2, [r7, #0]
- 8002c54:	4618      	mov	r0, r3
- 8002c56:	f000 fb19 	bl	800328c <Wheel_Update>
-    Wheel_Update(&base->right, right_target, elapsed_ms);
- 8002c5a:	687b      	ldr	r3, [r7, #4]
- 8002c5c:	33a0      	adds	r3, #160	; 0xa0
- 8002c5e:	68f9      	ldr	r1, [r7, #12]
- 8002c60:	683a      	ldr	r2, [r7, #0]
- 8002c62:	4618      	mov	r0, r3
- 8002c64:	f000 fb12 	bl	800328c <Wheel_Update>
-    DiffDrive_ToBody(&base->model, base->left.rpm, base->right.rpm, &base->v, &base->w);
- 8002c68:	687b      	ldr	r3, [r7, #4]
- 8002c6a:	f503 70a0 	add.w	r0, r3, #320	; 0x140
  8002c6e:	687b      	ldr	r3, [r7, #4]
- 8002c70:	6d99      	ldr	r1, [r3, #88]	; 0x58
- 8002c72:	687b      	ldr	r3, [r7, #4]
- 8002c74:	f8d3 20f8 	ldr.w	r2, [r3, #248]	; 0xf8
- 8002c78:	687b      	ldr	r3, [r7, #4]
- 8002c7a:	f503 74b4 	add.w	r4, r3, #360	; 0x168
- 8002c7e:	687b      	ldr	r3, [r7, #4]
- 8002c80:	f503 73b6 	add.w	r3, r3, #364	; 0x16c
- 8002c84:	9300      	str	r3, [sp, #0]
- 8002c86:	4623      	mov	r3, r4
- 8002c88:	f000 fec8 	bl	8003a1c <DiffDrive_ToBody>
+ 8002c70:	6939      	ldr	r1, [r7, #16]
+ 8002c72:	683a      	ldr	r2, [r7, #0]
+ 8002c74:	4618      	mov	r0, r3
+ 8002c76:	f000 faf9 	bl	800326c <Wheel_Update>
+    Wheel_Update(&base->right, right_target, elapsed_ms);
+ 8002c7a:	687b      	ldr	r3, [r7, #4]
+ 8002c7c:	33a0      	adds	r3, #160	; 0xa0
+ 8002c7e:	68f9      	ldr	r1, [r7, #12]
+ 8002c80:	683a      	ldr	r2, [r7, #0]
+ 8002c82:	4618      	mov	r0, r3
+ 8002c84:	f000 faf2 	bl	800326c <Wheel_Update>
+    DiffDrive_ToBody(&base->model, base->left.rpm, base->right.rpm, &base->v, &base->w);
+ 8002c88:	687b      	ldr	r3, [r7, #4]
+ 8002c8a:	f503 70a0 	add.w	r0, r3, #320	; 0x140
+ 8002c8e:	687b      	ldr	r3, [r7, #4]
+ 8002c90:	6d99      	ldr	r1, [r3, #88]	; 0x58
+ 8002c92:	687b      	ldr	r3, [r7, #4]
+ 8002c94:	f8d3 20f8 	ldr.w	r2, [r3, #248]	; 0xf8
+ 8002c98:	687b      	ldr	r3, [r7, #4]
+ 8002c9a:	f503 74b4 	add.w	r4, r3, #360	; 0x168
+ 8002c9e:	687b      	ldr	r3, [r7, #4]
+ 8002ca0:	f503 73b6 	add.w	r3, r3, #364	; 0x16c
+ 8002ca4:	9300      	str	r3, [sp, #0]
+ 8002ca6:	4623      	mov	r3, r4
+ 8002ca8:	f000 fea8 	bl	80039fc <DiffDrive_ToBody>
 }
- 8002c8c:	bf00      	nop
- 8002c8e:	3724      	adds	r7, #36	; 0x24
- 8002c90:	46bd      	mov	sp, r7
- 8002c92:	bd90      	pop	{r4, r7, pc}
- 8002c94:	2000027c 	.word	0x2000027c
- 8002c98:	20000284 	.word	0x20000284
- 8002c9c:	20000288 	.word	0x20000288
- 8002ca0:	20000280 	.word	0x20000280
- 8002ca4:	3a83126f 	.word	0x3a83126f
+ 8002cac:	bf00      	nop
+ 8002cae:	3724      	adds	r7, #36	; 0x24
+ 8002cb0:	46bd      	mov	sp, r7
+ 8002cb2:	bd90      	pop	{r4, r7, pc}
+ 8002cb4:	2000027c 	.word	0x2000027c
+ 8002cb8:	20000284 	.word	0x20000284
+ 8002cbc:	20000288 	.word	0x20000288
+ 8002cc0:	20000280 	.word	0x20000280
+ 8002cc4:	3a83126f 	.word	0x3a83126f
 
-08002ca8 <DriveBase_Stop>:
+08002cc8 <DriveBase_Stop>:
 
 void DriveBase_Stop(DriveBase *base)
 {
- 8002ca8:	b580      	push	{r7, lr}
- 8002caa:	b082      	sub	sp, #8
- 8002cac:	af00      	add	r7, sp, #0
- 8002cae:	6078      	str	r0, [r7, #4]
+ 8002cc8:	b580      	push	{r7, lr}
+ 8002cca:	b082      	sub	sp, #8
+ 8002ccc:	af00      	add	r7, sp, #0
+ 8002cce:	6078      	str	r0, [r7, #4]
     drive_enable = 0;
- 8002cb0:	4b0a      	ldr	r3, [pc, #40]	; (8002cdc <DriveBase_Stop+0x34>)
- 8002cb2:	2200      	movs	r2, #0
- 8002cb4:	701a      	strb	r2, [r3, #0]
+ 8002cd0:	4b0a      	ldr	r3, [pc, #40]	; (8002cfc <DriveBase_Stop+0x34>)
+ 8002cd2:	2200      	movs	r2, #0
+ 8002cd4:	701a      	strb	r2, [r3, #0]
     MotionProfile_Reset(&base->motion);
- 8002cb6:	687b      	ldr	r3, [r7, #4]
- 8002cb8:	f503 73a6 	add.w	r3, r3, #332	; 0x14c
- 8002cbc:	4618      	mov	r0, r3
- 8002cbe:	f000 f863 	bl	8002d88 <MotionProfile_Reset>
+ 8002cd6:	687b      	ldr	r3, [r7, #4]
+ 8002cd8:	f503 73a6 	add.w	r3, r3, #332	; 0x14c
+ 8002cdc:	4618      	mov	r0, r3
+ 8002cde:	f000 f863 	bl	8002da8 <MotionProfile_Reset>
     Wheel_Stop(&base->left);
- 8002cc2:	687b      	ldr	r3, [r7, #4]
- 8002cc4:	4618      	mov	r0, r3
- 8002cc6:	f000 fbdd 	bl	8003484 <Wheel_Stop>
+ 8002ce2:	687b      	ldr	r3, [r7, #4]
+ 8002ce4:	4618      	mov	r0, r3
+ 8002ce6:	f000 fbbd 	bl	8003464 <Wheel_Stop>
     Wheel_Stop(&base->right);
- 8002cca:	687b      	ldr	r3, [r7, #4]
- 8002ccc:	33a0      	adds	r3, #160	; 0xa0
- 8002cce:	4618      	mov	r0, r3
- 8002cd0:	f000 fbd8 	bl	8003484 <Wheel_Stop>
+ 8002cea:	687b      	ldr	r3, [r7, #4]
+ 8002cec:	33a0      	adds	r3, #160	; 0xa0
+ 8002cee:	4618      	mov	r0, r3
+ 8002cf0:	f000 fbb8 	bl	8003464 <Wheel_Stop>
 }
- 8002cd4:	bf00      	nop
- 8002cd6:	3708      	adds	r7, #8
- 8002cd8:	46bd      	mov	sp, r7
- 8002cda:	bd80      	pop	{r7, pc}
- 8002cdc:	20000280 	.word	0x20000280
+ 8002cf4:	bf00      	nop
+ 8002cf6:	3708      	adds	r7, #8
+ 8002cf8:	46bd      	mov	sp, r7
+ 8002cfa:	bd80      	pop	{r7, pc}
+ 8002cfc:	20000280 	.word	0x20000280
 
-08002ce0 <Clamp>:
+08002d00 <Clamp>:
 #include "motion_profile.h"
 
 /* Gioi han van toc */
 static float Clamp(float x, float min, float max)
 {
- 8002ce0:	b580      	push	{r7, lr}
- 8002ce2:	b084      	sub	sp, #16
- 8002ce4:	af00      	add	r7, sp, #0
- 8002ce6:	60f8      	str	r0, [r7, #12]
- 8002ce8:	60b9      	str	r1, [r7, #8]
- 8002cea:	607a      	str	r2, [r7, #4]
+ 8002d00:	b580      	push	{r7, lr}
+ 8002d02:	b084      	sub	sp, #16
+ 8002d04:	af00      	add	r7, sp, #0
+ 8002d06:	60f8      	str	r0, [r7, #12]
+ 8002d08:	60b9      	str	r1, [r7, #8]
+ 8002d0a:	607a      	str	r2, [r7, #4]
     return x < min ? min : (x > max ? max : x);
- 8002cec:	68b9      	ldr	r1, [r7, #8]
- 8002cee:	68f8      	ldr	r0, [r7, #12]
- 8002cf0:	f7fd fcd8 	bl	80006a4 <__aeabi_fcmplt>
- 8002cf4:	4603      	mov	r3, r0
- 8002cf6:	2b00      	cmp	r3, #0
- 8002cf8:	d001      	beq.n	8002cfe <Clamp+0x1e>
- 8002cfa:	68bb      	ldr	r3, [r7, #8]
- 8002cfc:	e009      	b.n	8002d12 <Clamp+0x32>
- 8002cfe:	6879      	ldr	r1, [r7, #4]
- 8002d00:	68f8      	ldr	r0, [r7, #12]
- 8002d02:	f7fd fced 	bl	80006e0 <__aeabi_fcmpgt>
- 8002d06:	4603      	mov	r3, r0
- 8002d08:	2b00      	cmp	r3, #0
- 8002d0a:	d001      	beq.n	8002d10 <Clamp+0x30>
- 8002d0c:	687b      	ldr	r3, [r7, #4]
- 8002d0e:	e000      	b.n	8002d12 <Clamp+0x32>
- 8002d10:	68fb      	ldr	r3, [r7, #12]
+ 8002d0c:	68b9      	ldr	r1, [r7, #8]
+ 8002d0e:	68f8      	ldr	r0, [r7, #12]
+ 8002d10:	f7fd fcc8 	bl	80006a4 <__aeabi_fcmplt>
+ 8002d14:	4603      	mov	r3, r0
+ 8002d16:	2b00      	cmp	r3, #0
+ 8002d18:	d001      	beq.n	8002d1e <Clamp+0x1e>
+ 8002d1a:	68bb      	ldr	r3, [r7, #8]
+ 8002d1c:	e009      	b.n	8002d32 <Clamp+0x32>
+ 8002d1e:	6879      	ldr	r1, [r7, #4]
+ 8002d20:	68f8      	ldr	r0, [r7, #12]
+ 8002d22:	f7fd fcdd 	bl	80006e0 <__aeabi_fcmpgt>
+ 8002d26:	4603      	mov	r3, r0
+ 8002d28:	2b00      	cmp	r3, #0
+ 8002d2a:	d001      	beq.n	8002d30 <Clamp+0x30>
+ 8002d2c:	687b      	ldr	r3, [r7, #4]
+ 8002d2e:	e000      	b.n	8002d32 <Clamp+0x32>
+ 8002d30:	68fb      	ldr	r3, [r7, #12]
 }
- 8002d12:	4618      	mov	r0, r3
- 8002d14:	3710      	adds	r7, #16
- 8002d16:	46bd      	mov	sp, r7
- 8002d18:	bd80      	pop	{r7, pc}
+ 8002d32:	4618      	mov	r0, r3
+ 8002d34:	3710      	adds	r7, #16
+ 8002d36:	46bd      	mov	sp, r7
+ 8002d38:	bd80      	pop	{r7, pc}
 
-08002d1a <Slew>:
+08002d3a <Slew>:
 
 /* Cap nhat van toc theo ti le */
 static float Slew(float value, float target, float step)
 {
- 8002d1a:	b580      	push	{r7, lr}
- 8002d1c:	b084      	sub	sp, #16
- 8002d1e:	af00      	add	r7, sp, #0
- 8002d20:	60f8      	str	r0, [r7, #12]
- 8002d22:	60b9      	str	r1, [r7, #8]
- 8002d24:	607a      	str	r2, [r7, #4]
+ 8002d3a:	b580      	push	{r7, lr}
+ 8002d3c:	b084      	sub	sp, #16
+ 8002d3e:	af00      	add	r7, sp, #0
+ 8002d40:	60f8      	str	r0, [r7, #12]
+ 8002d42:	60b9      	str	r1, [r7, #8]
+ 8002d44:	607a      	str	r2, [r7, #4]
     return value + Clamp(target - value, -step, step);
- 8002d26:	68f9      	ldr	r1, [r7, #12]
- 8002d28:	68b8      	ldr	r0, [r7, #8]
- 8002d2a:	f7fd fa13 	bl	8000154 <__aeabi_fsub>
- 8002d2e:	4603      	mov	r3, r0
- 8002d30:	4618      	mov	r0, r3
- 8002d32:	687b      	ldr	r3, [r7, #4]
- 8002d34:	f083 4300 	eor.w	r3, r3, #2147483648	; 0x80000000
- 8002d38:	687a      	ldr	r2, [r7, #4]
- 8002d3a:	4619      	mov	r1, r3
- 8002d3c:	f7ff ffd0 	bl	8002ce0 <Clamp>
- 8002d40:	4603      	mov	r3, r0
- 8002d42:	68f9      	ldr	r1, [r7, #12]
- 8002d44:	4618      	mov	r0, r3
- 8002d46:	f7fd fa07 	bl	8000158 <__addsf3>
- 8002d4a:	4603      	mov	r3, r0
+ 8002d46:	68f9      	ldr	r1, [r7, #12]
+ 8002d48:	68b8      	ldr	r0, [r7, #8]
+ 8002d4a:	f7fd fa03 	bl	8000154 <__aeabi_fsub>
+ 8002d4e:	4603      	mov	r3, r0
+ 8002d50:	4618      	mov	r0, r3
+ 8002d52:	687b      	ldr	r3, [r7, #4]
+ 8002d54:	f083 4300 	eor.w	r3, r3, #2147483648	; 0x80000000
+ 8002d58:	687a      	ldr	r2, [r7, #4]
+ 8002d5a:	4619      	mov	r1, r3
+ 8002d5c:	f7ff ffd0 	bl	8002d00 <Clamp>
+ 8002d60:	4603      	mov	r3, r0
+ 8002d62:	68f9      	ldr	r1, [r7, #12]
+ 8002d64:	4618      	mov	r0, r3
+ 8002d66:	f7fd f9f7 	bl	8000158 <__addsf3>
+ 8002d6a:	4603      	mov	r3, r0
 }
- 8002d4c:	4618      	mov	r0, r3
- 8002d4e:	3710      	adds	r7, #16
- 8002d50:	46bd      	mov	sp, r7
- 8002d52:	bd80      	pop	{r7, pc}
+ 8002d6c:	4618      	mov	r0, r3
+ 8002d6e:	3710      	adds	r7, #16
+ 8002d70:	46bd      	mov	sp, r7
+ 8002d72:	bd80      	pop	{r7, pc}
 
-08002d54 <MotionProfile_Init>:
+08002d74 <MotionProfile_Init>:
 
 void MotionProfile_Init(MotionProfile *p, float max_v, float max_w, float acc_v, float acc_w)
 {
- 8002d54:	b580      	push	{r7, lr}
- 8002d56:	b084      	sub	sp, #16
- 8002d58:	af00      	add	r7, sp, #0
- 8002d5a:	60f8      	str	r0, [r7, #12]
- 8002d5c:	60b9      	str	r1, [r7, #8]
- 8002d5e:	607a      	str	r2, [r7, #4]
- 8002d60:	603b      	str	r3, [r7, #0]
+ 8002d74:	b580      	push	{r7, lr}
+ 8002d76:	b084      	sub	sp, #16
+ 8002d78:	af00      	add	r7, sp, #0
+ 8002d7a:	60f8      	str	r0, [r7, #12]
+ 8002d7c:	60b9      	str	r1, [r7, #8]
+ 8002d7e:	607a      	str	r2, [r7, #4]
+ 8002d80:	603b      	str	r3, [r7, #0]
     p->max_v = max_v;
- 8002d62:	68fb      	ldr	r3, [r7, #12]
- 8002d64:	68ba      	ldr	r2, [r7, #8]
- 8002d66:	609a      	str	r2, [r3, #8]
+ 8002d82:	68fb      	ldr	r3, [r7, #12]
+ 8002d84:	68ba      	ldr	r2, [r7, #8]
+ 8002d86:	609a      	str	r2, [r3, #8]
     p->max_w = max_w;
- 8002d68:	68fb      	ldr	r3, [r7, #12]
- 8002d6a:	687a      	ldr	r2, [r7, #4]
- 8002d6c:	60da      	str	r2, [r3, #12]
+ 8002d88:	68fb      	ldr	r3, [r7, #12]
+ 8002d8a:	687a      	ldr	r2, [r7, #4]
+ 8002d8c:	60da      	str	r2, [r3, #12]
     p->acc_v = acc_v;
- 8002d6e:	68fb      	ldr	r3, [r7, #12]
- 8002d70:	683a      	ldr	r2, [r7, #0]
- 8002d72:	611a      	str	r2, [r3, #16]
+ 8002d8e:	68fb      	ldr	r3, [r7, #12]
+ 8002d90:	683a      	ldr	r2, [r7, #0]
+ 8002d92:	611a      	str	r2, [r3, #16]
     p->acc_w = acc_w;
- 8002d74:	68fb      	ldr	r3, [r7, #12]
- 8002d76:	69ba      	ldr	r2, [r7, #24]
- 8002d78:	615a      	str	r2, [r3, #20]
+ 8002d94:	68fb      	ldr	r3, [r7, #12]
+ 8002d96:	69ba      	ldr	r2, [r7, #24]
+ 8002d98:	615a      	str	r2, [r3, #20]
     MotionProfile_Reset(p);
- 8002d7a:	68f8      	ldr	r0, [r7, #12]
- 8002d7c:	f000 f804 	bl	8002d88 <MotionProfile_Reset>
+ 8002d9a:	68f8      	ldr	r0, [r7, #12]
+ 8002d9c:	f000 f804 	bl	8002da8 <MotionProfile_Reset>
 }
- 8002d80:	bf00      	nop
- 8002d82:	3710      	adds	r7, #16
- 8002d84:	46bd      	mov	sp, r7
- 8002d86:	bd80      	pop	{r7, pc}
+ 8002da0:	bf00      	nop
+ 8002da2:	3710      	adds	r7, #16
+ 8002da4:	46bd      	mov	sp, r7
+ 8002da6:	bd80      	pop	{r7, pc}
 
-08002d88 <MotionProfile_Reset>:
+08002da8 <MotionProfile_Reset>:
 
 void MotionProfile_Reset(MotionProfile *p)
 {
- 8002d88:	b480      	push	{r7}
- 8002d8a:	b083      	sub	sp, #12
- 8002d8c:	af00      	add	r7, sp, #0
- 8002d8e:	6078      	str	r0, [r7, #4]
+ 8002da8:	b480      	push	{r7}
+ 8002daa:	b083      	sub	sp, #12
+ 8002dac:	af00      	add	r7, sp, #0
+ 8002dae:	6078      	str	r0, [r7, #4]
     p->v = 0.0f;
- 8002d90:	687b      	ldr	r3, [r7, #4]
- 8002d92:	f04f 0200 	mov.w	r2, #0
- 8002d96:	601a      	str	r2, [r3, #0]
+ 8002db0:	687b      	ldr	r3, [r7, #4]
+ 8002db2:	f04f 0200 	mov.w	r2, #0
+ 8002db6:	601a      	str	r2, [r3, #0]
     p->w = 0.0f;
- 8002d98:	687b      	ldr	r3, [r7, #4]
- 8002d9a:	f04f 0200 	mov.w	r2, #0
- 8002d9e:	605a      	str	r2, [r3, #4]
+ 8002db8:	687b      	ldr	r3, [r7, #4]
+ 8002dba:	f04f 0200 	mov.w	r2, #0
+ 8002dbe:	605a      	str	r2, [r3, #4]
 }
- 8002da0:	bf00      	nop
- 8002da2:	370c      	adds	r7, #12
- 8002da4:	46bd      	mov	sp, r7
- 8002da6:	bc80      	pop	{r7}
- 8002da8:	4770      	bx	lr
+ 8002dc0:	bf00      	nop
+ 8002dc2:	370c      	adds	r7, #12
+ 8002dc4:	46bd      	mov	sp, r7
+ 8002dc6:	bc80      	pop	{r7}
+ 8002dc8:	4770      	bx	lr
 
-08002daa <MotionProfile_Update>:
+08002dca <MotionProfile_Update>:
 
 /* Gioi han van toc dai va van toc goc */
 void MotionProfile_Update(MotionProfile *p, float cmd_v, float cmd_w, float dt)
 {
- 8002daa:	b590      	push	{r4, r7, lr}
- 8002dac:	b085      	sub	sp, #20
- 8002dae:	af00      	add	r7, sp, #0
- 8002db0:	60f8      	str	r0, [r7, #12]
- 8002db2:	60b9      	str	r1, [r7, #8]
- 8002db4:	607a      	str	r2, [r7, #4]
- 8002db6:	603b      	str	r3, [r7, #0]
+ 8002dca:	b590      	push	{r4, r7, lr}
+ 8002dcc:	b085      	sub	sp, #20
+ 8002dce:	af00      	add	r7, sp, #0
+ 8002dd0:	60f8      	str	r0, [r7, #12]
+ 8002dd2:	60b9      	str	r1, [r7, #8]
+ 8002dd4:	607a      	str	r2, [r7, #4]
+ 8002dd6:	603b      	str	r3, [r7, #0]
     cmd_v = Clamp(cmd_v, -p->max_v, p->max_v);
- 8002db8:	68fb      	ldr	r3, [r7, #12]
- 8002dba:	689b      	ldr	r3, [r3, #8]
- 8002dbc:	f083 4100 	eor.w	r1, r3, #2147483648	; 0x80000000
- 8002dc0:	68fb      	ldr	r3, [r7, #12]
- 8002dc2:	689b      	ldr	r3, [r3, #8]
- 8002dc4:	461a      	mov	r2, r3
- 8002dc6:	68b8      	ldr	r0, [r7, #8]
- 8002dc8:	f7ff ff8a 	bl	8002ce0 <Clamp>
- 8002dcc:	60b8      	str	r0, [r7, #8]
+ 8002dd8:	68fb      	ldr	r3, [r7, #12]
+ 8002dda:	689b      	ldr	r3, [r3, #8]
+ 8002ddc:	f083 4100 	eor.w	r1, r3, #2147483648	; 0x80000000
+ 8002de0:	68fb      	ldr	r3, [r7, #12]
+ 8002de2:	689b      	ldr	r3, [r3, #8]
+ 8002de4:	461a      	mov	r2, r3
+ 8002de6:	68b8      	ldr	r0, [r7, #8]
+ 8002de8:	f7ff ff8a 	bl	8002d00 <Clamp>
+ 8002dec:	60b8      	str	r0, [r7, #8]
     cmd_w = Clamp(cmd_w, -p->max_w, p->max_w);
- 8002dce:	68fb      	ldr	r3, [r7, #12]
- 8002dd0:	68db      	ldr	r3, [r3, #12]
- 8002dd2:	f083 4100 	eor.w	r1, r3, #2147483648	; 0x80000000
- 8002dd6:	68fb      	ldr	r3, [r7, #12]
- 8002dd8:	68db      	ldr	r3, [r3, #12]
- 8002dda:	461a      	mov	r2, r3
- 8002ddc:	6878      	ldr	r0, [r7, #4]
- 8002dde:	f7ff ff7f 	bl	8002ce0 <Clamp>
- 8002de2:	6078      	str	r0, [r7, #4]
+ 8002dee:	68fb      	ldr	r3, [r7, #12]
+ 8002df0:	68db      	ldr	r3, [r3, #12]
+ 8002df2:	f083 4100 	eor.w	r1, r3, #2147483648	; 0x80000000
+ 8002df6:	68fb      	ldr	r3, [r7, #12]
+ 8002df8:	68db      	ldr	r3, [r3, #12]
+ 8002dfa:	461a      	mov	r2, r3
+ 8002dfc:	6878      	ldr	r0, [r7, #4]
+ 8002dfe:	f7ff ff7f 	bl	8002d00 <Clamp>
+ 8002e02:	6078      	str	r0, [r7, #4]
+    
     p->v = Slew(p->v, cmd_v, p->acc_v * dt);
- 8002de4:	68fb      	ldr	r3, [r7, #12]
- 8002de6:	681c      	ldr	r4, [r3, #0]
- 8002de8:	68fb      	ldr	r3, [r7, #12]
- 8002dea:	691b      	ldr	r3, [r3, #16]
- 8002dec:	6839      	ldr	r1, [r7, #0]
- 8002dee:	4618      	mov	r0, r3
- 8002df0:	f7fd faba 	bl	8000368 <__aeabi_fmul>
- 8002df4:	4603      	mov	r3, r0
- 8002df6:	461a      	mov	r2, r3
- 8002df8:	68b9      	ldr	r1, [r7, #8]
- 8002dfa:	4620      	mov	r0, r4
- 8002dfc:	f7ff ff8d 	bl	8002d1a <Slew>
- 8002e00:	4602      	mov	r2, r0
- 8002e02:	68fb      	ldr	r3, [r7, #12]
- 8002e04:	601a      	str	r2, [r3, #0]
+ 8002e04:	68fb      	ldr	r3, [r7, #12]
+ 8002e06:	681c      	ldr	r4, [r3, #0]
+ 8002e08:	68fb      	ldr	r3, [r7, #12]
+ 8002e0a:	691b      	ldr	r3, [r3, #16]
+ 8002e0c:	6839      	ldr	r1, [r7, #0]
+ 8002e0e:	4618      	mov	r0, r3
+ 8002e10:	f7fd faaa 	bl	8000368 <__aeabi_fmul>
+ 8002e14:	4603      	mov	r3, r0
+ 8002e16:	461a      	mov	r2, r3
+ 8002e18:	68b9      	ldr	r1, [r7, #8]
+ 8002e1a:	4620      	mov	r0, r4
+ 8002e1c:	f7ff ff8d 	bl	8002d3a <Slew>
+ 8002e20:	4602      	mov	r2, r0
+ 8002e22:	68fb      	ldr	r3, [r7, #12]
+ 8002e24:	601a      	str	r2, [r3, #0]
     p->w = Slew(p->w, cmd_w, p->acc_w * dt);
- 8002e06:	68fb      	ldr	r3, [r7, #12]
- 8002e08:	685c      	ldr	r4, [r3, #4]
- 8002e0a:	68fb      	ldr	r3, [r7, #12]
- 8002e0c:	695b      	ldr	r3, [r3, #20]
- 8002e0e:	6839      	ldr	r1, [r7, #0]
- 8002e10:	4618      	mov	r0, r3
- 8002e12:	f7fd faa9 	bl	8000368 <__aeabi_fmul>
- 8002e16:	4603      	mov	r3, r0
- 8002e18:	461a      	mov	r2, r3
- 8002e1a:	6879      	ldr	r1, [r7, #4]
- 8002e1c:	4620      	mov	r0, r4
- 8002e1e:	f7ff ff7c 	bl	8002d1a <Slew>
- 8002e22:	4602      	mov	r2, r0
- 8002e24:	68fb      	ldr	r3, [r7, #12]
- 8002e26:	605a      	str	r2, [r3, #4]
+ 8002e26:	68fb      	ldr	r3, [r7, #12]
+ 8002e28:	685c      	ldr	r4, [r3, #4]
+ 8002e2a:	68fb      	ldr	r3, [r7, #12]
+ 8002e2c:	695b      	ldr	r3, [r3, #20]
+ 8002e2e:	6839      	ldr	r1, [r7, #0]
+ 8002e30:	4618      	mov	r0, r3
+ 8002e32:	f7fd fa99 	bl	8000368 <__aeabi_fmul>
+ 8002e36:	4603      	mov	r3, r0
+ 8002e38:	461a      	mov	r2, r3
+ 8002e3a:	6879      	ldr	r1, [r7, #4]
+ 8002e3c:	4620      	mov	r0, r4
+ 8002e3e:	f7ff ff7c 	bl	8002d3a <Slew>
+ 8002e42:	4602      	mov	r2, r0
+ 8002e44:	68fb      	ldr	r3, [r7, #12]
+ 8002e46:	605a      	str	r2, [r3, #4]
 }
- 8002e28:	bf00      	nop
- 8002e2a:	3714      	adds	r7, #20
- 8002e2c:	46bd      	mov	sp, r7
- 8002e2e:	bd90      	pop	{r4, r7, pc}
+ 8002e48:	bf00      	nop
+ 8002e4a:	3714      	adds	r7, #20
+ 8002e4c:	46bd      	mov	sp, r7
+ 8002e4e:	bd90      	pop	{r4, r7, pc}
 
-08002e30 <Clamp>:
-#include "pid.h"
+08002e50 <Clamp>:
 
 #include <math.h>
 
+/* Giới hạn x trong khoảng [min, max] */
 static float Clamp(float x, float min, float max)
 {
- 8002e30:	b580      	push	{r7, lr}
- 8002e32:	b084      	sub	sp, #16
- 8002e34:	af00      	add	r7, sp, #0
- 8002e36:	60f8      	str	r0, [r7, #12]
- 8002e38:	60b9      	str	r1, [r7, #8]
- 8002e3a:	607a      	str	r2, [r7, #4]
-    return x < min ? min : (x > max ? max : x);
- 8002e3c:	68b9      	ldr	r1, [r7, #8]
- 8002e3e:	68f8      	ldr	r0, [r7, #12]
- 8002e40:	f7fd fc30 	bl	80006a4 <__aeabi_fcmplt>
- 8002e44:	4603      	mov	r3, r0
- 8002e46:	2b00      	cmp	r3, #0
- 8002e48:	d001      	beq.n	8002e4e <Clamp+0x1e>
- 8002e4a:	68bb      	ldr	r3, [r7, #8]
- 8002e4c:	e009      	b.n	8002e62 <Clamp+0x32>
- 8002e4e:	6879      	ldr	r1, [r7, #4]
- 8002e50:	68f8      	ldr	r0, [r7, #12]
- 8002e52:	f7fd fc45 	bl	80006e0 <__aeabi_fcmpgt>
- 8002e56:	4603      	mov	r3, r0
- 8002e58:	2b00      	cmp	r3, #0
- 8002e5a:	d001      	beq.n	8002e60 <Clamp+0x30>
- 8002e5c:	687b      	ldr	r3, [r7, #4]
- 8002e5e:	e000      	b.n	8002e62 <Clamp+0x32>
- 8002e60:	68fb      	ldr	r3, [r7, #12]
+ 8002e50:	b580      	push	{r7, lr}
+ 8002e52:	b084      	sub	sp, #16
+ 8002e54:	af00      	add	r7, sp, #0
+ 8002e56:	60f8      	str	r0, [r7, #12]
+ 8002e58:	60b9      	str	r1, [r7, #8]
+ 8002e5a:	607a      	str	r2, [r7, #4]
+    return x < min ? min : (x > max ? max : x);    
+ 8002e5c:	68b9      	ldr	r1, [r7, #8]
+ 8002e5e:	68f8      	ldr	r0, [r7, #12]
+ 8002e60:	f7fd fc20 	bl	80006a4 <__aeabi_fcmplt>
+ 8002e64:	4603      	mov	r3, r0
+ 8002e66:	2b00      	cmp	r3, #0
+ 8002e68:	d001      	beq.n	8002e6e <Clamp+0x1e>
+ 8002e6a:	68bb      	ldr	r3, [r7, #8]
+ 8002e6c:	e009      	b.n	8002e82 <Clamp+0x32>
+ 8002e6e:	6879      	ldr	r1, [r7, #4]
+ 8002e70:	68f8      	ldr	r0, [r7, #12]
+ 8002e72:	f7fd fc35 	bl	80006e0 <__aeabi_fcmpgt>
+ 8002e76:	4603      	mov	r3, r0
+ 8002e78:	2b00      	cmp	r3, #0
+ 8002e7a:	d001      	beq.n	8002e80 <Clamp+0x30>
+ 8002e7c:	687b      	ldr	r3, [r7, #4]
+ 8002e7e:	e000      	b.n	8002e82 <Clamp+0x32>
+ 8002e80:	68fb      	ldr	r3, [r7, #12]
 }
- 8002e62:	4618      	mov	r0, r3
- 8002e64:	3710      	adds	r7, #16
- 8002e66:	46bd      	mov	sp, r7
- 8002e68:	bd80      	pop	{r7, pc}
+ 8002e82:	4618      	mov	r0, r3
+ 8002e84:	3710      	adds	r7, #16
+ 8002e86:	46bd      	mov	sp, r7
+ 8002e88:	bd80      	pop	{r7, pc}
 
-08002e6a <Pid_Init>:
+08002e8a <Pid_Init>:
 
-void Pid_Init(Pid *pid, const PidCfg *cfg)
+void Pid_Init(Pid *pid, const Pid *cfg)
 {
- 8002e6a:	b580      	push	{r7, lr}
- 8002e6c:	b082      	sub	sp, #8
- 8002e6e:	af00      	add	r7, sp, #0
- 8002e70:	6078      	str	r0, [r7, #4]
- 8002e72:	6039      	str	r1, [r7, #0]
-    pid->kp = cfg->kp;
- 8002e74:	683b      	ldr	r3, [r7, #0]
- 8002e76:	681a      	ldr	r2, [r3, #0]
- 8002e78:	687b      	ldr	r3, [r7, #4]
- 8002e7a:	601a      	str	r2, [r3, #0]
-    pid->kp_fine = cfg->kp_fine;
- 8002e7c:	683b      	ldr	r3, [r7, #0]
- 8002e7e:	685a      	ldr	r2, [r3, #4]
- 8002e80:	687b      	ldr	r3, [r7, #4]
- 8002e82:	605a      	str	r2, [r3, #4]
-    pid->ki = cfg->ki;
- 8002e84:	683b      	ldr	r3, [r7, #0]
- 8002e86:	689a      	ldr	r2, [r3, #8]
- 8002e88:	687b      	ldr	r3, [r7, #4]
- 8002e8a:	609a      	str	r2, [r3, #8]
-    pid->kd = cfg->kd;
- 8002e8c:	683b      	ldr	r3, [r7, #0]
- 8002e8e:	68da      	ldr	r2, [r3, #12]
- 8002e90:	687b      	ldr	r3, [r7, #4]
- 8002e92:	60da      	str	r2, [r3, #12]
-    pid->fine_band = cfg->fine_band;
- 8002e94:	683b      	ldr	r3, [r7, #0]
- 8002e96:	691a      	ldr	r2, [r3, #16]
- 8002e98:	687b      	ldr	r3, [r7, #4]
- 8002e9a:	611a      	str	r2, [r3, #16]
-    pid->min = cfg->min;
- 8002e9c:	683b      	ldr	r3, [r7, #0]
- 8002e9e:	695a      	ldr	r2, [r3, #20]
- 8002ea0:	687b      	ldr	r3, [r7, #4]
- 8002ea2:	61da      	str	r2, [r3, #28]
-    pid->max = cfg->max;
- 8002ea4:	683b      	ldr	r3, [r7, #0]
- 8002ea6:	699a      	ldr	r2, [r3, #24]
- 8002ea8:	687b      	ldr	r3, [r7, #4]
- 8002eaa:	621a      	str	r2, [r3, #32]
+ 8002e8a:	b5b0      	push	{r4, r5, r7, lr}
+ 8002e8c:	b082      	sub	sp, #8
+ 8002e8e:	af00      	add	r7, sp, #0
+ 8002e90:	6078      	str	r0, [r7, #4]
+ 8002e92:	6039      	str	r1, [r7, #0]
+    *pid = *cfg;
+ 8002e94:	687a      	ldr	r2, [r7, #4]
+ 8002e96:	683b      	ldr	r3, [r7, #0]
+ 8002e98:	4614      	mov	r4, r2
+ 8002e9a:	461d      	mov	r5, r3
+ 8002e9c:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
+ 8002e9e:	c40f      	stmia	r4!, {r0, r1, r2, r3}
+ 8002ea0:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
+ 8002ea2:	c40f      	stmia	r4!, {r0, r1, r2, r3}
+ 8002ea4:	682b      	ldr	r3, [r5, #0]
+ 8002ea6:	6023      	str	r3, [r4, #0]
     Pid_Reset(pid);
- 8002eac:	6878      	ldr	r0, [r7, #4]
- 8002eae:	f000 f804 	bl	8002eba <Pid_Reset>
+ 8002ea8:	6878      	ldr	r0, [r7, #4]
+ 8002eaa:	f000 f804 	bl	8002eb6 <Pid_Reset>
 }
- 8002eb2:	bf00      	nop
- 8002eb4:	3708      	adds	r7, #8
- 8002eb6:	46bd      	mov	sp, r7
- 8002eb8:	bd80      	pop	{r7, pc}
+ 8002eae:	bf00      	nop
+ 8002eb0:	3708      	adds	r7, #8
+ 8002eb2:	46bd      	mov	sp, r7
+ 8002eb4:	bdb0      	pop	{r4, r5, r7, pc}
 
-08002eba <Pid_Reset>:
+08002eb6 <Pid_Reset>:
 
 void Pid_Reset(Pid *pid)
 {
- 8002eba:	b480      	push	{r7}
- 8002ebc:	b083      	sub	sp, #12
- 8002ebe:	af00      	add	r7, sp, #0
- 8002ec0:	6078      	str	r0, [r7, #4]
+ 8002eb6:	b480      	push	{r7}
+ 8002eb8:	b083      	sub	sp, #12
+ 8002eba:	af00      	add	r7, sp, #0
+ 8002ebc:	6078      	str	r0, [r7, #4]
     pid->integral = 0.0f;
- 8002ec2:	687b      	ldr	r3, [r7, #4]
- 8002ec4:	f04f 0200 	mov.w	r2, #0
- 8002ec8:	615a      	str	r2, [r3, #20]
+ 8002ebe:	687b      	ldr	r3, [r7, #4]
+ 8002ec0:	f04f 0200 	mov.w	r2, #0
+ 8002ec4:	615a      	str	r2, [r3, #20]
     pid->prev_input = 0.0f;
- 8002eca:	687b      	ldr	r3, [r7, #4]
- 8002ecc:	f04f 0200 	mov.w	r2, #0
- 8002ed0:	619a      	str	r2, [r3, #24]
+ 8002ec6:	687b      	ldr	r3, [r7, #4]
+ 8002ec8:	f04f 0200 	mov.w	r2, #0
+ 8002ecc:	619a      	str	r2, [r3, #24]
 }
- 8002ed2:	bf00      	nop
- 8002ed4:	370c      	adds	r7, #12
- 8002ed6:	46bd      	mov	sp, r7
- 8002ed8:	bc80      	pop	{r7}
- 8002eda:	4770      	bx	lr
+ 8002ece:	bf00      	nop
+ 8002ed0:	370c      	adds	r7, #12
+ 8002ed2:	46bd      	mov	sp, r7
+ 8002ed4:	bc80      	pop	{r7}
+ 8002ed6:	4770      	bx	lr
 
-08002edc <Pid_Update>:
+08002ed8 <Pid_Update>:
 
 float Pid_Update(Pid *pid, float target, float input, float dt)
 {
- 8002edc:	b590      	push	{r4, r7, lr}
- 8002ede:	b08f      	sub	sp, #60	; 0x3c
- 8002ee0:	af00      	add	r7, sp, #0
- 8002ee2:	60f8      	str	r0, [r7, #12]
- 8002ee4:	60b9      	str	r1, [r7, #8]
- 8002ee6:	607a      	str	r2, [r7, #4]
- 8002ee8:	603b      	str	r3, [r7, #0]
-    float error = target - input;                           
- 8002eea:	6879      	ldr	r1, [r7, #4]
- 8002eec:	68b8      	ldr	r0, [r7, #8]
- 8002eee:	f7fd f931 	bl	8000154 <__aeabi_fsub>
- 8002ef2:	4603      	mov	r3, r0
- 8002ef4:	633b      	str	r3, [r7, #48]	; 0x30
-    float fine = fminf(fabsf(error), pid->fine_band);       // error < fine_band thi dung kp_fine, nguoc lai dung kp
- 8002ef6:	6b3b      	ldr	r3, [r7, #48]	; 0x30
- 8002ef8:	f023 4200 	bic.w	r2, r3, #2147483648	; 0x80000000
- 8002efc:	68fb      	ldr	r3, [r7, #12]
- 8002efe:	691b      	ldr	r3, [r3, #16]
- 8002f00:	4619      	mov	r1, r3
- 8002f02:	4610      	mov	r0, r2
- 8002f04:	f000 fe64 	bl	8003bd0 <fminf>
- 8002f08:	62f8      	str	r0, [r7, #44]	; 0x2c
-    float kp = fmaxf(pid->kp, 0.0f);                        // Kp khong am
- 8002f0a:	68fb      	ldr	r3, [r7, #12]
- 8002f0c:	681b      	ldr	r3, [r3, #0]
- 8002f0e:	f04f 0100 	mov.w	r1, #0
- 8002f12:	4618      	mov	r0, r3
- 8002f14:	f000 fe4a 	bl	8003bac <fmaxf>
- 8002f18:	62b8      	str	r0, [r7, #40]	; 0x28
-    float kp_fine = Clamp(pid->kp_fine, 0.0f, kp);          // Kp_fine khong am va khong duoc > kp
- 8002f1a:	68fb      	ldr	r3, [r7, #12]
- 8002f1c:	685b      	ldr	r3, [r3, #4]
- 8002f1e:	6aba      	ldr	r2, [r7, #40]	; 0x28
- 8002f20:	f04f 0100 	mov.w	r1, #0
- 8002f24:	4618      	mov	r0, r3
- 8002f26:	f7ff ff83 	bl	8002e30 <Clamp>
- 8002f2a:	6278      	str	r0, [r7, #36]	; 0x24
-    float p = kp_fine * fine + kp * (fabsf(error) - fine);  // Thanh phan P cua PID
- 8002f2c:	6af9      	ldr	r1, [r7, #44]	; 0x2c
- 8002f2e:	6a78      	ldr	r0, [r7, #36]	; 0x24
- 8002f30:	f7fd fa1a 	bl	8000368 <__aeabi_fmul>
- 8002f34:	4603      	mov	r3, r0
- 8002f36:	461c      	mov	r4, r3
- 8002f38:	6b3b      	ldr	r3, [r7, #48]	; 0x30
- 8002f3a:	f023 4300 	bic.w	r3, r3, #2147483648	; 0x80000000
- 8002f3e:	6af9      	ldr	r1, [r7, #44]	; 0x2c
- 8002f40:	4618      	mov	r0, r3
- 8002f42:	f7fd f907 	bl	8000154 <__aeabi_fsub>
- 8002f46:	4603      	mov	r3, r0
- 8002f48:	6ab9      	ldr	r1, [r7, #40]	; 0x28
- 8002f4a:	4618      	mov	r0, r3
- 8002f4c:	f7fd fa0c 	bl	8000368 <__aeabi_fmul>
- 8002f50:	4603      	mov	r3, r0
- 8002f52:	4619      	mov	r1, r3
- 8002f54:	4620      	mov	r0, r4
- 8002f56:	f7fd f8ff 	bl	8000158 <__addsf3>
- 8002f5a:	4603      	mov	r3, r0
- 8002f5c:	637b      	str	r3, [r7, #52]	; 0x34
-    if (error < 0.0f) p = -p;                           
- 8002f5e:	f04f 0100 	mov.w	r1, #0
- 8002f62:	6b38      	ldr	r0, [r7, #48]	; 0x30
- 8002f64:	f7fd fb9e 	bl	80006a4 <__aeabi_fcmplt>
- 8002f68:	4603      	mov	r3, r0
- 8002f6a:	2b00      	cmp	r3, #0
- 8002f6c:	d003      	beq.n	8002f76 <Pid_Update+0x9a>
- 8002f6e:	6b7b      	ldr	r3, [r7, #52]	; 0x34
- 8002f70:	f083 4300 	eor.w	r3, r3, #2147483648	; 0x80000000
- 8002f74:	637b      	str	r3, [r7, #52]	; 0x34
+ 8002ed8:	b5b0      	push	{r4, r5, r7, lr}
+ 8002eda:	b08c      	sub	sp, #48	; 0x30
+ 8002edc:	af00      	add	r7, sp, #0
+ 8002ede:	60f8      	str	r0, [r7, #12]
+ 8002ee0:	60b9      	str	r1, [r7, #8]
+ 8002ee2:	607a      	str	r2, [r7, #4]
+ 8002ee4:	603b      	str	r3, [r7, #0]
+    float error = target - input;     
+ 8002ee6:	6879      	ldr	r1, [r7, #4]
+ 8002ee8:	68b8      	ldr	r0, [r7, #8]
+ 8002eea:	f7fd f933 	bl	8000154 <__aeabi_fsub>
+ 8002eee:	4603      	mov	r3, r0
+ 8002ef0:	62bb      	str	r3, [r7, #40]	; 0x28
+    
+    /* error < fine_band -> dùng kp_fine, ngc lại dùng kp */ 
+    float fine = fminf(fabsf(error), pid->fine_band);       
+ 8002ef2:	6abb      	ldr	r3, [r7, #40]	; 0x28
+ 8002ef4:	f023 4200 	bic.w	r2, r3, #2147483648	; 0x80000000
+ 8002ef8:	68fb      	ldr	r3, [r7, #12]
+ 8002efa:	691b      	ldr	r3, [r3, #16]
+ 8002efc:	4619      	mov	r1, r3
+ 8002efe:	4610      	mov	r0, r2
+ 8002f00:	f000 fe44 	bl	8003b8c <fminf>
+ 8002f04:	6278      	str	r0, [r7, #36]	; 0x24
+    
+    float p = pid->kp_fine * fine + pid->kp * (fabsf(error) - fine);        // P 
+ 8002f06:	68fb      	ldr	r3, [r7, #12]
+ 8002f08:	685b      	ldr	r3, [r3, #4]
+ 8002f0a:	6a79      	ldr	r1, [r7, #36]	; 0x24
+ 8002f0c:	4618      	mov	r0, r3
+ 8002f0e:	f7fd fa2b 	bl	8000368 <__aeabi_fmul>
+ 8002f12:	4603      	mov	r3, r0
+ 8002f14:	461d      	mov	r5, r3
+ 8002f16:	68fb      	ldr	r3, [r7, #12]
+ 8002f18:	681c      	ldr	r4, [r3, #0]
+ 8002f1a:	6abb      	ldr	r3, [r7, #40]	; 0x28
+ 8002f1c:	f023 4300 	bic.w	r3, r3, #2147483648	; 0x80000000
+ 8002f20:	6a79      	ldr	r1, [r7, #36]	; 0x24
+ 8002f22:	4618      	mov	r0, r3
+ 8002f24:	f7fd f916 	bl	8000154 <__aeabi_fsub>
+ 8002f28:	4603      	mov	r3, r0
+ 8002f2a:	4619      	mov	r1, r3
+ 8002f2c:	4620      	mov	r0, r4
+ 8002f2e:	f7fd fa1b 	bl	8000368 <__aeabi_fmul>
+ 8002f32:	4603      	mov	r3, r0
+ 8002f34:	4619      	mov	r1, r3
+ 8002f36:	4628      	mov	r0, r5
+ 8002f38:	f7fd f90e 	bl	8000158 <__addsf3>
+ 8002f3c:	4603      	mov	r3, r0
+ 8002f3e:	62fb      	str	r3, [r7, #44]	; 0x2c
+    if (error < 0.0f) p = -p;                               // Đổi dấu khi error âm để P có cùng dấu với error                    
+ 8002f40:	f04f 0100 	mov.w	r1, #0
+ 8002f44:	6ab8      	ldr	r0, [r7, #40]	; 0x28
+ 8002f46:	f7fd fbad 	bl	80006a4 <__aeabi_fcmplt>
+ 8002f4a:	4603      	mov	r3, r0
+ 8002f4c:	2b00      	cmp	r3, #0
+ 8002f4e:	d003      	beq.n	8002f58 <Pid_Update+0x80>
+ 8002f50:	6afb      	ldr	r3, [r7, #44]	; 0x2c
+ 8002f52:	f083 4300 	eor.w	r3, r3, #2147483648	; 0x80000000
+ 8002f56:	62fb      	str	r3, [r7, #44]	; 0x2c
 
-    float d = -pid->kd * (input - pid->prev_input) / dt;        // Thanh phan D cua PID
- 8002f76:	68fb      	ldr	r3, [r7, #12]
- 8002f78:	68db      	ldr	r3, [r3, #12]
- 8002f7a:	f083 4400 	eor.w	r4, r3, #2147483648	; 0x80000000
- 8002f7e:	68fb      	ldr	r3, [r7, #12]
- 8002f80:	699b      	ldr	r3, [r3, #24]
- 8002f82:	4619      	mov	r1, r3
- 8002f84:	6878      	ldr	r0, [r7, #4]
- 8002f86:	f7fd f8e5 	bl	8000154 <__aeabi_fsub>
- 8002f8a:	4603      	mov	r3, r0
- 8002f8c:	4619      	mov	r1, r3
- 8002f8e:	4620      	mov	r0, r4
- 8002f90:	f7fd f9ea 	bl	8000368 <__aeabi_fmul>
- 8002f94:	4603      	mov	r3, r0
- 8002f96:	6839      	ldr	r1, [r7, #0]
- 8002f98:	4618      	mov	r0, r3
- 8002f9a:	f7fd fa99 	bl	80004d0 <__aeabi_fdiv>
- 8002f9e:	4603      	mov	r3, r0
- 8002fa0:	623b      	str	r3, [r7, #32]
+    float d = -pid->kd * (input - pid->prev_input) / dt;                    // D (không dùng nên D = 0)
+ 8002f58:	68fb      	ldr	r3, [r7, #12]
+ 8002f5a:	68db      	ldr	r3, [r3, #12]
+ 8002f5c:	f083 4400 	eor.w	r4, r3, #2147483648	; 0x80000000
+ 8002f60:	68fb      	ldr	r3, [r7, #12]
+ 8002f62:	699b      	ldr	r3, [r3, #24]
+ 8002f64:	4619      	mov	r1, r3
+ 8002f66:	6878      	ldr	r0, [r7, #4]
+ 8002f68:	f7fd f8f4 	bl	8000154 <__aeabi_fsub>
+ 8002f6c:	4603      	mov	r3, r0
+ 8002f6e:	4619      	mov	r1, r3
+ 8002f70:	4620      	mov	r0, r4
+ 8002f72:	f7fd f9f9 	bl	8000368 <__aeabi_fmul>
+ 8002f76:	4603      	mov	r3, r0
+ 8002f78:	6839      	ldr	r1, [r7, #0]
+ 8002f7a:	4618      	mov	r0, r3
+ 8002f7c:	f7fd faa8 	bl	80004d0 <__aeabi_fdiv>
+ 8002f80:	4603      	mov	r3, r0
+ 8002f82:	623b      	str	r3, [r7, #32]
     pid->prev_input = input;
- 8002fa2:	68fb      	ldr	r3, [r7, #12]
- 8002fa4:	687a      	ldr	r2, [r7, #4]
- 8002fa6:	619a      	str	r2, [r3, #24]
+ 8002f84:	68fb      	ldr	r3, [r7, #12]
+ 8002f86:	687a      	ldr	r2, [r7, #4]
+ 8002f88:	619a      	str	r2, [r3, #24]
 
+    /* ===== Anti - Integral Windup ===== 
+     * Có 2 lớp bảo vệ:
+     * - Giới hạn riêng tích phân [min, max] 
+     * - Ngừng integral khi đầu ra bão hòa */
     if (pid->ki > 0.0f) {
- 8002fa8:	68fb      	ldr	r3, [r7, #12]
- 8002faa:	689b      	ldr	r3, [r3, #8]
- 8002fac:	f04f 0100 	mov.w	r1, #0
- 8002fb0:	4618      	mov	r0, r3
- 8002fb2:	f7fd fb95 	bl	80006e0 <__aeabi_fcmpgt>
- 8002fb6:	4603      	mov	r3, r0
- 8002fb8:	2b00      	cmp	r3, #0
- 8002fba:	d05f      	beq.n	800307c <Pid_Update+0x1a0>
-        float change = pid->ki * error * dt;
- 8002fbc:	68fb      	ldr	r3, [r7, #12]
- 8002fbe:	689b      	ldr	r3, [r3, #8]
- 8002fc0:	6b39      	ldr	r1, [r7, #48]	; 0x30
- 8002fc2:	4618      	mov	r0, r3
- 8002fc4:	f7fd f9d0 	bl	8000368 <__aeabi_fmul>
- 8002fc8:	4603      	mov	r3, r0
- 8002fca:	4619      	mov	r1, r3
- 8002fcc:	6838      	ldr	r0, [r7, #0]
- 8002fce:	f7fd f9cb 	bl	8000368 <__aeabi_fmul>
- 8002fd2:	4603      	mov	r3, r0
- 8002fd4:	61fb      	str	r3, [r7, #28]
-        float next_i = Clamp(pid->integral + change, pid->min, pid->max);   // Thanh phan I cua PID
- 8002fd6:	68fb      	ldr	r3, [r7, #12]
- 8002fd8:	695b      	ldr	r3, [r3, #20]
- 8002fda:	69f9      	ldr	r1, [r7, #28]
- 8002fdc:	4618      	mov	r0, r3
- 8002fde:	f7fd f8bb 	bl	8000158 <__addsf3>
- 8002fe2:	4603      	mov	r3, r0
- 8002fe4:	4618      	mov	r0, r3
- 8002fe6:	68fb      	ldr	r3, [r7, #12]
- 8002fe8:	69d9      	ldr	r1, [r3, #28]
- 8002fea:	68fb      	ldr	r3, [r7, #12]
- 8002fec:	6a1b      	ldr	r3, [r3, #32]
- 8002fee:	461a      	mov	r2, r3
- 8002ff0:	f7ff ff1e 	bl	8002e30 <Clamp>
- 8002ff4:	61b8      	str	r0, [r7, #24]
-        float next_out = p + d + next_i;        // Tong cac thanh phan P + I + D
- 8002ff6:	6a39      	ldr	r1, [r7, #32]
- 8002ff8:	6b78      	ldr	r0, [r7, #52]	; 0x34
- 8002ffa:	f7fd f8ad 	bl	8000158 <__addsf3>
- 8002ffe:	4603      	mov	r3, r0
- 8003000:	4619      	mov	r1, r3
- 8003002:	69b8      	ldr	r0, [r7, #24]
- 8003004:	f7fd f8a8 	bl	8000158 <__addsf3>
- 8003008:	4603      	mov	r3, r0
- 800300a:	617b      	str	r3, [r7, #20]
-        if ((next_out >= pid->min && next_out <= pid->max) || (next_out > pid->max && change < 0.0f) ||
- 800300c:	68fb      	ldr	r3, [r7, #12]
- 800300e:	69db      	ldr	r3, [r3, #28]
- 8003010:	4619      	mov	r1, r3
- 8003012:	6978      	ldr	r0, [r7, #20]
- 8003014:	f7fd fb5a 	bl	80006cc <__aeabi_fcmpge>
- 8003018:	4603      	mov	r3, r0
- 800301a:	2b00      	cmp	r3, #0
- 800301c:	d008      	beq.n	8003030 <Pid_Update+0x154>
- 800301e:	68fb      	ldr	r3, [r7, #12]
- 8003020:	6a1b      	ldr	r3, [r3, #32]
- 8003022:	4619      	mov	r1, r3
- 8003024:	6978      	ldr	r0, [r7, #20]
- 8003026:	f7fd fb47 	bl	80006b8 <__aeabi_fcmple>
- 800302a:	4603      	mov	r3, r0
- 800302c:	2b00      	cmp	r3, #0
- 800302e:	d121      	bne.n	8003074 <Pid_Update+0x198>
- 8003030:	68fb      	ldr	r3, [r7, #12]
- 8003032:	6a1b      	ldr	r3, [r3, #32]
- 8003034:	4619      	mov	r1, r3
- 8003036:	6978      	ldr	r0, [r7, #20]
- 8003038:	f7fd fb52 	bl	80006e0 <__aeabi_fcmpgt>
- 800303c:	4603      	mov	r3, r0
- 800303e:	2b00      	cmp	r3, #0
- 8003040:	d007      	beq.n	8003052 <Pid_Update+0x176>
- 8003042:	f04f 0100 	mov.w	r1, #0
- 8003046:	69f8      	ldr	r0, [r7, #28]
- 8003048:	f7fd fb2c 	bl	80006a4 <__aeabi_fcmplt>
- 800304c:	4603      	mov	r3, r0
- 800304e:	2b00      	cmp	r3, #0
- 8003050:	d110      	bne.n	8003074 <Pid_Update+0x198>
-            (next_out < pid->min && change > 0.0f)) {
- 8003052:	68fb      	ldr	r3, [r7, #12]
- 8003054:	69db      	ldr	r3, [r3, #28]
-        if ((next_out >= pid->min && next_out <= pid->max) || (next_out > pid->max && change < 0.0f) ||
- 8003056:	4619      	mov	r1, r3
- 8003058:	6978      	ldr	r0, [r7, #20]
- 800305a:	f7fd fb23 	bl	80006a4 <__aeabi_fcmplt>
- 800305e:	4603      	mov	r3, r0
- 8003060:	2b00      	cmp	r3, #0
- 8003062:	d00f      	beq.n	8003084 <Pid_Update+0x1a8>
-            (next_out < pid->min && change > 0.0f)) {
- 8003064:	f04f 0100 	mov.w	r1, #0
- 8003068:	69f8      	ldr	r0, [r7, #28]
- 800306a:	f7fd fb39 	bl	80006e0 <__aeabi_fcmpgt>
- 800306e:	4603      	mov	r3, r0
- 8003070:	2b00      	cmp	r3, #0
- 8003072:	d007      	beq.n	8003084 <Pid_Update+0x1a8>
-            pid->integral = next_i;
- 8003074:	68fb      	ldr	r3, [r7, #12]
- 8003076:	69ba      	ldr	r2, [r7, #24]
- 8003078:	615a      	str	r2, [r3, #20]
- 800307a:	e003      	b.n	8003084 <Pid_Update+0x1a8>
+ 8002f8a:	68fb      	ldr	r3, [r7, #12]
+ 8002f8c:	689b      	ldr	r3, [r3, #8]
+ 8002f8e:	f04f 0100 	mov.w	r1, #0
+ 8002f92:	4618      	mov	r0, r3
+ 8002f94:	f7fd fba4 	bl	80006e0 <__aeabi_fcmpgt>
+ 8002f98:	4603      	mov	r3, r0
+ 8002f9a:	2b00      	cmp	r3, #0
+ 8002f9c:	d05f      	beq.n	800305e <Pid_Update+0x186>
+        float change = pid->ki * error * dt;                // I Thay đổi trong 1 chu kỳ 
+ 8002f9e:	68fb      	ldr	r3, [r7, #12]
+ 8002fa0:	689b      	ldr	r3, [r3, #8]
+ 8002fa2:	6ab9      	ldr	r1, [r7, #40]	; 0x28
+ 8002fa4:	4618      	mov	r0, r3
+ 8002fa6:	f7fd f9df 	bl	8000368 <__aeabi_fmul>
+ 8002faa:	4603      	mov	r3, r0
+ 8002fac:	4619      	mov	r1, r3
+ 8002fae:	6838      	ldr	r0, [r7, #0]
+ 8002fb0:	f7fd f9da 	bl	8000368 <__aeabi_fmul>
+ 8002fb4:	4603      	mov	r3, r0
+ 8002fb6:	61fb      	str	r3, [r7, #28]
+
+        float next_i = Clamp(pid->integral + change, pid->min, pid->max);   // I 
+ 8002fb8:	68fb      	ldr	r3, [r7, #12]
+ 8002fba:	695b      	ldr	r3, [r3, #20]
+ 8002fbc:	69f9      	ldr	r1, [r7, #28]
+ 8002fbe:	4618      	mov	r0, r3
+ 8002fc0:	f7fd f8ca 	bl	8000158 <__addsf3>
+ 8002fc4:	4603      	mov	r3, r0
+ 8002fc6:	4618      	mov	r0, r3
+ 8002fc8:	68fb      	ldr	r3, [r7, #12]
+ 8002fca:	69d9      	ldr	r1, [r3, #28]
+ 8002fcc:	68fb      	ldr	r3, [r7, #12]
+ 8002fce:	6a1b      	ldr	r3, [r3, #32]
+ 8002fd0:	461a      	mov	r2, r3
+ 8002fd2:	f7ff ff3d 	bl	8002e50 <Clamp>
+ 8002fd6:	61b8      	str	r0, [r7, #24]
+
+        float next_out = p + d + next_i;                                    // P + I + D
+ 8002fd8:	6a39      	ldr	r1, [r7, #32]
+ 8002fda:	6af8      	ldr	r0, [r7, #44]	; 0x2c
+ 8002fdc:	f7fd f8bc 	bl	8000158 <__addsf3>
+ 8002fe0:	4603      	mov	r3, r0
+ 8002fe2:	4619      	mov	r1, r3
+ 8002fe4:	69b8      	ldr	r0, [r7, #24]
+ 8002fe6:	f7fd f8b7 	bl	8000158 <__addsf3>
+ 8002fea:	4603      	mov	r3, r0
+ 8002fec:	617b      	str	r3, [r7, #20]
+
+        // Cập nhật integral nếu chưa bão hòa hoặc đang bão hòa nhưng error có dấu ngược với bão hòa
+        if ((next_out >= pid->min && next_out <= pid->max) || 
+ 8002fee:	68fb      	ldr	r3, [r7, #12]
+ 8002ff0:	69db      	ldr	r3, [r3, #28]
+ 8002ff2:	4619      	mov	r1, r3
+ 8002ff4:	6978      	ldr	r0, [r7, #20]
+ 8002ff6:	f7fd fb69 	bl	80006cc <__aeabi_fcmpge>
+ 8002ffa:	4603      	mov	r3, r0
+ 8002ffc:	2b00      	cmp	r3, #0
+ 8002ffe:	d008      	beq.n	8003012 <Pid_Update+0x13a>
+ 8003000:	68fb      	ldr	r3, [r7, #12]
+ 8003002:	6a1b      	ldr	r3, [r3, #32]
+ 8003004:	4619      	mov	r1, r3
+ 8003006:	6978      	ldr	r0, [r7, #20]
+ 8003008:	f7fd fb56 	bl	80006b8 <__aeabi_fcmple>
+ 800300c:	4603      	mov	r3, r0
+ 800300e:	2b00      	cmp	r3, #0
+ 8003010:	d121      	bne.n	8003056 <Pid_Update+0x17e>
+            (next_out > pid->max && change < 0.0f) ||
+ 8003012:	68fb      	ldr	r3, [r7, #12]
+ 8003014:	6a1b      	ldr	r3, [r3, #32]
+        if ((next_out >= pid->min && next_out <= pid->max) || 
+ 8003016:	4619      	mov	r1, r3
+ 8003018:	6978      	ldr	r0, [r7, #20]
+ 800301a:	f7fd fb61 	bl	80006e0 <__aeabi_fcmpgt>
+ 800301e:	4603      	mov	r3, r0
+ 8003020:	2b00      	cmp	r3, #0
+ 8003022:	d007      	beq.n	8003034 <Pid_Update+0x15c>
+            (next_out > pid->max && change < 0.0f) ||
+ 8003024:	f04f 0100 	mov.w	r1, #0
+ 8003028:	69f8      	ldr	r0, [r7, #28]
+ 800302a:	f7fd fb3b 	bl	80006a4 <__aeabi_fcmplt>
+ 800302e:	4603      	mov	r3, r0
+ 8003030:	2b00      	cmp	r3, #0
+ 8003032:	d110      	bne.n	8003056 <Pid_Update+0x17e>
+            (next_out < pid->min && change > 0.0f)) 
+ 8003034:	68fb      	ldr	r3, [r7, #12]
+ 8003036:	69db      	ldr	r3, [r3, #28]
+            (next_out > pid->max && change < 0.0f) ||
+ 8003038:	4619      	mov	r1, r3
+ 800303a:	6978      	ldr	r0, [r7, #20]
+ 800303c:	f7fd fb32 	bl	80006a4 <__aeabi_fcmplt>
+ 8003040:	4603      	mov	r3, r0
+ 8003042:	2b00      	cmp	r3, #0
+ 8003044:	d00f      	beq.n	8003066 <Pid_Update+0x18e>
+            (next_out < pid->min && change > 0.0f)) 
+ 8003046:	f04f 0100 	mov.w	r1, #0
+ 800304a:	69f8      	ldr	r0, [r7, #28]
+ 800304c:	f7fd fb48 	bl	80006e0 <__aeabi_fcmpgt>
+ 8003050:	4603      	mov	r3, r0
+ 8003052:	2b00      	cmp	r3, #0
+ 8003054:	d007      	beq.n	8003066 <Pid_Update+0x18e>
+        {
+            pid->integral = next_i;    
+ 8003056:	68fb      	ldr	r3, [r7, #12]
+ 8003058:	69ba      	ldr	r2, [r7, #24]
+ 800305a:	615a      	str	r2, [r3, #20]
+ 800305c:	e003      	b.n	8003066 <Pid_Update+0x18e>
         }
     } else {
         pid->integral = 0.0f;
- 800307c:	68fb      	ldr	r3, [r7, #12]
- 800307e:	f04f 0200 	mov.w	r2, #0
- 8003082:	615a      	str	r2, [r3, #20]
+ 800305e:	68fb      	ldr	r3, [r7, #12]
+ 8003060:	f04f 0200 	mov.w	r2, #0
+ 8003064:	615a      	str	r2, [r3, #20]
     }
-    return Clamp(p + d + pid->integral, pid->min, pid->max);
- 8003084:	6a39      	ldr	r1, [r7, #32]
- 8003086:	6b78      	ldr	r0, [r7, #52]	; 0x34
- 8003088:	f7fd f866 	bl	8000158 <__addsf3>
- 800308c:	4603      	mov	r3, r0
- 800308e:	461a      	mov	r2, r3
- 8003090:	68fb      	ldr	r3, [r7, #12]
- 8003092:	695b      	ldr	r3, [r3, #20]
- 8003094:	4619      	mov	r1, r3
- 8003096:	4610      	mov	r0, r2
- 8003098:	f7fd f85e 	bl	8000158 <__addsf3>
- 800309c:	4603      	mov	r3, r0
- 800309e:	4618      	mov	r0, r3
- 80030a0:	68fb      	ldr	r3, [r7, #12]
- 80030a2:	69d9      	ldr	r1, [r3, #28]
- 80030a4:	68fb      	ldr	r3, [r7, #12]
- 80030a6:	6a1b      	ldr	r3, [r3, #32]
- 80030a8:	461a      	mov	r2, r3
- 80030aa:	f7ff fec1 	bl	8002e30 <Clamp>
- 80030ae:	4603      	mov	r3, r0
-}
- 80030b0:	4618      	mov	r0, r3
- 80030b2:	373c      	adds	r7, #60	; 0x3c
- 80030b4:	46bd      	mov	sp, r7
- 80030b6:	bd90      	pop	{r4, r7, pc}
 
-080030b8 <Filter_Update>:
+    // Trả về PWM, giới hạn duty cycle trong khoảng [-100, 100]%
+    return Clamp(p + d + pid->integral, pid->min, pid->max);
+ 8003066:	6a39      	ldr	r1, [r7, #32]
+ 8003068:	6af8      	ldr	r0, [r7, #44]	; 0x2c
+ 800306a:	f7fd f875 	bl	8000158 <__addsf3>
+ 800306e:	4603      	mov	r3, r0
+ 8003070:	461a      	mov	r2, r3
+ 8003072:	68fb      	ldr	r3, [r7, #12]
+ 8003074:	695b      	ldr	r3, [r3, #20]
+ 8003076:	4619      	mov	r1, r3
+ 8003078:	4610      	mov	r0, r2
+ 800307a:	f7fd f86d 	bl	8000158 <__addsf3>
+ 800307e:	4603      	mov	r3, r0
+ 8003080:	4618      	mov	r0, r3
+ 8003082:	68fb      	ldr	r3, [r7, #12]
+ 8003084:	69d9      	ldr	r1, [r3, #28]
+ 8003086:	68fb      	ldr	r3, [r7, #12]
+ 8003088:	6a1b      	ldr	r3, [r3, #32]
+ 800308a:	461a      	mov	r2, r3
+ 800308c:	f7ff fee0 	bl	8002e50 <Clamp>
+ 8003090:	4603      	mov	r3, r0
+}
+ 8003092:	4618      	mov	r0, r3
+ 8003094:	3730      	adds	r7, #48	; 0x30
+ 8003096:	46bd      	mov	sp, r7
+ 8003098:	bdb0      	pop	{r4, r5, r7, pc}
+
+0800309a <Filter_Update>:
 
 #define STOP_EPSILON_RPM 0.01f      // Nguong dung (RPM)
 #define REPORT_PERIOD_MS 1000U      // Chu ky bao cao (ms)
 
 static float Filter_Update(WheelCtrl *w, float value)
 {
- 80030b8:	b590      	push	{r4, r7, lr}
- 80030ba:	b083      	sub	sp, #12
- 80030bc:	af00      	add	r7, sp, #0
- 80030be:	6078      	str	r0, [r7, #4]
- 80030c0:	6039      	str	r1, [r7, #0]
+ 800309a:	b590      	push	{r4, r7, lr}
+ 800309c:	b083      	sub	sp, #12
+ 800309e:	af00      	add	r7, sp, #0
+ 80030a0:	6078      	str	r0, [r7, #4]
+ 80030a2:	6039      	str	r1, [r7, #0]
     w->filter_sum -= w->filter[w->filter_pos];
- 80030c2:	687b      	ldr	r3, [r7, #4]
- 80030c4:	f8d3 008c 	ldr.w	r0, [r3, #140]	; 0x8c
- 80030c8:	687b      	ldr	r3, [r7, #4]
- 80030ca:	f8b3 3090 	ldrh.w	r3, [r3, #144]	; 0x90
- 80030ce:	687a      	ldr	r2, [r7, #4]
- 80030d0:	3318      	adds	r3, #24
- 80030d2:	009b      	lsls	r3, r3, #2
- 80030d4:	4413      	add	r3, r2
- 80030d6:	685b      	ldr	r3, [r3, #4]
- 80030d8:	4619      	mov	r1, r3
- 80030da:	f7fd f83b 	bl	8000154 <__aeabi_fsub>
- 80030de:	4603      	mov	r3, r0
- 80030e0:	461a      	mov	r2, r3
- 80030e2:	687b      	ldr	r3, [r7, #4]
- 80030e4:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
+ 80030a4:	687b      	ldr	r3, [r7, #4]
+ 80030a6:	f8d3 008c 	ldr.w	r0, [r3, #140]	; 0x8c
+ 80030aa:	687b      	ldr	r3, [r7, #4]
+ 80030ac:	f8b3 3090 	ldrh.w	r3, [r3, #144]	; 0x90
+ 80030b0:	687a      	ldr	r2, [r7, #4]
+ 80030b2:	3318      	adds	r3, #24
+ 80030b4:	009b      	lsls	r3, r3, #2
+ 80030b6:	4413      	add	r3, r2
+ 80030b8:	685b      	ldr	r3, [r3, #4]
+ 80030ba:	4619      	mov	r1, r3
+ 80030bc:	f7fd f84a 	bl	8000154 <__aeabi_fsub>
+ 80030c0:	4603      	mov	r3, r0
+ 80030c2:	461a      	mov	r2, r3
+ 80030c4:	687b      	ldr	r3, [r7, #4]
+ 80030c6:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
     w->filter[w->filter_pos] = value;
- 80030e8:	687b      	ldr	r3, [r7, #4]
- 80030ea:	f8b3 3090 	ldrh.w	r3, [r3, #144]	; 0x90
- 80030ee:	687a      	ldr	r2, [r7, #4]
- 80030f0:	3318      	adds	r3, #24
- 80030f2:	009b      	lsls	r3, r3, #2
- 80030f4:	4413      	add	r3, r2
- 80030f6:	683a      	ldr	r2, [r7, #0]
- 80030f8:	605a      	str	r2, [r3, #4]
+ 80030ca:	687b      	ldr	r3, [r7, #4]
+ 80030cc:	f8b3 3090 	ldrh.w	r3, [r3, #144]	; 0x90
+ 80030d0:	687a      	ldr	r2, [r7, #4]
+ 80030d2:	3318      	adds	r3, #24
+ 80030d4:	009b      	lsls	r3, r3, #2
+ 80030d6:	4413      	add	r3, r2
+ 80030d8:	683a      	ldr	r2, [r7, #0]
+ 80030da:	605a      	str	r2, [r3, #4]
     w->filter_sum += value;
- 80030fa:	687b      	ldr	r3, [r7, #4]
- 80030fc:	f8d3 308c 	ldr.w	r3, [r3, #140]	; 0x8c
- 8003100:	6839      	ldr	r1, [r7, #0]
- 8003102:	4618      	mov	r0, r3
- 8003104:	f7fd f828 	bl	8000158 <__addsf3>
- 8003108:	4603      	mov	r3, r0
- 800310a:	461a      	mov	r2, r3
- 800310c:	687b      	ldr	r3, [r7, #4]
- 800310e:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
+ 80030dc:	687b      	ldr	r3, [r7, #4]
+ 80030de:	f8d3 308c 	ldr.w	r3, [r3, #140]	; 0x8c
+ 80030e2:	6839      	ldr	r1, [r7, #0]
+ 80030e4:	4618      	mov	r0, r3
+ 80030e6:	f7fd f837 	bl	8000158 <__addsf3>
+ 80030ea:	4603      	mov	r3, r0
+ 80030ec:	461a      	mov	r2, r3
+ 80030ee:	687b      	ldr	r3, [r7, #4]
+ 80030f0:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
     if (++w->filter_pos >= WHEEL_FILTER_LEN) w->filter_pos = 0;
- 8003112:	687b      	ldr	r3, [r7, #4]
- 8003114:	f8b3 3090 	ldrh.w	r3, [r3, #144]	; 0x90
- 8003118:	3301      	adds	r3, #1
- 800311a:	b29a      	uxth	r2, r3
- 800311c:	687b      	ldr	r3, [r7, #4]
- 800311e:	f8a3 2090 	strh.w	r2, [r3, #144]	; 0x90
- 8003122:	687b      	ldr	r3, [r7, #4]
- 8003124:	f8b3 3090 	ldrh.w	r3, [r3, #144]	; 0x90
- 8003128:	2b09      	cmp	r3, #9
- 800312a:	d903      	bls.n	8003134 <Filter_Update+0x7c>
- 800312c:	687b      	ldr	r3, [r7, #4]
- 800312e:	2200      	movs	r2, #0
- 8003130:	f8a3 2090 	strh.w	r2, [r3, #144]	; 0x90
+ 80030f4:	687b      	ldr	r3, [r7, #4]
+ 80030f6:	f8b3 3090 	ldrh.w	r3, [r3, #144]	; 0x90
+ 80030fa:	3301      	adds	r3, #1
+ 80030fc:	b29a      	uxth	r2, r3
+ 80030fe:	687b      	ldr	r3, [r7, #4]
+ 8003100:	f8a3 2090 	strh.w	r2, [r3, #144]	; 0x90
+ 8003104:	687b      	ldr	r3, [r7, #4]
+ 8003106:	f8b3 3090 	ldrh.w	r3, [r3, #144]	; 0x90
+ 800310a:	2b09      	cmp	r3, #9
+ 800310c:	d903      	bls.n	8003116 <Filter_Update+0x7c>
+ 800310e:	687b      	ldr	r3, [r7, #4]
+ 8003110:	2200      	movs	r2, #0
+ 8003112:	f8a3 2090 	strh.w	r2, [r3, #144]	; 0x90
     if (w->filter_count < WHEEL_FILTER_LEN) ++w->filter_count;
- 8003134:	687b      	ldr	r3, [r7, #4]
- 8003136:	f8b3 3092 	ldrh.w	r3, [r3, #146]	; 0x92
- 800313a:	2b09      	cmp	r3, #9
- 800313c:	d807      	bhi.n	800314e <Filter_Update+0x96>
- 800313e:	687b      	ldr	r3, [r7, #4]
- 8003140:	f8b3 3092 	ldrh.w	r3, [r3, #146]	; 0x92
- 8003144:	3301      	adds	r3, #1
- 8003146:	b29a      	uxth	r2, r3
- 8003148:	687b      	ldr	r3, [r7, #4]
- 800314a:	f8a3 2092 	strh.w	r2, [r3, #146]	; 0x92
+ 8003116:	687b      	ldr	r3, [r7, #4]
+ 8003118:	f8b3 3092 	ldrh.w	r3, [r3, #146]	; 0x92
+ 800311c:	2b09      	cmp	r3, #9
+ 800311e:	d807      	bhi.n	8003130 <Filter_Update+0x96>
+ 8003120:	687b      	ldr	r3, [r7, #4]
+ 8003122:	f8b3 3092 	ldrh.w	r3, [r3, #146]	; 0x92
+ 8003126:	3301      	adds	r3, #1
+ 8003128:	b29a      	uxth	r2, r3
+ 800312a:	687b      	ldr	r3, [r7, #4]
+ 800312c:	f8a3 2092 	strh.w	r2, [r3, #146]	; 0x92
     return w->filter_sum / w->filter_count;
- 800314e:	687b      	ldr	r3, [r7, #4]
- 8003150:	f8d3 408c 	ldr.w	r4, [r3, #140]	; 0x8c
- 8003154:	687b      	ldr	r3, [r7, #4]
- 8003156:	f8b3 3092 	ldrh.w	r3, [r3, #146]	; 0x92
- 800315a:	4618      	mov	r0, r3
- 800315c:	f7fd f8b0 	bl	80002c0 <__aeabi_i2f>
- 8003160:	4603      	mov	r3, r0
- 8003162:	4619      	mov	r1, r3
- 8003164:	4620      	mov	r0, r4
- 8003166:	f7fd f9b3 	bl	80004d0 <__aeabi_fdiv>
- 800316a:	4603      	mov	r3, r0
+ 8003130:	687b      	ldr	r3, [r7, #4]
+ 8003132:	f8d3 408c 	ldr.w	r4, [r3, #140]	; 0x8c
+ 8003136:	687b      	ldr	r3, [r7, #4]
+ 8003138:	f8b3 3092 	ldrh.w	r3, [r3, #146]	; 0x92
+ 800313c:	4618      	mov	r0, r3
+ 800313e:	f7fd f8bf 	bl	80002c0 <__aeabi_i2f>
+ 8003142:	4603      	mov	r3, r0
+ 8003144:	4619      	mov	r1, r3
+ 8003146:	4620      	mov	r0, r4
+ 8003148:	f7fd f9c2 	bl	80004d0 <__aeabi_fdiv>
+ 800314c:	4603      	mov	r3, r0
 }
- 800316c:	4618      	mov	r0, r3
- 800316e:	370c      	adds	r7, #12
- 8003170:	46bd      	mov	sp, r7
- 8003172:	bd90      	pop	{r4, r7, pc}
+ 800314e:	4618      	mov	r0, r3
+ 8003150:	370c      	adds	r7, #12
+ 8003152:	46bd      	mov	sp, r7
+ 8003154:	bd90      	pop	{r4, r7, pc}
 
-08003174 <Wheel_Init>:
+08003156 <Wheel_Init>:
 
-void Wheel_Init(WheelCtrl *w, const WheelHw *hw, float cpr, const PidCfg *pid_cfg)
+void Wheel_Init(WheelCtrl *w, const WheelHw *hw, float cpr, const Pid *pid_cfg)
 {
- 8003174:	b5f0      	push	{r4, r5, r6, r7, lr}
- 8003176:	b08b      	sub	sp, #44	; 0x2c
- 8003178:	af04      	add	r7, sp, #16
- 800317a:	60f8      	str	r0, [r7, #12]
- 800317c:	60b9      	str	r1, [r7, #8]
- 800317e:	607a      	str	r2, [r7, #4]
- 8003180:	603b      	str	r3, [r7, #0]
+ 8003156:	b5f0      	push	{r4, r5, r6, r7, lr}
+ 8003158:	b08b      	sub	sp, #44	; 0x2c
+ 800315a:	af04      	add	r7, sp, #16
+ 800315c:	60f8      	str	r0, [r7, #12]
+ 800315e:	60b9      	str	r1, [r7, #8]
+ 8003160:	607a      	str	r2, [r7, #4]
+ 8003162:	603b      	str	r3, [r7, #0]
     Encoder_Init(&w->enc, hw->enc_tim, hw->enc_sign);
- 8003182:	68f8      	ldr	r0, [r7, #12]
- 8003184:	68bb      	ldr	r3, [r7, #8]
- 8003186:	6819      	ldr	r1, [r3, #0]
- 8003188:	68bb      	ldr	r3, [r7, #8]
- 800318a:	f993 3004 	ldrsb.w	r3, [r3, #4]
- 800318e:	461a      	mov	r2, r3
- 8003190:	f000 f996 	bl	80034c0 <Encoder_Init>
+ 8003164:	68f8      	ldr	r0, [r7, #12]
+ 8003166:	68bb      	ldr	r3, [r7, #8]
+ 8003168:	6819      	ldr	r1, [r3, #0]
+ 800316a:	68bb      	ldr	r3, [r7, #8]
+ 800316c:	f993 3004 	ldrsb.w	r3, [r3, #4]
+ 8003170:	461a      	mov	r2, r3
+ 8003172:	f000 f995 	bl	80034a0 <Encoder_Init>
     MotorDriver_Init(&w->motor, hw->pwm_tim, hw->pwm_channel,
- 8003194:	68fb      	ldr	r3, [r7, #12]
- 8003196:	f103 0010 	add.w	r0, r3, #16
- 800319a:	68bb      	ldr	r3, [r7, #8]
- 800319c:	689c      	ldr	r4, [r3, #8]
- 800319e:	68bb      	ldr	r3, [r7, #8]
- 80031a0:	68dd      	ldr	r5, [r3, #12]
- 80031a2:	68bb      	ldr	r3, [r7, #8]
- 80031a4:	691e      	ldr	r6, [r3, #16]
- 80031a6:	68bb      	ldr	r3, [r7, #8]
- 80031a8:	8a9b      	ldrh	r3, [r3, #20]
- 80031aa:	68ba      	ldr	r2, [r7, #8]
- 80031ac:	8ad2      	ldrh	r2, [r2, #22]
- 80031ae:	68b9      	ldr	r1, [r7, #8]
- 80031b0:	f991 1018 	ldrsb.w	r1, [r1, #24]
- 80031b4:	9102      	str	r1, [sp, #8]
- 80031b6:	9201      	str	r2, [sp, #4]
- 80031b8:	9300      	str	r3, [sp, #0]
- 80031ba:	4633      	mov	r3, r6
- 80031bc:	462a      	mov	r2, r5
- 80031be:	4621      	mov	r1, r4
- 80031c0:	f000 fa06 	bl	80035d0 <MotorDriver_Init>
+ 8003176:	68fb      	ldr	r3, [r7, #12]
+ 8003178:	f103 0010 	add.w	r0, r3, #16
+ 800317c:	68bb      	ldr	r3, [r7, #8]
+ 800317e:	689c      	ldr	r4, [r3, #8]
+ 8003180:	68bb      	ldr	r3, [r7, #8]
+ 8003182:	68dd      	ldr	r5, [r3, #12]
+ 8003184:	68bb      	ldr	r3, [r7, #8]
+ 8003186:	691e      	ldr	r6, [r3, #16]
+ 8003188:	68bb      	ldr	r3, [r7, #8]
+ 800318a:	8a9b      	ldrh	r3, [r3, #20]
+ 800318c:	68ba      	ldr	r2, [r7, #8]
+ 800318e:	8ad2      	ldrh	r2, [r2, #22]
+ 8003190:	68b9      	ldr	r1, [r7, #8]
+ 8003192:	f991 1018 	ldrsb.w	r1, [r1, #24]
+ 8003196:	9102      	str	r1, [sp, #8]
+ 8003198:	9201      	str	r2, [sp, #4]
+ 800319a:	9300      	str	r3, [sp, #0]
+ 800319c:	4633      	mov	r3, r6
+ 800319e:	462a      	mov	r2, r5
+ 80031a0:	4621      	mov	r1, r4
+ 80031a2:	f000 fa05 	bl	80035b0 <MotorDriver_Init>
                      hw->dir_port, hw->in1, hw->in2, hw->drive_sign);
     Pid_Init(&w->pid, pid_cfg);
- 80031c4:	68fb      	ldr	r3, [r7, #12]
- 80031c6:	3328      	adds	r3, #40	; 0x28
- 80031c8:	6839      	ldr	r1, [r7, #0]
- 80031ca:	4618      	mov	r0, r3
- 80031cc:	f7ff fe4d 	bl	8002e6a <Pid_Init>
-    w->cpr = cpr;
- 80031d0:	68fb      	ldr	r3, [r7, #12]
- 80031d2:	687a      	ldr	r2, [r7, #4]
- 80031d4:	64da      	str	r2, [r3, #76]	; 0x4c
-    w->target_rpm = 0.0f;
- 80031d6:	68fb      	ldr	r3, [r7, #12]
- 80031d8:	f04f 0200 	mov.w	r2, #0
- 80031dc:	651a      	str	r2, [r3, #80]	; 0x50
-    w->raw_rpm = 0.0f;
- 80031de:	68fb      	ldr	r3, [r7, #12]
- 80031e0:	f04f 0200 	mov.w	r2, #0
- 80031e4:	655a      	str	r2, [r3, #84]	; 0x54
-    w->rpm = 0.0f;
- 80031e6:	68fb      	ldr	r3, [r7, #12]
- 80031e8:	f04f 0200 	mov.w	r2, #0
- 80031ec:	659a      	str	r2, [r3, #88]	; 0x58
-    w->avg_rpm = 0.0f;
- 80031ee:	68fb      	ldr	r3, [r7, #12]
- 80031f0:	f04f 0200 	mov.w	r2, #0
- 80031f4:	65da      	str	r2, [r3, #92]	; 0x5c
-    w->error = 0.0f;
- 80031f6:	68fb      	ldr	r3, [r7, #12]
- 80031f8:	f04f 0200 	mov.w	r2, #0
- 80031fc:	661a      	str	r2, [r3, #96]	; 0x60
-    w->filter_sum = 0.0f;
- 80031fe:	68fb      	ldr	r3, [r7, #12]
- 8003200:	f04f 0200 	mov.w	r2, #0
- 8003204:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
-    w->filter_pos = 0;
- 8003208:	68fb      	ldr	r3, [r7, #12]
- 800320a:	2200      	movs	r2, #0
- 800320c:	f8a3 2090 	strh.w	r2, [r3, #144]	; 0x90
-    w->filter_count = 0;
- 8003210:	68fb      	ldr	r3, [r7, #12]
- 8003212:	2200      	movs	r2, #0
- 8003214:	f8a3 2092 	strh.w	r2, [r3, #146]	; 0x92
-    w->report_ticks = 0;
- 8003218:	68fb      	ldr	r3, [r7, #12]
- 800321a:	2200      	movs	r2, #0
- 800321c:	f8c3 2094 	str.w	r2, [r3, #148]	; 0x94
-    w->report_ms = 0;
- 8003220:	68fb      	ldr	r3, [r7, #12]
- 8003222:	2200      	movs	r2, #0
- 8003224:	f8c3 2098 	str.w	r2, [r3, #152]	; 0x98
-    w->target_sign = 0;
- 8003228:	68fb      	ldr	r3, [r7, #12]
- 800322a:	2200      	movs	r2, #0
- 800322c:	f883 209c 	strb.w	r2, [r3, #156]	; 0x9c
-    for (uint16_t i = 0; i < WHEEL_FILTER_LEN; ++i) w->filter[i] = 0.0f;
- 8003230:	2300      	movs	r3, #0
- 8003232:	82fb      	strh	r3, [r7, #22]
- 8003234:	e00a      	b.n	800324c <Wheel_Init+0xd8>
- 8003236:	8afb      	ldrh	r3, [r7, #22]
- 8003238:	68fa      	ldr	r2, [r7, #12]
- 800323a:	3318      	adds	r3, #24
- 800323c:	009b      	lsls	r3, r3, #2
- 800323e:	4413      	add	r3, r2
- 8003240:	f04f 0200 	mov.w	r2, #0
- 8003244:	605a      	str	r2, [r3, #4]
- 8003246:	8afb      	ldrh	r3, [r7, #22]
- 8003248:	3301      	adds	r3, #1
- 800324a:	82fb      	strh	r3, [r7, #22]
- 800324c:	8afb      	ldrh	r3, [r7, #22]
- 800324e:	2b09      	cmp	r3, #9
- 8003250:	d9f1      	bls.n	8003236 <Wheel_Init+0xc2>
-}
- 8003252:	bf00      	nop
- 8003254:	bf00      	nop
- 8003256:	371c      	adds	r7, #28
- 8003258:	46bd      	mov	sp, r7
- 800325a:	bdf0      	pop	{r4, r5, r6, r7, pc}
+ 80031a6:	68fb      	ldr	r3, [r7, #12]
+ 80031a8:	3328      	adds	r3, #40	; 0x28
+ 80031aa:	6839      	ldr	r1, [r7, #0]
+ 80031ac:	4618      	mov	r0, r3
+ 80031ae:	f7ff fe6c 	bl	8002e8a <Pid_Init>
 
-0800325c <Wheel_Start>:
+    w->cpr = cpr;
+ 80031b2:	68fb      	ldr	r3, [r7, #12]
+ 80031b4:	687a      	ldr	r2, [r7, #4]
+ 80031b6:	64da      	str	r2, [r3, #76]	; 0x4c
+    w->target_rpm = 0.0f;
+ 80031b8:	68fb      	ldr	r3, [r7, #12]
+ 80031ba:	f04f 0200 	mov.w	r2, #0
+ 80031be:	651a      	str	r2, [r3, #80]	; 0x50
+    w->raw_rpm = 0.0f;
+ 80031c0:	68fb      	ldr	r3, [r7, #12]
+ 80031c2:	f04f 0200 	mov.w	r2, #0
+ 80031c6:	655a      	str	r2, [r3, #84]	; 0x54
+    w->rpm = 0.0f;
+ 80031c8:	68fb      	ldr	r3, [r7, #12]
+ 80031ca:	f04f 0200 	mov.w	r2, #0
+ 80031ce:	659a      	str	r2, [r3, #88]	; 0x58
+    w->avg_rpm = 0.0f;
+ 80031d0:	68fb      	ldr	r3, [r7, #12]
+ 80031d2:	f04f 0200 	mov.w	r2, #0
+ 80031d6:	65da      	str	r2, [r3, #92]	; 0x5c
+    w->error = 0.0f;
+ 80031d8:	68fb      	ldr	r3, [r7, #12]
+ 80031da:	f04f 0200 	mov.w	r2, #0
+ 80031de:	661a      	str	r2, [r3, #96]	; 0x60
+    w->filter_sum = 0.0f;
+ 80031e0:	68fb      	ldr	r3, [r7, #12]
+ 80031e2:	f04f 0200 	mov.w	r2, #0
+ 80031e6:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
+    w->filter_pos = 0;
+ 80031ea:	68fb      	ldr	r3, [r7, #12]
+ 80031ec:	2200      	movs	r2, #0
+ 80031ee:	f8a3 2090 	strh.w	r2, [r3, #144]	; 0x90
+    w->filter_count = 0;
+ 80031f2:	68fb      	ldr	r3, [r7, #12]
+ 80031f4:	2200      	movs	r2, #0
+ 80031f6:	f8a3 2092 	strh.w	r2, [r3, #146]	; 0x92
+    w->report_ticks = 0;
+ 80031fa:	68fb      	ldr	r3, [r7, #12]
+ 80031fc:	2200      	movs	r2, #0
+ 80031fe:	f8c3 2094 	str.w	r2, [r3, #148]	; 0x94
+    w->report_ms = 0;
+ 8003202:	68fb      	ldr	r3, [r7, #12]
+ 8003204:	2200      	movs	r2, #0
+ 8003206:	f8c3 2098 	str.w	r2, [r3, #152]	; 0x98
+    w->target_sign = 0;
+ 800320a:	68fb      	ldr	r3, [r7, #12]
+ 800320c:	2200      	movs	r2, #0
+ 800320e:	f883 209c 	strb.w	r2, [r3, #156]	; 0x9c
+    for (uint16_t i = 0; i < WHEEL_FILTER_LEN; ++i) w->filter[i] = 0.0f;
+ 8003212:	2300      	movs	r3, #0
+ 8003214:	82fb      	strh	r3, [r7, #22]
+ 8003216:	e00a      	b.n	800322e <Wheel_Init+0xd8>
+ 8003218:	8afb      	ldrh	r3, [r7, #22]
+ 800321a:	68fa      	ldr	r2, [r7, #12]
+ 800321c:	3318      	adds	r3, #24
+ 800321e:	009b      	lsls	r3, r3, #2
+ 8003220:	4413      	add	r3, r2
+ 8003222:	f04f 0200 	mov.w	r2, #0
+ 8003226:	605a      	str	r2, [r3, #4]
+ 8003228:	8afb      	ldrh	r3, [r7, #22]
+ 800322a:	3301      	adds	r3, #1
+ 800322c:	82fb      	strh	r3, [r7, #22]
+ 800322e:	8afb      	ldrh	r3, [r7, #22]
+ 8003230:	2b09      	cmp	r3, #9
+ 8003232:	d9f1      	bls.n	8003218 <Wheel_Init+0xc2>
+}
+ 8003234:	bf00      	nop
+ 8003236:	bf00      	nop
+ 8003238:	371c      	adds	r7, #28
+ 800323a:	46bd      	mov	sp, r7
+ 800323c:	bdf0      	pop	{r4, r5, r6, r7, pc}
+
+0800323e <Wheel_Start>:
 
 HAL_StatusTypeDef Wheel_Start(WheelCtrl *w)
 {
- 800325c:	b580      	push	{r7, lr}
- 800325e:	b082      	sub	sp, #8
- 8003260:	af00      	add	r7, sp, #0
- 8003262:	6078      	str	r0, [r7, #4]
+ 800323e:	b580      	push	{r7, lr}
+ 8003240:	b082      	sub	sp, #8
+ 8003242:	af00      	add	r7, sp, #0
+ 8003244:	6078      	str	r0, [r7, #4]
     if (Encoder_Start(&w->enc) != HAL_OK) return HAL_ERROR;
- 8003264:	687b      	ldr	r3, [r7, #4]
- 8003266:	4618      	mov	r0, r3
- 8003268:	f000 f94a 	bl	8003500 <Encoder_Start>
- 800326c:	4603      	mov	r3, r0
- 800326e:	2b00      	cmp	r3, #0
- 8003270:	d001      	beq.n	8003276 <Wheel_Start+0x1a>
- 8003272:	2301      	movs	r3, #1
- 8003274:	e005      	b.n	8003282 <Wheel_Start+0x26>
+ 8003246:	687b      	ldr	r3, [r7, #4]
+ 8003248:	4618      	mov	r0, r3
+ 800324a:	f000 f949 	bl	80034e0 <Encoder_Start>
+ 800324e:	4603      	mov	r3, r0
+ 8003250:	2b00      	cmp	r3, #0
+ 8003252:	d001      	beq.n	8003258 <Wheel_Start+0x1a>
+ 8003254:	2301      	movs	r3, #1
+ 8003256:	e005      	b.n	8003264 <Wheel_Start+0x26>
     return MotorDriver_Start(&w->motor);
- 8003276:	687b      	ldr	r3, [r7, #4]
- 8003278:	3310      	adds	r3, #16
- 800327a:	4618      	mov	r0, r3
- 800327c:	f000 f9f2 	bl	8003664 <MotorDriver_Start>
- 8003280:	4603      	mov	r3, r0
+ 8003258:	687b      	ldr	r3, [r7, #4]
+ 800325a:	3310      	adds	r3, #16
+ 800325c:	4618      	mov	r0, r3
+ 800325e:	f000 f9f1 	bl	8003644 <MotorDriver_Start>
+ 8003262:	4603      	mov	r3, r0
 }
- 8003282:	4618      	mov	r0, r3
- 8003284:	3708      	adds	r7, #8
- 8003286:	46bd      	mov	sp, r7
- 8003288:	bd80      	pop	{r7, pc}
-	...
+ 8003264:	4618      	mov	r0, r3
+ 8003266:	3708      	adds	r7, #8
+ 8003268:	46bd      	mov	sp, r7
+ 800326a:	bd80      	pop	{r7, pc}
 
-0800328c <Wheel_Update>:
+0800326c <Wheel_Update>:
 
 /* Cap nhat trang thai bánh xe */
 void Wheel_Update(WheelCtrl *w, float target_rpm, uint32_t elapsed_ms)
 {
- 800328c:	b5b0      	push	{r4, r5, r7, lr}
- 800328e:	b088      	sub	sp, #32
- 8003290:	af00      	add	r7, sp, #0
- 8003292:	60f8      	str	r0, [r7, #12]
- 8003294:	60b9      	str	r1, [r7, #8]
- 8003296:	607a      	str	r2, [r7, #4]
-    float dt = elapsed_ms * 0.001f;  // Chuyen ms sang s
- 8003298:	6878      	ldr	r0, [r7, #4]
- 800329a:	f7fd f80d 	bl	80002b8 <__aeabi_ui2f>
- 800329e:	4603      	mov	r3, r0
- 80032a0:	4973      	ldr	r1, [pc, #460]	; (8003470 <Wheel_Update+0x1e4>)
- 80032a2:	4618      	mov	r0, r3
- 80032a4:	f7fd f860 	bl	8000368 <__aeabi_fmul>
- 80032a8:	4603      	mov	r3, r0
- 80032aa:	61fb      	str	r3, [r7, #28]
+ 800326c:	b5b0      	push	{r4, r5, r7, lr}
+ 800326e:	b088      	sub	sp, #32
+ 8003270:	af00      	add	r7, sp, #0
+ 8003272:	60f8      	str	r0, [r7, #12]
+ 8003274:	60b9      	str	r1, [r7, #8]
+ 8003276:	607a      	str	r2, [r7, #4]
+    float dt = elapsed_ms * 0.001f;         // Chuyen ms sang s
+ 8003278:	6878      	ldr	r0, [r7, #4]
+ 800327a:	f7fd f81d 	bl	80002b8 <__aeabi_ui2f>
+ 800327e:	4603      	mov	r3, r0
+ 8003280:	4973      	ldr	r1, [pc, #460]	; (8003450 <Wheel_Update+0x1e4>)
+ 8003282:	4618      	mov	r0, r3
+ 8003284:	f7fd f870 	bl	8000368 <__aeabi_fmul>
+ 8003288:	4603      	mov	r3, r0
+ 800328a:	61fb      	str	r3, [r7, #28]
     int32_t ticks = Encoder_Read(&w->enc);  
- 80032ac:	68fb      	ldr	r3, [r7, #12]
- 80032ae:	4618      	mov	r0, r3
- 80032b0:	f000 f935 	bl	800351e <Encoder_Read>
- 80032b4:	61b8      	str	r0, [r7, #24]
+ 800328c:	68fb      	ldr	r3, [r7, #12]
+ 800328e:	4618      	mov	r0, r3
+ 8003290:	f000 f935 	bl	80034fe <Encoder_Read>
+ 8003294:	61b8      	str	r0, [r7, #24]
 
-    // Tinh RPM chua loc va RPM da loc
+    /* Tính raw_rpm sau đó lọc thành rpm */ 
     w->raw_rpm = ticks * 60.0f / (w->cpr * dt);
- 80032b6:	69b8      	ldr	r0, [r7, #24]
- 80032b8:	f7fd f802 	bl	80002c0 <__aeabi_i2f>
- 80032bc:	4603      	mov	r3, r0
- 80032be:	496d      	ldr	r1, [pc, #436]	; (8003474 <Wheel_Update+0x1e8>)
- 80032c0:	4618      	mov	r0, r3
- 80032c2:	f7fd f851 	bl	8000368 <__aeabi_fmul>
- 80032c6:	4603      	mov	r3, r0
- 80032c8:	461c      	mov	r4, r3
- 80032ca:	68fb      	ldr	r3, [r7, #12]
- 80032cc:	6cdb      	ldr	r3, [r3, #76]	; 0x4c
- 80032ce:	69f9      	ldr	r1, [r7, #28]
- 80032d0:	4618      	mov	r0, r3
- 80032d2:	f7fd f849 	bl	8000368 <__aeabi_fmul>
- 80032d6:	4603      	mov	r3, r0
- 80032d8:	4619      	mov	r1, r3
- 80032da:	4620      	mov	r0, r4
- 80032dc:	f7fd f8f8 	bl	80004d0 <__aeabi_fdiv>
- 80032e0:	4603      	mov	r3, r0
- 80032e2:	461a      	mov	r2, r3
- 80032e4:	68fb      	ldr	r3, [r7, #12]
- 80032e6:	655a      	str	r2, [r3, #84]	; 0x54
+ 8003296:	69b8      	ldr	r0, [r7, #24]
+ 8003298:	f7fd f812 	bl	80002c0 <__aeabi_i2f>
+ 800329c:	4603      	mov	r3, r0
+ 800329e:	496d      	ldr	r1, [pc, #436]	; (8003454 <Wheel_Update+0x1e8>)
+ 80032a0:	4618      	mov	r0, r3
+ 80032a2:	f7fd f861 	bl	8000368 <__aeabi_fmul>
+ 80032a6:	4603      	mov	r3, r0
+ 80032a8:	461c      	mov	r4, r3
+ 80032aa:	68fb      	ldr	r3, [r7, #12]
+ 80032ac:	6cdb      	ldr	r3, [r3, #76]	; 0x4c
+ 80032ae:	69f9      	ldr	r1, [r7, #28]
+ 80032b0:	4618      	mov	r0, r3
+ 80032b2:	f7fd f859 	bl	8000368 <__aeabi_fmul>
+ 80032b6:	4603      	mov	r3, r0
+ 80032b8:	4619      	mov	r1, r3
+ 80032ba:	4620      	mov	r0, r4
+ 80032bc:	f7fd f908 	bl	80004d0 <__aeabi_fdiv>
+ 80032c0:	4603      	mov	r3, r0
+ 80032c2:	461a      	mov	r2, r3
+ 80032c4:	68fb      	ldr	r3, [r7, #12]
+ 80032c6:	655a      	str	r2, [r3, #84]	; 0x54
     w->rpm = Filter_Update(w, w->raw_rpm);
- 80032e8:	68fb      	ldr	r3, [r7, #12]
- 80032ea:	6d5b      	ldr	r3, [r3, #84]	; 0x54
- 80032ec:	4619      	mov	r1, r3
- 80032ee:	68f8      	ldr	r0, [r7, #12]
- 80032f0:	f7ff fee2 	bl	80030b8 <Filter_Update>
- 80032f4:	4602      	mov	r2, r0
- 80032f6:	68fb      	ldr	r3, [r7, #12]
- 80032f8:	659a      	str	r2, [r3, #88]	; 0x58
+ 80032c8:	68fb      	ldr	r3, [r7, #12]
+ 80032ca:	6d5b      	ldr	r3, [r3, #84]	; 0x54
+ 80032cc:	4619      	mov	r1, r3
+ 80032ce:	68f8      	ldr	r0, [r7, #12]
+ 80032d0:	f7ff fee3 	bl	800309a <Filter_Update>
+ 80032d4:	4602      	mov	r2, r0
+ 80032d6:	68fb      	ldr	r3, [r7, #12]
+ 80032d8:	659a      	str	r2, [r3, #88]	; 0x58
 
     // Cap nhat so xung da dem duoc trong chu ky 1s
     w->report_ticks += ticks;
- 80032fa:	68fb      	ldr	r3, [r7, #12]
- 80032fc:	f8d3 2094 	ldr.w	r2, [r3, #148]	; 0x94
- 8003300:	69bb      	ldr	r3, [r7, #24]
- 8003302:	441a      	add	r2, r3
- 8003304:	68fb      	ldr	r3, [r7, #12]
- 8003306:	f8c3 2094 	str.w	r2, [r3, #148]	; 0x94
+ 80032da:	68fb      	ldr	r3, [r7, #12]
+ 80032dc:	f8d3 2094 	ldr.w	r2, [r3, #148]	; 0x94
+ 80032e0:	69bb      	ldr	r3, [r7, #24]
+ 80032e2:	441a      	add	r2, r3
+ 80032e4:	68fb      	ldr	r3, [r7, #12]
+ 80032e6:	f8c3 2094 	str.w	r2, [r3, #148]	; 0x94
     w->report_ms += elapsed_ms;
- 800330a:	68fb      	ldr	r3, [r7, #12]
- 800330c:	f8d3 2098 	ldr.w	r2, [r3, #152]	; 0x98
- 8003310:	687b      	ldr	r3, [r7, #4]
- 8003312:	441a      	add	r2, r3
- 8003314:	68fb      	ldr	r3, [r7, #12]
- 8003316:	f8c3 2098 	str.w	r2, [r3, #152]	; 0x98
+ 80032ea:	68fb      	ldr	r3, [r7, #12]
+ 80032ec:	f8d3 2098 	ldr.w	r2, [r3, #152]	; 0x98
+ 80032f0:	687b      	ldr	r3, [r7, #4]
+ 80032f2:	441a      	add	r2, r3
+ 80032f4:	68fb      	ldr	r3, [r7, #12]
+ 80032f6:	f8c3 2098 	str.w	r2, [r3, #152]	; 0x98
 
     if (w->report_ms >= REPORT_PERIOD_MS) {
- 800331a:	68fb      	ldr	r3, [r7, #12]
- 800331c:	f8d3 3098 	ldr.w	r3, [r3, #152]	; 0x98
- 8003320:	f5b3 7f7a 	cmp.w	r3, #1000	; 0x3e8
- 8003324:	d32a      	bcc.n	800337c <Wheel_Update+0xf0>
+ 80032fa:	68fb      	ldr	r3, [r7, #12]
+ 80032fc:	f8d3 3098 	ldr.w	r3, [r3, #152]	; 0x98
+ 8003300:	f5b3 7f7a 	cmp.w	r3, #1000	; 0x3e8
+ 8003304:	d32a      	bcc.n	800335c <Wheel_Update+0xf0>
         w->avg_rpm = w->report_ticks * 60000.0f / (w->cpr * w->report_ms);
- 8003326:	68fb      	ldr	r3, [r7, #12]
- 8003328:	f8d3 3094 	ldr.w	r3, [r3, #148]	; 0x94
- 800332c:	4618      	mov	r0, r3
- 800332e:	f7fc ffc7 	bl	80002c0 <__aeabi_i2f>
- 8003332:	4603      	mov	r3, r0
- 8003334:	4950      	ldr	r1, [pc, #320]	; (8003478 <Wheel_Update+0x1ec>)
- 8003336:	4618      	mov	r0, r3
- 8003338:	f7fd f816 	bl	8000368 <__aeabi_fmul>
- 800333c:	4603      	mov	r3, r0
- 800333e:	461d      	mov	r5, r3
- 8003340:	68fb      	ldr	r3, [r7, #12]
- 8003342:	6cdc      	ldr	r4, [r3, #76]	; 0x4c
- 8003344:	68fb      	ldr	r3, [r7, #12]
- 8003346:	f8d3 3098 	ldr.w	r3, [r3, #152]	; 0x98
- 800334a:	4618      	mov	r0, r3
- 800334c:	f7fc ffb4 	bl	80002b8 <__aeabi_ui2f>
- 8003350:	4603      	mov	r3, r0
- 8003352:	4619      	mov	r1, r3
- 8003354:	4620      	mov	r0, r4
- 8003356:	f7fd f807 	bl	8000368 <__aeabi_fmul>
- 800335a:	4603      	mov	r3, r0
- 800335c:	4619      	mov	r1, r3
- 800335e:	4628      	mov	r0, r5
- 8003360:	f7fd f8b6 	bl	80004d0 <__aeabi_fdiv>
- 8003364:	4603      	mov	r3, r0
- 8003366:	461a      	mov	r2, r3
- 8003368:	68fb      	ldr	r3, [r7, #12]
- 800336a:	65da      	str	r2, [r3, #92]	; 0x5c
+ 8003306:	68fb      	ldr	r3, [r7, #12]
+ 8003308:	f8d3 3094 	ldr.w	r3, [r3, #148]	; 0x94
+ 800330c:	4618      	mov	r0, r3
+ 800330e:	f7fc ffd7 	bl	80002c0 <__aeabi_i2f>
+ 8003312:	4603      	mov	r3, r0
+ 8003314:	4950      	ldr	r1, [pc, #320]	; (8003458 <Wheel_Update+0x1ec>)
+ 8003316:	4618      	mov	r0, r3
+ 8003318:	f7fd f826 	bl	8000368 <__aeabi_fmul>
+ 800331c:	4603      	mov	r3, r0
+ 800331e:	461d      	mov	r5, r3
+ 8003320:	68fb      	ldr	r3, [r7, #12]
+ 8003322:	6cdc      	ldr	r4, [r3, #76]	; 0x4c
+ 8003324:	68fb      	ldr	r3, [r7, #12]
+ 8003326:	f8d3 3098 	ldr.w	r3, [r3, #152]	; 0x98
+ 800332a:	4618      	mov	r0, r3
+ 800332c:	f7fc ffc4 	bl	80002b8 <__aeabi_ui2f>
+ 8003330:	4603      	mov	r3, r0
+ 8003332:	4619      	mov	r1, r3
+ 8003334:	4620      	mov	r0, r4
+ 8003336:	f7fd f817 	bl	8000368 <__aeabi_fmul>
+ 800333a:	4603      	mov	r3, r0
+ 800333c:	4619      	mov	r1, r3
+ 800333e:	4628      	mov	r0, r5
+ 8003340:	f7fd f8c6 	bl	80004d0 <__aeabi_fdiv>
+ 8003344:	4603      	mov	r3, r0
+ 8003346:	461a      	mov	r2, r3
+ 8003348:	68fb      	ldr	r3, [r7, #12]
+ 800334a:	65da      	str	r2, [r3, #92]	; 0x5c
         w->report_ticks = 0;
- 800336c:	68fb      	ldr	r3, [r7, #12]
- 800336e:	2200      	movs	r2, #0
- 8003370:	f8c3 2094 	str.w	r2, [r3, #148]	; 0x94
+ 800334c:	68fb      	ldr	r3, [r7, #12]
+ 800334e:	2200      	movs	r2, #0
+ 8003350:	f8c3 2094 	str.w	r2, [r3, #148]	; 0x94
         w->report_ms = 0;
- 8003374:	68fb      	ldr	r3, [r7, #12]
- 8003376:	2200      	movs	r2, #0
- 8003378:	f8c3 2098 	str.w	r2, [r3, #152]	; 0x98
+ 8003354:	68fb      	ldr	r3, [r7, #12]
+ 8003356:	2200      	movs	r2, #0
+ 8003358:	f8c3 2098 	str.w	r2, [r3, #152]	; 0x98
     }
 
-    // Dieu khien PID + MotorDriver
+    /* Dieu khien PID + MotorDriver */ 
     w->target_rpm = target_rpm;
- 800337c:	68fb      	ldr	r3, [r7, #12]
- 800337e:	68ba      	ldr	r2, [r7, #8]
- 8003380:	651a      	str	r2, [r3, #80]	; 0x50
+ 800335c:	68fb      	ldr	r3, [r7, #12]
+ 800335e:	68ba      	ldr	r2, [r7, #8]
+ 8003360:	651a      	str	r2, [r3, #80]	; 0x50
     if (!isfinite(target_rpm) || fabsf(target_rpm) <= STOP_EPSILON_RPM) {
- 8003382:	68bb      	ldr	r3, [r7, #8]
- 8003384:	f023 4400 	bic.w	r4, r3, #2147483648	; 0x80000000
- 8003388:	493c      	ldr	r1, [pc, #240]	; (800347c <Wheel_Update+0x1f0>)
- 800338a:	4620      	mov	r0, r4
- 800338c:	f7fd f9b2 	bl	80006f4 <__aeabi_fcmpun>
- 8003390:	4603      	mov	r3, r0
- 8003392:	2b00      	cmp	r3, #0
- 8003394:	d110      	bne.n	80033b8 <Wheel_Update+0x12c>
- 8003396:	4939      	ldr	r1, [pc, #228]	; (800347c <Wheel_Update+0x1f0>)
- 8003398:	4620      	mov	r0, r4
- 800339a:	f7fd f9a1 	bl	80006e0 <__aeabi_fcmpgt>
- 800339e:	4603      	mov	r3, r0
- 80033a0:	2b00      	cmp	r3, #0
- 80033a2:	d109      	bne.n	80033b8 <Wheel_Update+0x12c>
- 80033a4:	68bb      	ldr	r3, [r7, #8]
- 80033a6:	f023 4300 	bic.w	r3, r3, #2147483648	; 0x80000000
- 80033aa:	4935      	ldr	r1, [pc, #212]	; (8003480 <Wheel_Update+0x1f4>)
- 80033ac:	4618      	mov	r0, r3
- 80033ae:	f7fd f983 	bl	80006b8 <__aeabi_fcmple>
- 80033b2:	4603      	mov	r3, r0
- 80033b4:	2b00      	cmp	r3, #0
- 80033b6:	d016      	beq.n	80033e6 <Wheel_Update+0x15a>
+ 8003362:	68bb      	ldr	r3, [r7, #8]
+ 8003364:	f023 4400 	bic.w	r4, r3, #2147483648	; 0x80000000
+ 8003368:	493c      	ldr	r1, [pc, #240]	; (800345c <Wheel_Update+0x1f0>)
+ 800336a:	4620      	mov	r0, r4
+ 800336c:	f7fd f9c2 	bl	80006f4 <__aeabi_fcmpun>
+ 8003370:	4603      	mov	r3, r0
+ 8003372:	2b00      	cmp	r3, #0
+ 8003374:	d110      	bne.n	8003398 <Wheel_Update+0x12c>
+ 8003376:	4939      	ldr	r1, [pc, #228]	; (800345c <Wheel_Update+0x1f0>)
+ 8003378:	4620      	mov	r0, r4
+ 800337a:	f7fd f9b1 	bl	80006e0 <__aeabi_fcmpgt>
+ 800337e:	4603      	mov	r3, r0
+ 8003380:	2b00      	cmp	r3, #0
+ 8003382:	d109      	bne.n	8003398 <Wheel_Update+0x12c>
+ 8003384:	68bb      	ldr	r3, [r7, #8]
+ 8003386:	f023 4300 	bic.w	r3, r3, #2147483648	; 0x80000000
+ 800338a:	4935      	ldr	r1, [pc, #212]	; (8003460 <Wheel_Update+0x1f4>)
+ 800338c:	4618      	mov	r0, r3
+ 800338e:	f7fd f993 	bl	80006b8 <__aeabi_fcmple>
+ 8003392:	4603      	mov	r3, r0
+ 8003394:	2b00      	cmp	r3, #0
+ 8003396:	d016      	beq.n	80033c6 <Wheel_Update+0x15a>
         w->error = 0.0f;
- 80033b8:	68fb      	ldr	r3, [r7, #12]
- 80033ba:	f04f 0200 	mov.w	r2, #0
- 80033be:	661a      	str	r2, [r3, #96]	; 0x60
+ 8003398:	68fb      	ldr	r3, [r7, #12]
+ 800339a:	f04f 0200 	mov.w	r2, #0
+ 800339e:	661a      	str	r2, [r3, #96]	; 0x60
         w->target_sign = 0;
- 80033c0:	68fb      	ldr	r3, [r7, #12]
- 80033c2:	2200      	movs	r2, #0
- 80033c4:	f883 209c 	strb.w	r2, [r3, #156]	; 0x9c
+ 80033a0:	68fb      	ldr	r3, [r7, #12]
+ 80033a2:	2200      	movs	r2, #0
+ 80033a4:	f883 209c 	strb.w	r2, [r3, #156]	; 0x9c
         Pid_Reset(&w->pid);
- 80033c8:	68fb      	ldr	r3, [r7, #12]
- 80033ca:	3328      	adds	r3, #40	; 0x28
- 80033cc:	4618      	mov	r0, r3
- 80033ce:	f7ff fd74 	bl	8002eba <Pid_Reset>
+ 80033a8:	68fb      	ldr	r3, [r7, #12]
+ 80033aa:	3328      	adds	r3, #40	; 0x28
+ 80033ac:	4618      	mov	r0, r3
+ 80033ae:	f7ff fd82 	bl	8002eb6 <Pid_Reset>
         w->pid.prev_input = w->rpm;
- 80033d2:	68fb      	ldr	r3, [r7, #12]
- 80033d4:	6d9a      	ldr	r2, [r3, #88]	; 0x58
- 80033d6:	68fb      	ldr	r3, [r7, #12]
- 80033d8:	641a      	str	r2, [r3, #64]	; 0x40
+ 80033b2:	68fb      	ldr	r3, [r7, #12]
+ 80033b4:	6d9a      	ldr	r2, [r3, #88]	; 0x58
+ 80033b6:	68fb      	ldr	r3, [r7, #12]
+ 80033b8:	641a      	str	r2, [r3, #64]	; 0x40
         MotorDriver_Stop(&w->motor);
- 80033da:	68fb      	ldr	r3, [r7, #12]
- 80033dc:	3310      	adds	r3, #16
- 80033de:	4618      	mov	r0, r3
- 80033e0:	f000 fa6e 	bl	80038c0 <MotorDriver_Stop>
+ 80033ba:	68fb      	ldr	r3, [r7, #12]
+ 80033bc:	3310      	adds	r3, #16
+ 80033be:	4618      	mov	r0, r3
+ 80033c0:	f000 fa6e 	bl	80038a0 <MotorDriver_Stop>
         return;
- 80033e4:	e040      	b.n	8003468 <Wheel_Update+0x1dc>
+ 80033c4:	e040      	b.n	8003448 <Wheel_Update+0x1dc>
     }
 
     // Cap nhat dau dao chieu
     int8_t sign = target_rpm > 0.0f ? 1 : -1;
- 80033e6:	f04f 0100 	mov.w	r1, #0
- 80033ea:	68b8      	ldr	r0, [r7, #8]
- 80033ec:	f7fd f978 	bl	80006e0 <__aeabi_fcmpgt>
- 80033f0:	4603      	mov	r3, r0
- 80033f2:	2b00      	cmp	r3, #0
- 80033f4:	d001      	beq.n	80033fa <Wheel_Update+0x16e>
- 80033f6:	2301      	movs	r3, #1
- 80033f8:	e001      	b.n	80033fe <Wheel_Update+0x172>
- 80033fa:	f04f 33ff 	mov.w	r3, #4294967295
- 80033fe:	75fb      	strb	r3, [r7, #23]
+ 80033c6:	f04f 0100 	mov.w	r1, #0
+ 80033ca:	68b8      	ldr	r0, [r7, #8]
+ 80033cc:	f7fd f988 	bl	80006e0 <__aeabi_fcmpgt>
+ 80033d0:	4603      	mov	r3, r0
+ 80033d2:	2b00      	cmp	r3, #0
+ 80033d4:	d001      	beq.n	80033da <Wheel_Update+0x16e>
+ 80033d6:	2301      	movs	r3, #1
+ 80033d8:	e001      	b.n	80033de <Wheel_Update+0x172>
+ 80033da:	f04f 33ff 	mov.w	r3, #4294967295
+ 80033de:	75fb      	strb	r3, [r7, #23]
     if (w->target_sign && sign != w->target_sign) {
- 8003400:	68fb      	ldr	r3, [r7, #12]
- 8003402:	f993 309c 	ldrsb.w	r3, [r3, #156]	; 0x9c
- 8003406:	2b00      	cmp	r3, #0
- 8003408:	d00f      	beq.n	800342a <Wheel_Update+0x19e>
- 800340a:	68fb      	ldr	r3, [r7, #12]
- 800340c:	f993 309c 	ldrsb.w	r3, [r3, #156]	; 0x9c
- 8003410:	f997 2017 	ldrsb.w	r2, [r7, #23]
- 8003414:	429a      	cmp	r2, r3
- 8003416:	d008      	beq.n	800342a <Wheel_Update+0x19e>
+ 80033e0:	68fb      	ldr	r3, [r7, #12]
+ 80033e2:	f993 309c 	ldrsb.w	r3, [r3, #156]	; 0x9c
+ 80033e6:	2b00      	cmp	r3, #0
+ 80033e8:	d00f      	beq.n	800340a <Wheel_Update+0x19e>
+ 80033ea:	68fb      	ldr	r3, [r7, #12]
+ 80033ec:	f993 309c 	ldrsb.w	r3, [r3, #156]	; 0x9c
+ 80033f0:	f997 2017 	ldrsb.w	r2, [r7, #23]
+ 80033f4:	429a      	cmp	r2, r3
+ 80033f6:	d008      	beq.n	800340a <Wheel_Update+0x19e>
         Pid_Reset(&w->pid);
- 8003418:	68fb      	ldr	r3, [r7, #12]
- 800341a:	3328      	adds	r3, #40	; 0x28
- 800341c:	4618      	mov	r0, r3
- 800341e:	f7ff fd4c 	bl	8002eba <Pid_Reset>
+ 80033f8:	68fb      	ldr	r3, [r7, #12]
+ 80033fa:	3328      	adds	r3, #40	; 0x28
+ 80033fc:	4618      	mov	r0, r3
+ 80033fe:	f7ff fd5a 	bl	8002eb6 <Pid_Reset>
         w->pid.prev_input = w->rpm;
- 8003422:	68fb      	ldr	r3, [r7, #12]
- 8003424:	6d9a      	ldr	r2, [r3, #88]	; 0x58
- 8003426:	68fb      	ldr	r3, [r7, #12]
- 8003428:	641a      	str	r2, [r3, #64]	; 0x40
+ 8003402:	68fb      	ldr	r3, [r7, #12]
+ 8003404:	6d9a      	ldr	r2, [r3, #88]	; 0x58
+ 8003406:	68fb      	ldr	r3, [r7, #12]
+ 8003408:	641a      	str	r2, [r3, #64]	; 0x40
     }
-    w->target_sign = sign;              // Cap nhat dau muc tieu
- 800342a:	68fb      	ldr	r3, [r7, #12]
- 800342c:	7dfa      	ldrb	r2, [r7, #23]
- 800342e:	f883 209c 	strb.w	r2, [r3, #156]	; 0x9c
+    w->target_sign = sign;              
+ 800340a:	68fb      	ldr	r3, [r7, #12]
+ 800340c:	7dfa      	ldrb	r2, [r7, #23]
+ 800340e:	f883 209c 	strb.w	r2, [r3, #156]	; 0x9c
     w->error = target_rpm - w->rpm;     // Sai so giua RPM muc tieu va RPM da loc
- 8003432:	68fb      	ldr	r3, [r7, #12]
- 8003434:	6d9b      	ldr	r3, [r3, #88]	; 0x58
- 8003436:	4619      	mov	r1, r3
- 8003438:	68b8      	ldr	r0, [r7, #8]
- 800343a:	f7fc fe8b 	bl	8000154 <__aeabi_fsub>
- 800343e:	4603      	mov	r3, r0
- 8003440:	461a      	mov	r2, r3
- 8003442:	68fb      	ldr	r3, [r7, #12]
- 8003444:	661a      	str	r2, [r3, #96]	; 0x60
+ 8003412:	68fb      	ldr	r3, [r7, #12]
+ 8003414:	6d9b      	ldr	r3, [r3, #88]	; 0x58
+ 8003416:	4619      	mov	r1, r3
+ 8003418:	68b8      	ldr	r0, [r7, #8]
+ 800341a:	f7fc fe9b 	bl	8000154 <__aeabi_fsub>
+ 800341e:	4603      	mov	r3, r0
+ 8003420:	461a      	mov	r2, r3
+ 8003422:	68fb      	ldr	r3, [r7, #12]
+ 8003424:	661a      	str	r2, [r3, #96]	; 0x60
 
     // Cap nhat PID va dieu khien dong co
     MotorDriver_Set(&w->motor, Pid_Update(&w->pid, target_rpm, w->rpm, dt));
- 8003446:	68fb      	ldr	r3, [r7, #12]
- 8003448:	f103 0410 	add.w	r4, r3, #16
- 800344c:	68fb      	ldr	r3, [r7, #12]
- 800344e:	f103 0028 	add.w	r0, r3, #40	; 0x28
- 8003452:	68fb      	ldr	r3, [r7, #12]
- 8003454:	6d9a      	ldr	r2, [r3, #88]	; 0x58
- 8003456:	69fb      	ldr	r3, [r7, #28]
- 8003458:	68b9      	ldr	r1, [r7, #8]
- 800345a:	f7ff fd3f 	bl	8002edc <Pid_Update>
- 800345e:	4603      	mov	r3, r0
- 8003460:	4619      	mov	r1, r3
- 8003462:	4620      	mov	r0, r4
- 8003464:	f000 f910 	bl	8003688 <MotorDriver_Set>
+ 8003426:	68fb      	ldr	r3, [r7, #12]
+ 8003428:	f103 0410 	add.w	r4, r3, #16
+ 800342c:	68fb      	ldr	r3, [r7, #12]
+ 800342e:	f103 0028 	add.w	r0, r3, #40	; 0x28
+ 8003432:	68fb      	ldr	r3, [r7, #12]
+ 8003434:	6d9a      	ldr	r2, [r3, #88]	; 0x58
+ 8003436:	69fb      	ldr	r3, [r7, #28]
+ 8003438:	68b9      	ldr	r1, [r7, #8]
+ 800343a:	f7ff fd4d 	bl	8002ed8 <Pid_Update>
+ 800343e:	4603      	mov	r3, r0
+ 8003440:	4619      	mov	r1, r3
+ 8003442:	4620      	mov	r0, r4
+ 8003444:	f000 f910 	bl	8003668 <MotorDriver_Set>
 }
- 8003468:	3720      	adds	r7, #32
- 800346a:	46bd      	mov	sp, r7
- 800346c:	bdb0      	pop	{r4, r5, r7, pc}
- 800346e:	bf00      	nop
- 8003470:	3a83126f 	.word	0x3a83126f
- 8003474:	42700000 	.word	0x42700000
- 8003478:	476a6000 	.word	0x476a6000
- 800347c:	7f7fffff 	.word	0x7f7fffff
- 8003480:	3c23d70a 	.word	0x3c23d70a
+ 8003448:	3720      	adds	r7, #32
+ 800344a:	46bd      	mov	sp, r7
+ 800344c:	bdb0      	pop	{r4, r5, r7, pc}
+ 800344e:	bf00      	nop
+ 8003450:	3a83126f 	.word	0x3a83126f
+ 8003454:	42700000 	.word	0x42700000
+ 8003458:	476a6000 	.word	0x476a6000
+ 800345c:	7f7fffff 	.word	0x7f7fffff
+ 8003460:	3c23d70a 	.word	0x3c23d70a
 
-08003484 <Wheel_Stop>:
+08003464 <Wheel_Stop>:
 
 void Wheel_Stop(WheelCtrl *w)
 {
- 8003484:	b580      	push	{r7, lr}
- 8003486:	b082      	sub	sp, #8
- 8003488:	af00      	add	r7, sp, #0
- 800348a:	6078      	str	r0, [r7, #4]
+ 8003464:	b580      	push	{r7, lr}
+ 8003466:	b082      	sub	sp, #8
+ 8003468:	af00      	add	r7, sp, #0
+ 800346a:	6078      	str	r0, [r7, #4]
     w->target_rpm = 0.0f;
- 800348c:	687b      	ldr	r3, [r7, #4]
- 800348e:	f04f 0200 	mov.w	r2, #0
- 8003492:	651a      	str	r2, [r3, #80]	; 0x50
+ 800346c:	687b      	ldr	r3, [r7, #4]
+ 800346e:	f04f 0200 	mov.w	r2, #0
+ 8003472:	651a      	str	r2, [r3, #80]	; 0x50
     w->error = 0.0f;
- 8003494:	687b      	ldr	r3, [r7, #4]
- 8003496:	f04f 0200 	mov.w	r2, #0
- 800349a:	661a      	str	r2, [r3, #96]	; 0x60
+ 8003474:	687b      	ldr	r3, [r7, #4]
+ 8003476:	f04f 0200 	mov.w	r2, #0
+ 800347a:	661a      	str	r2, [r3, #96]	; 0x60
     w->target_sign = 0;
- 800349c:	687b      	ldr	r3, [r7, #4]
- 800349e:	2200      	movs	r2, #0
- 80034a0:	f883 209c 	strb.w	r2, [r3, #156]	; 0x9c
+ 800347c:	687b      	ldr	r3, [r7, #4]
+ 800347e:	2200      	movs	r2, #0
+ 8003480:	f883 209c 	strb.w	r2, [r3, #156]	; 0x9c
     Pid_Reset(&w->pid);
- 80034a4:	687b      	ldr	r3, [r7, #4]
- 80034a6:	3328      	adds	r3, #40	; 0x28
- 80034a8:	4618      	mov	r0, r3
- 80034aa:	f7ff fd06 	bl	8002eba <Pid_Reset>
+ 8003484:	687b      	ldr	r3, [r7, #4]
+ 8003486:	3328      	adds	r3, #40	; 0x28
+ 8003488:	4618      	mov	r0, r3
+ 800348a:	f7ff fd14 	bl	8002eb6 <Pid_Reset>
     MotorDriver_Stop(&w->motor);
- 80034ae:	687b      	ldr	r3, [r7, #4]
- 80034b0:	3310      	adds	r3, #16
- 80034b2:	4618      	mov	r0, r3
- 80034b4:	f000 fa04 	bl	80038c0 <MotorDriver_Stop>
+ 800348e:	687b      	ldr	r3, [r7, #4]
+ 8003490:	3310      	adds	r3, #16
+ 8003492:	4618      	mov	r0, r3
+ 8003494:	f000 fa04 	bl	80038a0 <MotorDriver_Stop>
 }
- 80034b8:	bf00      	nop
- 80034ba:	3708      	adds	r7, #8
- 80034bc:	46bd      	mov	sp, r7
- 80034be:	bd80      	pop	{r7, pc}
+ 8003498:	bf00      	nop
+ 800349a:	3708      	adds	r7, #8
+ 800349c:	46bd      	mov	sp, r7
+ 800349e:	bd80      	pop	{r7, pc}
 
-080034c0 <Encoder_Init>:
+080034a0 <Encoder_Init>:
 #include "encoder.h"
 
 void Encoder_Init(Encoder *enc, TIM_HandleTypeDef *tim, int8_t sign)
 {
- 80034c0:	b480      	push	{r7}
- 80034c2:	b085      	sub	sp, #20
- 80034c4:	af00      	add	r7, sp, #0
- 80034c6:	60f8      	str	r0, [r7, #12]
- 80034c8:	60b9      	str	r1, [r7, #8]
- 80034ca:	4613      	mov	r3, r2
- 80034cc:	71fb      	strb	r3, [r7, #7]
+ 80034a0:	b480      	push	{r7}
+ 80034a2:	b085      	sub	sp, #20
+ 80034a4:	af00      	add	r7, sp, #0
+ 80034a6:	60f8      	str	r0, [r7, #12]
+ 80034a8:	60b9      	str	r1, [r7, #8]
+ 80034aa:	4613      	mov	r3, r2
+ 80034ac:	71fb      	strb	r3, [r7, #7]
     enc->tim = tim;
- 80034ce:	68fb      	ldr	r3, [r7, #12]
- 80034d0:	68ba      	ldr	r2, [r7, #8]
- 80034d2:	601a      	str	r2, [r3, #0]
+ 80034ae:	68fb      	ldr	r3, [r7, #12]
+ 80034b0:	68ba      	ldr	r2, [r7, #8]
+ 80034b2:	601a      	str	r2, [r3, #0]
     enc->prev = 0;
- 80034d4:	68fb      	ldr	r3, [r7, #12]
- 80034d6:	2200      	movs	r2, #0
- 80034d8:	809a      	strh	r2, [r3, #4]
+ 80034b4:	68fb      	ldr	r3, [r7, #12]
+ 80034b6:	2200      	movs	r2, #0
+ 80034b8:	809a      	strh	r2, [r3, #4]
     enc->sign = sign;
- 80034da:	68fb      	ldr	r3, [r7, #12]
- 80034dc:	79fa      	ldrb	r2, [r7, #7]
- 80034de:	719a      	strb	r2, [r3, #6]
+ 80034ba:	68fb      	ldr	r3, [r7, #12]
+ 80034bc:	79fa      	ldrb	r2, [r7, #7]
+ 80034be:	719a      	strb	r2, [r3, #6]
     enc->total = 0;
- 80034e0:	68f9      	ldr	r1, [r7, #12]
- 80034e2:	f04f 0200 	mov.w	r2, #0
- 80034e6:	f04f 0300 	mov.w	r3, #0
- 80034ea:	e9c1 2302 	strd	r2, r3, [r1, #8]
-    __HAL_TIM_SET_COUNTER(tim, 0);
- 80034ee:	68bb      	ldr	r3, [r7, #8]
- 80034f0:	681b      	ldr	r3, [r3, #0]
- 80034f2:	2200      	movs	r2, #0
- 80034f4:	625a      	str	r2, [r3, #36]	; 0x24
-}
- 80034f6:	bf00      	nop
- 80034f8:	3714      	adds	r7, #20
- 80034fa:	46bd      	mov	sp, r7
- 80034fc:	bc80      	pop	{r7}
- 80034fe:	4770      	bx	lr
+ 80034c0:	68f9      	ldr	r1, [r7, #12]
+ 80034c2:	f04f 0200 	mov.w	r2, #0
+ 80034c6:	f04f 0300 	mov.w	r3, #0
+ 80034ca:	e9c1 2302 	strd	r2, r3, [r1, #8]
 
-08003500 <Encoder_Start>:
+    __HAL_TIM_SET_COUNTER(tim, 0);
+ 80034ce:	68bb      	ldr	r3, [r7, #8]
+ 80034d0:	681b      	ldr	r3, [r3, #0]
+ 80034d2:	2200      	movs	r2, #0
+ 80034d4:	625a      	str	r2, [r3, #36]	; 0x24
+}
+ 80034d6:	bf00      	nop
+ 80034d8:	3714      	adds	r7, #20
+ 80034da:	46bd      	mov	sp, r7
+ 80034dc:	bc80      	pop	{r7}
+ 80034de:	4770      	bx	lr
+
+080034e0 <Encoder_Start>:
 
 HAL_StatusTypeDef Encoder_Start(Encoder *enc)
 {
- 8003500:	b580      	push	{r7, lr}
- 8003502:	b082      	sub	sp, #8
- 8003504:	af00      	add	r7, sp, #0
- 8003506:	6078      	str	r0, [r7, #4]
+ 80034e0:	b580      	push	{r7, lr}
+ 80034e2:	b082      	sub	sp, #8
+ 80034e4:	af00      	add	r7, sp, #0
+ 80034e6:	6078      	str	r0, [r7, #4]
     return HAL_TIM_Encoder_Start(enc->tim, TIM_CHANNEL_ALL);
- 8003508:	687b      	ldr	r3, [r7, #4]
- 800350a:	681b      	ldr	r3, [r3, #0]
- 800350c:	213c      	movs	r1, #60	; 0x3c
- 800350e:	4618      	mov	r0, r3
- 8003510:	f7fe fd62 	bl	8001fd8 <HAL_TIM_Encoder_Start>
- 8003514:	4603      	mov	r3, r0
+ 80034e8:	687b      	ldr	r3, [r7, #4]
+ 80034ea:	681b      	ldr	r3, [r3, #0]
+ 80034ec:	213c      	movs	r1, #60	; 0x3c
+ 80034ee:	4618      	mov	r0, r3
+ 80034f0:	f7fe fd72 	bl	8001fd8 <HAL_TIM_Encoder_Start>
+ 80034f4:	4603      	mov	r3, r0
 }
- 8003516:	4618      	mov	r0, r3
- 8003518:	3708      	adds	r7, #8
- 800351a:	46bd      	mov	sp, r7
- 800351c:	bd80      	pop	{r7, pc}
+ 80034f6:	4618      	mov	r0, r3
+ 80034f8:	3708      	adds	r7, #8
+ 80034fa:	46bd      	mov	sp, r7
+ 80034fc:	bd80      	pop	{r7, pc}
 
-0800351e <Encoder_Read>:
+080034fe <Encoder_Read>:
 
 int32_t Encoder_Read(Encoder *enc)
 {
- 800351e:	b4b0      	push	{r4, r5, r7}
- 8003520:	b085      	sub	sp, #20
- 8003522:	af00      	add	r7, sp, #0
- 8003524:	6078      	str	r0, [r7, #4]
+ 80034fe:	b4b0      	push	{r4, r5, r7}
+ 8003500:	b085      	sub	sp, #20
+ 8003502:	af00      	add	r7, sp, #0
+ 8003504:	6078      	str	r0, [r7, #4]
     uint16_t now = (uint16_t)__HAL_TIM_GET_COUNTER(enc->tim);
- 8003526:	687b      	ldr	r3, [r7, #4]
- 8003528:	681b      	ldr	r3, [r3, #0]
- 800352a:	681b      	ldr	r3, [r3, #0]
- 800352c:	6a5b      	ldr	r3, [r3, #36]	; 0x24
- 800352e:	817b      	strh	r3, [r7, #10]
+ 8003506:	687b      	ldr	r3, [r7, #4]
+ 8003508:	681b      	ldr	r3, [r3, #0]
+ 800350a:	681b      	ldr	r3, [r3, #0]
+ 800350c:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+ 800350e:	817b      	strh	r3, [r7, #10]
     int32_t delta = (int32_t)now - (int32_t)enc->prev;
- 8003530:	897b      	ldrh	r3, [r7, #10]
- 8003532:	687a      	ldr	r2, [r7, #4]
- 8003534:	8892      	ldrh	r2, [r2, #4]
- 8003536:	1a9b      	subs	r3, r3, r2
- 8003538:	60fb      	str	r3, [r7, #12]
-    if (delta > 32767) delta -= 65536;
- 800353a:	68fb      	ldr	r3, [r7, #12]
- 800353c:	f5b3 4f00 	cmp.w	r3, #32768	; 0x8000
- 8003540:	db03      	blt.n	800354a <Encoder_Read+0x2c>
- 8003542:	68fb      	ldr	r3, [r7, #12]
- 8003544:	f5a3 3380 	sub.w	r3, r3, #65536	; 0x10000
- 8003548:	60fb      	str	r3, [r7, #12]
-    if (delta < -32768) delta += 65536;
- 800354a:	68fb      	ldr	r3, [r7, #12]
- 800354c:	f513 4f00 	cmn.w	r3, #32768	; 0x8000
- 8003550:	da03      	bge.n	800355a <Encoder_Read+0x3c>
- 8003552:	68fb      	ldr	r3, [r7, #12]
- 8003554:	f503 3380 	add.w	r3, r3, #65536	; 0x10000
- 8003558:	60fb      	str	r3, [r7, #12]
-    enc->prev = now;
- 800355a:	687b      	ldr	r3, [r7, #4]
- 800355c:	897a      	ldrh	r2, [r7, #10]
- 800355e:	809a      	strh	r2, [r3, #4]
-    delta *= enc->sign;
- 8003560:	687b      	ldr	r3, [r7, #4]
- 8003562:	f993 3006 	ldrsb.w	r3, [r3, #6]
- 8003566:	461a      	mov	r2, r3
- 8003568:	68fb      	ldr	r3, [r7, #12]
- 800356a:	fb02 f303 	mul.w	r3, r2, r3
- 800356e:	60fb      	str	r3, [r7, #12]
-    enc->total += delta;
- 8003570:	687b      	ldr	r3, [r7, #4]
- 8003572:	e9d3 0102 	ldrd	r0, r1, [r3, #8]
- 8003576:	68fb      	ldr	r3, [r7, #12]
- 8003578:	461a      	mov	r2, r3
- 800357a:	ea4f 73e2 	mov.w	r3, r2, asr #31
- 800357e:	1884      	adds	r4, r0, r2
- 8003580:	eb41 0503 	adc.w	r5, r1, r3
- 8003584:	687b      	ldr	r3, [r7, #4]
- 8003586:	e9c3 4502 	strd	r4, r5, [r3, #8]
-    return delta;
- 800358a:	68fb      	ldr	r3, [r7, #12]
-}
- 800358c:	4618      	mov	r0, r3
- 800358e:	3714      	adds	r7, #20
- 8003590:	46bd      	mov	sp, r7
- 8003592:	bcb0      	pop	{r4, r5, r7}
- 8003594:	4770      	bx	lr
+ 8003510:	897b      	ldrh	r3, [r7, #10]
+ 8003512:	687a      	ldr	r2, [r7, #4]
+ 8003514:	8892      	ldrh	r2, [r2, #4]
+ 8003516:	1a9b      	subs	r3, r3, r2
+ 8003518:	60fb      	str	r3, [r7, #12]
 
-08003596 <Clamp>:
+    /* Xử lý tràn CNT */
+    if (delta > 32767) delta -= 65536;
+ 800351a:	68fb      	ldr	r3, [r7, #12]
+ 800351c:	f5b3 4f00 	cmp.w	r3, #32768	; 0x8000
+ 8003520:	db03      	blt.n	800352a <Encoder_Read+0x2c>
+ 8003522:	68fb      	ldr	r3, [r7, #12]
+ 8003524:	f5a3 3380 	sub.w	r3, r3, #65536	; 0x10000
+ 8003528:	60fb      	str	r3, [r7, #12]
+    if (delta < -32768) delta += 65536;
+ 800352a:	68fb      	ldr	r3, [r7, #12]
+ 800352c:	f513 4f00 	cmn.w	r3, #32768	; 0x8000
+ 8003530:	da03      	bge.n	800353a <Encoder_Read+0x3c>
+ 8003532:	68fb      	ldr	r3, [r7, #12]
+ 8003534:	f503 3380 	add.w	r3, r3, #65536	; 0x10000
+ 8003538:	60fb      	str	r3, [r7, #12]
+
+    enc->prev = now;
+ 800353a:	687b      	ldr	r3, [r7, #4]
+ 800353c:	897a      	ldrh	r2, [r7, #10]
+ 800353e:	809a      	strh	r2, [r3, #4]
+
+    delta *= enc->sign;     
+ 8003540:	687b      	ldr	r3, [r7, #4]
+ 8003542:	f993 3006 	ldrsb.w	r3, [r3, #6]
+ 8003546:	461a      	mov	r2, r3
+ 8003548:	68fb      	ldr	r3, [r7, #12]
+ 800354a:	fb02 f303 	mul.w	r3, r2, r3
+ 800354e:	60fb      	str	r3, [r7, #12]
+
+    enc->total += delta;
+ 8003550:	687b      	ldr	r3, [r7, #4]
+ 8003552:	e9d3 0102 	ldrd	r0, r1, [r3, #8]
+ 8003556:	68fb      	ldr	r3, [r7, #12]
+ 8003558:	461a      	mov	r2, r3
+ 800355a:	ea4f 73e2 	mov.w	r3, r2, asr #31
+ 800355e:	1884      	adds	r4, r0, r2
+ 8003560:	eb41 0503 	adc.w	r5, r1, r3
+ 8003564:	687b      	ldr	r3, [r7, #4]
+ 8003566:	e9c3 4502 	strd	r4, r5, [r3, #8]
+
+    return delta;
+ 800356a:	68fb      	ldr	r3, [r7, #12]
+}
+ 800356c:	4618      	mov	r0, r3
+ 800356e:	3714      	adds	r7, #20
+ 8003570:	46bd      	mov	sp, r7
+ 8003572:	bcb0      	pop	{r4, r5, r7}
+ 8003574:	4770      	bx	lr
+
+08003576 <Clamp>:
 #include "motor_driver.h"
 
 #include <math.h>
 
 static float Clamp(float x, float min, float max)
 {
- 8003596:	b580      	push	{r7, lr}
- 8003598:	b084      	sub	sp, #16
- 800359a:	af00      	add	r7, sp, #0
- 800359c:	60f8      	str	r0, [r7, #12]
- 800359e:	60b9      	str	r1, [r7, #8]
- 80035a0:	607a      	str	r2, [r7, #4]
+ 8003576:	b580      	push	{r7, lr}
+ 8003578:	b084      	sub	sp, #16
+ 800357a:	af00      	add	r7, sp, #0
+ 800357c:	60f8      	str	r0, [r7, #12]
+ 800357e:	60b9      	str	r1, [r7, #8]
+ 8003580:	607a      	str	r2, [r7, #4]
     return x < min ? min : (x > max ? max : x);
- 80035a2:	68b9      	ldr	r1, [r7, #8]
- 80035a4:	68f8      	ldr	r0, [r7, #12]
- 80035a6:	f7fd f87d 	bl	80006a4 <__aeabi_fcmplt>
- 80035aa:	4603      	mov	r3, r0
- 80035ac:	2b00      	cmp	r3, #0
- 80035ae:	d001      	beq.n	80035b4 <Clamp+0x1e>
- 80035b0:	68bb      	ldr	r3, [r7, #8]
- 80035b2:	e009      	b.n	80035c8 <Clamp+0x32>
- 80035b4:	6879      	ldr	r1, [r7, #4]
- 80035b6:	68f8      	ldr	r0, [r7, #12]
- 80035b8:	f7fd f892 	bl	80006e0 <__aeabi_fcmpgt>
- 80035bc:	4603      	mov	r3, r0
- 80035be:	2b00      	cmp	r3, #0
- 80035c0:	d001      	beq.n	80035c6 <Clamp+0x30>
- 80035c2:	687b      	ldr	r3, [r7, #4]
- 80035c4:	e000      	b.n	80035c8 <Clamp+0x32>
- 80035c6:	68fb      	ldr	r3, [r7, #12]
+ 8003582:	68b9      	ldr	r1, [r7, #8]
+ 8003584:	68f8      	ldr	r0, [r7, #12]
+ 8003586:	f7fd f88d 	bl	80006a4 <__aeabi_fcmplt>
+ 800358a:	4603      	mov	r3, r0
+ 800358c:	2b00      	cmp	r3, #0
+ 800358e:	d001      	beq.n	8003594 <Clamp+0x1e>
+ 8003590:	68bb      	ldr	r3, [r7, #8]
+ 8003592:	e009      	b.n	80035a8 <Clamp+0x32>
+ 8003594:	6879      	ldr	r1, [r7, #4]
+ 8003596:	68f8      	ldr	r0, [r7, #12]
+ 8003598:	f7fd f8a2 	bl	80006e0 <__aeabi_fcmpgt>
+ 800359c:	4603      	mov	r3, r0
+ 800359e:	2b00      	cmp	r3, #0
+ 80035a0:	d001      	beq.n	80035a6 <Clamp+0x30>
+ 80035a2:	687b      	ldr	r3, [r7, #4]
+ 80035a4:	e000      	b.n	80035a8 <Clamp+0x32>
+ 80035a6:	68fb      	ldr	r3, [r7, #12]
 }
- 80035c8:	4618      	mov	r0, r3
- 80035ca:	3710      	adds	r7, #16
- 80035cc:	46bd      	mov	sp, r7
- 80035ce:	bd80      	pop	{r7, pc}
+ 80035a8:	4618      	mov	r0, r3
+ 80035aa:	3710      	adds	r7, #16
+ 80035ac:	46bd      	mov	sp, r7
+ 80035ae:	bd80      	pop	{r7, pc}
 
-080035d0 <MotorDriver_Init>:
+080035b0 <MotorDriver_Init>:
 
 void MotorDriver_Init(MotorDriver *m, TIM_HandleTypeDef *tim, uint32_t channel,
                       GPIO_TypeDef *port, uint16_t in1, uint16_t in2, int8_t sign)
 {
- 80035d0:	b580      	push	{r7, lr}
- 80035d2:	b084      	sub	sp, #16
- 80035d4:	af00      	add	r7, sp, #0
- 80035d6:	60f8      	str	r0, [r7, #12]
- 80035d8:	60b9      	str	r1, [r7, #8]
- 80035da:	607a      	str	r2, [r7, #4]
- 80035dc:	603b      	str	r3, [r7, #0]
+ 80035b0:	b580      	push	{r7, lr}
+ 80035b2:	b084      	sub	sp, #16
+ 80035b4:	af00      	add	r7, sp, #0
+ 80035b6:	60f8      	str	r0, [r7, #12]
+ 80035b8:	60b9      	str	r1, [r7, #8]
+ 80035ba:	607a      	str	r2, [r7, #4]
+ 80035bc:	603b      	str	r3, [r7, #0]
     m->tim = tim;
- 80035de:	68fb      	ldr	r3, [r7, #12]
- 80035e0:	68ba      	ldr	r2, [r7, #8]
- 80035e2:	601a      	str	r2, [r3, #0]
+ 80035be:	68fb      	ldr	r3, [r7, #12]
+ 80035c0:	68ba      	ldr	r2, [r7, #8]
+ 80035c2:	601a      	str	r2, [r3, #0]
     m->channel = channel;
- 80035e4:	68fb      	ldr	r3, [r7, #12]
- 80035e6:	687a      	ldr	r2, [r7, #4]
- 80035e8:	605a      	str	r2, [r3, #4]
+ 80035c4:	68fb      	ldr	r3, [r7, #12]
+ 80035c6:	687a      	ldr	r2, [r7, #4]
+ 80035c8:	605a      	str	r2, [r3, #4]
     m->port = port;
- 80035ea:	68fb      	ldr	r3, [r7, #12]
- 80035ec:	683a      	ldr	r2, [r7, #0]
- 80035ee:	609a      	str	r2, [r3, #8]
+ 80035ca:	68fb      	ldr	r3, [r7, #12]
+ 80035cc:	683a      	ldr	r2, [r7, #0]
+ 80035ce:	609a      	str	r2, [r3, #8]
     m->in1 = in1;
- 80035f0:	68fb      	ldr	r3, [r7, #12]
- 80035f2:	8b3a      	ldrh	r2, [r7, #24]
- 80035f4:	819a      	strh	r2, [r3, #12]
+ 80035d0:	68fb      	ldr	r3, [r7, #12]
+ 80035d2:	8b3a      	ldrh	r2, [r7, #24]
+ 80035d4:	819a      	strh	r2, [r3, #12]
     m->in2 = in2;
- 80035f6:	68fb      	ldr	r3, [r7, #12]
- 80035f8:	8bba      	ldrh	r2, [r7, #28]
- 80035fa:	81da      	strh	r2, [r3, #14]
+ 80035d6:	68fb      	ldr	r3, [r7, #12]
+ 80035d8:	8bba      	ldrh	r2, [r7, #28]
+ 80035da:	81da      	strh	r2, [r3, #14]
     m->sign = sign;
- 80035fc:	68fb      	ldr	r3, [r7, #12]
- 80035fe:	f897 2020 	ldrb.w	r2, [r7, #32]
- 8003602:	741a      	strb	r2, [r3, #16]
+ 80035dc:	68fb      	ldr	r3, [r7, #12]
+ 80035de:	f897 2020 	ldrb.w	r2, [r7, #32]
+ 80035e2:	741a      	strb	r2, [r3, #16]
     m->direction = 0;
- 8003604:	68fb      	ldr	r3, [r7, #12]
- 8003606:	2200      	movs	r2, #0
- 8003608:	745a      	strb	r2, [r3, #17]
+ 80035e4:	68fb      	ldr	r3, [r7, #12]
+ 80035e6:	2200      	movs	r2, #0
+ 80035e8:	745a      	strb	r2, [r3, #17]
     m->duty = 0.0f;
- 800360a:	68fb      	ldr	r3, [r7, #12]
- 800360c:	f04f 0200 	mov.w	r2, #0
- 8003610:	615a      	str	r2, [r3, #20]
-    __HAL_TIM_SET_COMPARE(tim, channel, 0);
- 8003612:	687b      	ldr	r3, [r7, #4]
- 8003614:	2b00      	cmp	r3, #0
- 8003616:	d104      	bne.n	8003622 <MotorDriver_Init+0x52>
- 8003618:	68bb      	ldr	r3, [r7, #8]
- 800361a:	681b      	ldr	r3, [r3, #0]
- 800361c:	2200      	movs	r2, #0
- 800361e:	635a      	str	r2, [r3, #52]	; 0x34
- 8003620:	e013      	b.n	800364a <MotorDriver_Init+0x7a>
- 8003622:	687b      	ldr	r3, [r7, #4]
- 8003624:	2b04      	cmp	r3, #4
- 8003626:	d104      	bne.n	8003632 <MotorDriver_Init+0x62>
- 8003628:	68bb      	ldr	r3, [r7, #8]
- 800362a:	681a      	ldr	r2, [r3, #0]
- 800362c:	2300      	movs	r3, #0
- 800362e:	6393      	str	r3, [r2, #56]	; 0x38
- 8003630:	e00b      	b.n	800364a <MotorDriver_Init+0x7a>
- 8003632:	687b      	ldr	r3, [r7, #4]
- 8003634:	2b08      	cmp	r3, #8
- 8003636:	d104      	bne.n	8003642 <MotorDriver_Init+0x72>
- 8003638:	68bb      	ldr	r3, [r7, #8]
- 800363a:	681a      	ldr	r2, [r3, #0]
- 800363c:	2300      	movs	r3, #0
- 800363e:	63d3      	str	r3, [r2, #60]	; 0x3c
- 8003640:	e003      	b.n	800364a <MotorDriver_Init+0x7a>
- 8003642:	68bb      	ldr	r3, [r7, #8]
- 8003644:	681a      	ldr	r2, [r3, #0]
- 8003646:	2300      	movs	r3, #0
- 8003648:	6413      	str	r3, [r2, #64]	; 0x40
-    HAL_GPIO_WritePin(port, in1 | in2, GPIO_PIN_RESET);
- 800364a:	8b3a      	ldrh	r2, [r7, #24]
- 800364c:	8bbb      	ldrh	r3, [r7, #28]
- 800364e:	4313      	orrs	r3, r2
- 8003650:	b29b      	uxth	r3, r3
- 8003652:	2200      	movs	r2, #0
- 8003654:	4619      	mov	r1, r3
- 8003656:	6838      	ldr	r0, [r7, #0]
- 8003658:	f7fd fede 	bl	8001418 <HAL_GPIO_WritePin>
-}
- 800365c:	bf00      	nop
- 800365e:	3710      	adds	r7, #16
- 8003660:	46bd      	mov	sp, r7
- 8003662:	bd80      	pop	{r7, pc}
+ 80035ea:	68fb      	ldr	r3, [r7, #12]
+ 80035ec:	f04f 0200 	mov.w	r2, #0
+ 80035f0:	615a      	str	r2, [r3, #20]
 
-08003664 <MotorDriver_Start>:
+    __HAL_TIM_SET_COMPARE(tim, channel, 0);
+ 80035f2:	687b      	ldr	r3, [r7, #4]
+ 80035f4:	2b00      	cmp	r3, #0
+ 80035f6:	d104      	bne.n	8003602 <MotorDriver_Init+0x52>
+ 80035f8:	68bb      	ldr	r3, [r7, #8]
+ 80035fa:	681b      	ldr	r3, [r3, #0]
+ 80035fc:	2200      	movs	r2, #0
+ 80035fe:	635a      	str	r2, [r3, #52]	; 0x34
+ 8003600:	e013      	b.n	800362a <MotorDriver_Init+0x7a>
+ 8003602:	687b      	ldr	r3, [r7, #4]
+ 8003604:	2b04      	cmp	r3, #4
+ 8003606:	d104      	bne.n	8003612 <MotorDriver_Init+0x62>
+ 8003608:	68bb      	ldr	r3, [r7, #8]
+ 800360a:	681a      	ldr	r2, [r3, #0]
+ 800360c:	2300      	movs	r3, #0
+ 800360e:	6393      	str	r3, [r2, #56]	; 0x38
+ 8003610:	e00b      	b.n	800362a <MotorDriver_Init+0x7a>
+ 8003612:	687b      	ldr	r3, [r7, #4]
+ 8003614:	2b08      	cmp	r3, #8
+ 8003616:	d104      	bne.n	8003622 <MotorDriver_Init+0x72>
+ 8003618:	68bb      	ldr	r3, [r7, #8]
+ 800361a:	681a      	ldr	r2, [r3, #0]
+ 800361c:	2300      	movs	r3, #0
+ 800361e:	63d3      	str	r3, [r2, #60]	; 0x3c
+ 8003620:	e003      	b.n	800362a <MotorDriver_Init+0x7a>
+ 8003622:	68bb      	ldr	r3, [r7, #8]
+ 8003624:	681a      	ldr	r2, [r3, #0]
+ 8003626:	2300      	movs	r3, #0
+ 8003628:	6413      	str	r3, [r2, #64]	; 0x40
+
+    // Set both IN1 and IN2 pins to low to ensure the motor is stopped
+    HAL_GPIO_WritePin(port, in1 | in2, GPIO_PIN_RESET);
+ 800362a:	8b3a      	ldrh	r2, [r7, #24]
+ 800362c:	8bbb      	ldrh	r3, [r7, #28]
+ 800362e:	4313      	orrs	r3, r2
+ 8003630:	b29b      	uxth	r3, r3
+ 8003632:	2200      	movs	r2, #0
+ 8003634:	4619      	mov	r1, r3
+ 8003636:	6838      	ldr	r0, [r7, #0]
+ 8003638:	f7fd feee 	bl	8001418 <HAL_GPIO_WritePin>
+}
+ 800363c:	bf00      	nop
+ 800363e:	3710      	adds	r7, #16
+ 8003640:	46bd      	mov	sp, r7
+ 8003642:	bd80      	pop	{r7, pc}
+
+08003644 <MotorDriver_Start>:
 
 HAL_StatusTypeDef MotorDriver_Start(MotorDriver *m)
 {
- 8003664:	b580      	push	{r7, lr}
- 8003666:	b082      	sub	sp, #8
- 8003668:	af00      	add	r7, sp, #0
- 800366a:	6078      	str	r0, [r7, #4]
+ 8003644:	b580      	push	{r7, lr}
+ 8003646:	b082      	sub	sp, #8
+ 8003648:	af00      	add	r7, sp, #0
+ 800364a:	6078      	str	r0, [r7, #4]
     return HAL_TIM_PWM_Start(m->tim, m->channel);
- 800366c:	687b      	ldr	r3, [r7, #4]
- 800366e:	681a      	ldr	r2, [r3, #0]
- 8003670:	687b      	ldr	r3, [r7, #4]
- 8003672:	685b      	ldr	r3, [r3, #4]
- 8003674:	4619      	mov	r1, r3
- 8003676:	4610      	mov	r0, r2
- 8003678:	f7fe fb6a 	bl	8001d50 <HAL_TIM_PWM_Start>
- 800367c:	4603      	mov	r3, r0
+ 800364c:	687b      	ldr	r3, [r7, #4]
+ 800364e:	681a      	ldr	r2, [r3, #0]
+ 8003650:	687b      	ldr	r3, [r7, #4]
+ 8003652:	685b      	ldr	r3, [r3, #4]
+ 8003654:	4619      	mov	r1, r3
+ 8003656:	4610      	mov	r0, r2
+ 8003658:	f7fe fb7a 	bl	8001d50 <HAL_TIM_PWM_Start>
+ 800365c:	4603      	mov	r3, r0
 }
- 800367e:	4618      	mov	r0, r3
- 8003680:	3708      	adds	r7, #8
- 8003682:	46bd      	mov	sp, r7
- 8003684:	bd80      	pop	{r7, pc}
+ 800365e:	4618      	mov	r0, r3
+ 8003660:	3708      	adds	r7, #8
+ 8003662:	46bd      	mov	sp, r7
+ 8003664:	bd80      	pop	{r7, pc}
 	...
 
-08003688 <MotorDriver_Set>:
+08003668 <MotorDriver_Set>:
 
 void MotorDriver_Set(MotorDriver *m, float duty)
 {
- 8003688:	b590      	push	{r4, r7, lr}
- 800368a:	b087      	sub	sp, #28
- 800368c:	af00      	add	r7, sp, #0
- 800368e:	6078      	str	r0, [r7, #4]
- 8003690:	6039      	str	r1, [r7, #0]
+ 8003668:	b590      	push	{r4, r7, lr}
+ 800366a:	b087      	sub	sp, #28
+ 800366c:	af00      	add	r7, sp, #0
+ 800366e:	6078      	str	r0, [r7, #4]
+ 8003670:	6039      	str	r1, [r7, #0]
     duty = Clamp(duty, -100.0f, 100.0f);
- 8003692:	4a89      	ldr	r2, [pc, #548]	; (80038b8 <MotorDriver_Set+0x230>)
- 8003694:	4989      	ldr	r1, [pc, #548]	; (80038bc <MotorDriver_Set+0x234>)
- 8003696:	6838      	ldr	r0, [r7, #0]
- 8003698:	f7ff ff7d 	bl	8003596 <Clamp>
- 800369c:	6038      	str	r0, [r7, #0]
+ 8003672:	4a89      	ldr	r2, [pc, #548]	; (8003898 <MotorDriver_Set+0x230>)
+ 8003674:	4989      	ldr	r1, [pc, #548]	; (800389c <MotorDriver_Set+0x234>)
+ 8003676:	6838      	ldr	r0, [r7, #0]
+ 8003678:	f7ff ff7d 	bl	8003576 <Clamp>
+ 800367c:	6038      	str	r0, [r7, #0]
     float physical = duty * m->sign;
- 800369e:	687b      	ldr	r3, [r7, #4]
- 80036a0:	f993 3010 	ldrsb.w	r3, [r3, #16]
- 80036a4:	4618      	mov	r0, r3
- 80036a6:	f7fc fe0b 	bl	80002c0 <__aeabi_i2f>
- 80036aa:	4603      	mov	r3, r0
- 80036ac:	4619      	mov	r1, r3
- 80036ae:	6838      	ldr	r0, [r7, #0]
- 80036b0:	f7fc fe5a 	bl	8000368 <__aeabi_fmul>
- 80036b4:	4603      	mov	r3, r0
- 80036b6:	617b      	str	r3, [r7, #20]
-    int8_t next = physical > 0.0f ? 1 : (physical < 0.0f ? -1 : 0);
- 80036b8:	f04f 0100 	mov.w	r1, #0
- 80036bc:	6978      	ldr	r0, [r7, #20]
- 80036be:	f7fd f80f 	bl	80006e0 <__aeabi_fcmpgt>
- 80036c2:	4603      	mov	r3, r0
- 80036c4:	2b00      	cmp	r3, #0
- 80036c6:	d001      	beq.n	80036cc <MotorDriver_Set+0x44>
- 80036c8:	2301      	movs	r3, #1
- 80036ca:	e00b      	b.n	80036e4 <MotorDriver_Set+0x5c>
- 80036cc:	f04f 0100 	mov.w	r1, #0
- 80036d0:	6978      	ldr	r0, [r7, #20]
- 80036d2:	f7fc ffe7 	bl	80006a4 <__aeabi_fcmplt>
- 80036d6:	4603      	mov	r3, r0
- 80036d8:	2b00      	cmp	r3, #0
- 80036da:	d002      	beq.n	80036e2 <MotorDriver_Set+0x5a>
- 80036dc:	f04f 33ff 	mov.w	r3, #4294967295
- 80036e0:	e000      	b.n	80036e4 <MotorDriver_Set+0x5c>
- 80036e2:	2300      	movs	r3, #0
- 80036e4:	74fb      	strb	r3, [r7, #19]
+ 800367e:	687b      	ldr	r3, [r7, #4]
+ 8003680:	f993 3010 	ldrsb.w	r3, [r3, #16]
+ 8003684:	4618      	mov	r0, r3
+ 8003686:	f7fc fe1b 	bl	80002c0 <__aeabi_i2f>
+ 800368a:	4603      	mov	r3, r0
+ 800368c:	4619      	mov	r1, r3
+ 800368e:	6838      	ldr	r0, [r7, #0]
+ 8003690:	f7fc fe6a 	bl	8000368 <__aeabi_fmul>
+ 8003694:	4603      	mov	r3, r0
+ 8003696:	617b      	str	r3, [r7, #20]
 
+    // Xác định hướng tiếp theo dựa trên duty
+    int8_t next = physical > 0.0f ? 1 : (physical < 0.0f ? -1 : 0);
+ 8003698:	f04f 0100 	mov.w	r1, #0
+ 800369c:	6978      	ldr	r0, [r7, #20]
+ 800369e:	f7fd f81f 	bl	80006e0 <__aeabi_fcmpgt>
+ 80036a2:	4603      	mov	r3, r0
+ 80036a4:	2b00      	cmp	r3, #0
+ 80036a6:	d001      	beq.n	80036ac <MotorDriver_Set+0x44>
+ 80036a8:	2301      	movs	r3, #1
+ 80036aa:	e00b      	b.n	80036c4 <MotorDriver_Set+0x5c>
+ 80036ac:	f04f 0100 	mov.w	r1, #0
+ 80036b0:	6978      	ldr	r0, [r7, #20]
+ 80036b2:	f7fc fff7 	bl	80006a4 <__aeabi_fcmplt>
+ 80036b6:	4603      	mov	r3, r0
+ 80036b8:	2b00      	cmp	r3, #0
+ 80036ba:	d002      	beq.n	80036c2 <MotorDriver_Set+0x5a>
+ 80036bc:	f04f 33ff 	mov.w	r3, #4294967295
+ 80036c0:	e000      	b.n	80036c4 <MotorDriver_Set+0x5c>
+ 80036c2:	2300      	movs	r3, #0
+ 80036c4:	74fb      	strb	r3, [r7, #19]
+
+    // Nếu hướng tiếp theo khác với hướng hiện tại, dừng động cơ trước khi thay đổi hướng
     if (next && m->direction && next != m->direction) {
- 80036e6:	f997 3013 	ldrsb.w	r3, [r7, #19]
- 80036ea:	2b00      	cmp	r3, #0
- 80036ec:	d042      	beq.n	8003774 <MotorDriver_Set+0xec>
- 80036ee:	687b      	ldr	r3, [r7, #4]
- 80036f0:	f993 3011 	ldrsb.w	r3, [r3, #17]
- 80036f4:	2b00      	cmp	r3, #0
- 80036f6:	d03d      	beq.n	8003774 <MotorDriver_Set+0xec>
- 80036f8:	687b      	ldr	r3, [r7, #4]
- 80036fa:	f993 3011 	ldrsb.w	r3, [r3, #17]
- 80036fe:	f997 2013 	ldrsb.w	r2, [r7, #19]
- 8003702:	429a      	cmp	r2, r3
- 8003704:	d036      	beq.n	8003774 <MotorDriver_Set+0xec>
+ 80036c6:	f997 3013 	ldrsb.w	r3, [r7, #19]
+ 80036ca:	2b00      	cmp	r3, #0
+ 80036cc:	d042      	beq.n	8003754 <MotorDriver_Set+0xec>
+ 80036ce:	687b      	ldr	r3, [r7, #4]
+ 80036d0:	f993 3011 	ldrsb.w	r3, [r3, #17]
+ 80036d4:	2b00      	cmp	r3, #0
+ 80036d6:	d03d      	beq.n	8003754 <MotorDriver_Set+0xec>
+ 80036d8:	687b      	ldr	r3, [r7, #4]
+ 80036da:	f993 3011 	ldrsb.w	r3, [r3, #17]
+ 80036de:	f997 2013 	ldrsb.w	r2, [r7, #19]
+ 80036e2:	429a      	cmp	r2, r3
+ 80036e4:	d036      	beq.n	8003754 <MotorDriver_Set+0xec>
         __HAL_TIM_SET_COMPARE(m->tim, m->channel, 0);
- 8003706:	687b      	ldr	r3, [r7, #4]
- 8003708:	685b      	ldr	r3, [r3, #4]
- 800370a:	2b00      	cmp	r3, #0
- 800370c:	d105      	bne.n	800371a <MotorDriver_Set+0x92>
+ 80036e6:	687b      	ldr	r3, [r7, #4]
+ 80036e8:	685b      	ldr	r3, [r3, #4]
+ 80036ea:	2b00      	cmp	r3, #0
+ 80036ec:	d105      	bne.n	80036fa <MotorDriver_Set+0x92>
+ 80036ee:	687b      	ldr	r3, [r7, #4]
+ 80036f0:	681b      	ldr	r3, [r3, #0]
+ 80036f2:	681b      	ldr	r3, [r3, #0]
+ 80036f4:	2200      	movs	r2, #0
+ 80036f6:	635a      	str	r2, [r3, #52]	; 0x34
+ 80036f8:	e018      	b.n	800372c <MotorDriver_Set+0xc4>
+ 80036fa:	687b      	ldr	r3, [r7, #4]
+ 80036fc:	685b      	ldr	r3, [r3, #4]
+ 80036fe:	2b04      	cmp	r3, #4
+ 8003700:	d105      	bne.n	800370e <MotorDriver_Set+0xa6>
+ 8003702:	687b      	ldr	r3, [r7, #4]
+ 8003704:	681b      	ldr	r3, [r3, #0]
+ 8003706:	681a      	ldr	r2, [r3, #0]
+ 8003708:	2300      	movs	r3, #0
+ 800370a:	6393      	str	r3, [r2, #56]	; 0x38
+ 800370c:	e00e      	b.n	800372c <MotorDriver_Set+0xc4>
  800370e:	687b      	ldr	r3, [r7, #4]
- 8003710:	681b      	ldr	r3, [r3, #0]
- 8003712:	681b      	ldr	r3, [r3, #0]
- 8003714:	2200      	movs	r2, #0
- 8003716:	635a      	str	r2, [r3, #52]	; 0x34
- 8003718:	e018      	b.n	800374c <MotorDriver_Set+0xc4>
- 800371a:	687b      	ldr	r3, [r7, #4]
- 800371c:	685b      	ldr	r3, [r3, #4]
- 800371e:	2b04      	cmp	r3, #4
- 8003720:	d105      	bne.n	800372e <MotorDriver_Set+0xa6>
+ 8003710:	685b      	ldr	r3, [r3, #4]
+ 8003712:	2b08      	cmp	r3, #8
+ 8003714:	d105      	bne.n	8003722 <MotorDriver_Set+0xba>
+ 8003716:	687b      	ldr	r3, [r7, #4]
+ 8003718:	681b      	ldr	r3, [r3, #0]
+ 800371a:	681a      	ldr	r2, [r3, #0]
+ 800371c:	2300      	movs	r3, #0
+ 800371e:	63d3      	str	r3, [r2, #60]	; 0x3c
+ 8003720:	e004      	b.n	800372c <MotorDriver_Set+0xc4>
  8003722:	687b      	ldr	r3, [r7, #4]
  8003724:	681b      	ldr	r3, [r3, #0]
  8003726:	681a      	ldr	r2, [r3, #0]
  8003728:	2300      	movs	r3, #0
- 800372a:	6393      	str	r3, [r2, #56]	; 0x38
- 800372c:	e00e      	b.n	800374c <MotorDriver_Set+0xc4>
- 800372e:	687b      	ldr	r3, [r7, #4]
- 8003730:	685b      	ldr	r3, [r3, #4]
- 8003732:	2b08      	cmp	r3, #8
- 8003734:	d105      	bne.n	8003742 <MotorDriver_Set+0xba>
- 8003736:	687b      	ldr	r3, [r7, #4]
- 8003738:	681b      	ldr	r3, [r3, #0]
- 800373a:	681a      	ldr	r2, [r3, #0]
- 800373c:	2300      	movs	r3, #0
- 800373e:	63d3      	str	r3, [r2, #60]	; 0x3c
- 8003740:	e004      	b.n	800374c <MotorDriver_Set+0xc4>
- 8003742:	687b      	ldr	r3, [r7, #4]
- 8003744:	681b      	ldr	r3, [r3, #0]
- 8003746:	681a      	ldr	r2, [r3, #0]
- 8003748:	2300      	movs	r3, #0
- 800374a:	6413      	str	r3, [r2, #64]	; 0x40
+ 800372a:	6413      	str	r3, [r2, #64]	; 0x40
         HAL_GPIO_WritePin(m->port, m->in1 | m->in2, GPIO_PIN_RESET);
- 800374c:	687b      	ldr	r3, [r7, #4]
- 800374e:	6898      	ldr	r0, [r3, #8]
- 8003750:	687b      	ldr	r3, [r7, #4]
- 8003752:	899a      	ldrh	r2, [r3, #12]
- 8003754:	687b      	ldr	r3, [r7, #4]
- 8003756:	89db      	ldrh	r3, [r3, #14]
- 8003758:	4313      	orrs	r3, r2
- 800375a:	b29b      	uxth	r3, r3
- 800375c:	2200      	movs	r2, #0
- 800375e:	4619      	mov	r1, r3
- 8003760:	f7fd fe5a 	bl	8001418 <HAL_GPIO_WritePin>
+ 800372c:	687b      	ldr	r3, [r7, #4]
+ 800372e:	6898      	ldr	r0, [r3, #8]
+ 8003730:	687b      	ldr	r3, [r7, #4]
+ 8003732:	899a      	ldrh	r2, [r3, #12]
+ 8003734:	687b      	ldr	r3, [r7, #4]
+ 8003736:	89db      	ldrh	r3, [r3, #14]
+ 8003738:	4313      	orrs	r3, r2
+ 800373a:	b29b      	uxth	r3, r3
+ 800373c:	2200      	movs	r2, #0
+ 800373e:	4619      	mov	r1, r3
+ 8003740:	f7fd fe6a 	bl	8001418 <HAL_GPIO_WritePin>
         m->direction = 0;
- 8003764:	687b      	ldr	r3, [r7, #4]
- 8003766:	2200      	movs	r2, #0
- 8003768:	745a      	strb	r2, [r3, #17]
+ 8003744:	687b      	ldr	r3, [r7, #4]
+ 8003746:	2200      	movs	r2, #0
+ 8003748:	745a      	strb	r2, [r3, #17]
         m->duty = 0.0f;
- 800376a:	687b      	ldr	r3, [r7, #4]
- 800376c:	f04f 0200 	mov.w	r2, #0
- 8003770:	615a      	str	r2, [r3, #20]
+ 800374a:	687b      	ldr	r3, [r7, #4]
+ 800374c:	f04f 0200 	mov.w	r2, #0
+ 8003750:	615a      	str	r2, [r3, #20]
         return;
- 8003772:	e09e      	b.n	80038b2 <MotorDriver_Set+0x22a>
+ 8003752:	e09e      	b.n	8003892 <MotorDriver_Set+0x22a>
     }
 
-    uint32_t period = __HAL_TIM_GET_AUTORELOAD(m->tim) + 1U;
- 8003774:	687b      	ldr	r3, [r7, #4]
- 8003776:	681b      	ldr	r3, [r3, #0]
- 8003778:	681b      	ldr	r3, [r3, #0]
- 800377a:	6adb      	ldr	r3, [r3, #44]	; 0x2c
- 800377c:	3301      	adds	r3, #1
- 800377e:	60fb      	str	r3, [r7, #12]
+    /* Chuyển duty cycle(%) sang giá trị compare(ARR) */
+    uint32_t period = __HAL_TIM_GET_AUTORELOAD(m->tim) + 1;                     // ARR=7200
+ 8003754:	687b      	ldr	r3, [r7, #4]
+ 8003756:	681b      	ldr	r3, [r3, #0]
+ 8003758:	681b      	ldr	r3, [r3, #0]
+ 800375a:	6adb      	ldr	r3, [r3, #44]	; 0x2c
+ 800375c:	3301      	adds	r3, #1
+ 800375e:	60fb      	str	r3, [r7, #12]
     uint32_t compare = (uint32_t)(fabsf(physical) * period / 100.0f + 0.5f);
- 8003780:	697b      	ldr	r3, [r7, #20]
- 8003782:	f023 4400 	bic.w	r4, r3, #2147483648	; 0x80000000
- 8003786:	68f8      	ldr	r0, [r7, #12]
- 8003788:	f7fc fd96 	bl	80002b8 <__aeabi_ui2f>
+ 8003760:	697b      	ldr	r3, [r7, #20]
+ 8003762:	f023 4400 	bic.w	r4, r3, #2147483648	; 0x80000000
+ 8003766:	68f8      	ldr	r0, [r7, #12]
+ 8003768:	f7fc fda6 	bl	80002b8 <__aeabi_ui2f>
+ 800376c:	4603      	mov	r3, r0
+ 800376e:	4619      	mov	r1, r3
+ 8003770:	4620      	mov	r0, r4
+ 8003772:	f7fc fdf9 	bl	8000368 <__aeabi_fmul>
+ 8003776:	4603      	mov	r3, r0
+ 8003778:	4947      	ldr	r1, [pc, #284]	; (8003898 <MotorDriver_Set+0x230>)
+ 800377a:	4618      	mov	r0, r3
+ 800377c:	f7fc fea8 	bl	80004d0 <__aeabi_fdiv>
+ 8003780:	4603      	mov	r3, r0
+ 8003782:	f04f 517c 	mov.w	r1, #1056964608	; 0x3f000000
+ 8003786:	4618      	mov	r0, r3
+ 8003788:	f7fc fce6 	bl	8000158 <__addsf3>
  800378c:	4603      	mov	r3, r0
- 800378e:	4619      	mov	r1, r3
- 8003790:	4620      	mov	r0, r4
- 8003792:	f7fc fde9 	bl	8000368 <__aeabi_fmul>
- 8003796:	4603      	mov	r3, r0
- 8003798:	4947      	ldr	r1, [pc, #284]	; (80038b8 <MotorDriver_Set+0x230>)
- 800379a:	4618      	mov	r0, r3
- 800379c:	f7fc fe98 	bl	80004d0 <__aeabi_fdiv>
- 80037a0:	4603      	mov	r3, r0
- 80037a2:	f04f 517c 	mov.w	r1, #1056964608	; 0x3f000000
- 80037a6:	4618      	mov	r0, r3
- 80037a8:	f7fc fcd6 	bl	8000158 <__addsf3>
- 80037ac:	4603      	mov	r3, r0
- 80037ae:	4618      	mov	r0, r3
- 80037b0:	f7fc ffb6 	bl	8000720 <__aeabi_f2uiz>
- 80037b4:	4603      	mov	r3, r0
- 80037b6:	60bb      	str	r3, [r7, #8]
+ 800378e:	4618      	mov	r0, r3
+ 8003790:	f7fc ffc6 	bl	8000720 <__aeabi_f2uiz>
+ 8003794:	4603      	mov	r3, r0
+ 8003796:	60bb      	str	r3, [r7, #8]
 
-    if (!next) {
- 80037b8:	f997 3013 	ldrsb.w	r3, [r7, #19]
- 80037bc:	2b00      	cmp	r3, #0
- 80037be:	d10c      	bne.n	80037da <MotorDriver_Set+0x152>
+    /* Thiết lập chiều động cơ */ 
+    if (!next) {                    // TH dừng
+ 8003798:	f997 3013 	ldrsb.w	r3, [r7, #19]
+ 800379c:	2b00      	cmp	r3, #0
+ 800379e:	d10c      	bne.n	80037ba <MotorDriver_Set+0x152>
         HAL_GPIO_WritePin(m->port, m->in1 | m->in2, GPIO_PIN_RESET);
- 80037c0:	687b      	ldr	r3, [r7, #4]
- 80037c2:	6898      	ldr	r0, [r3, #8]
- 80037c4:	687b      	ldr	r3, [r7, #4]
- 80037c6:	899a      	ldrh	r2, [r3, #12]
- 80037c8:	687b      	ldr	r3, [r7, #4]
- 80037ca:	89db      	ldrh	r3, [r3, #14]
- 80037cc:	4313      	orrs	r3, r2
- 80037ce:	b29b      	uxth	r3, r3
- 80037d0:	2200      	movs	r2, #0
- 80037d2:	4619      	mov	r1, r3
- 80037d4:	f7fd fe20 	bl	8001418 <HAL_GPIO_WritePin>
- 80037d8:	e024      	b.n	8003824 <MotorDriver_Set+0x19c>
-    } else if (next > 0) {
- 80037da:	f997 3013 	ldrsb.w	r3, [r7, #19]
- 80037de:	2b00      	cmp	r3, #0
- 80037e0:	dd10      	ble.n	8003804 <MotorDriver_Set+0x17c>
-        HAL_GPIO_WritePin(m->port, m->in2, GPIO_PIN_RESET);
- 80037e2:	687b      	ldr	r3, [r7, #4]
- 80037e4:	6898      	ldr	r0, [r3, #8]
- 80037e6:	687b      	ldr	r3, [r7, #4]
- 80037e8:	89db      	ldrh	r3, [r3, #14]
- 80037ea:	2200      	movs	r2, #0
- 80037ec:	4619      	mov	r1, r3
- 80037ee:	f7fd fe13 	bl	8001418 <HAL_GPIO_WritePin>
+ 80037a0:	687b      	ldr	r3, [r7, #4]
+ 80037a2:	6898      	ldr	r0, [r3, #8]
+ 80037a4:	687b      	ldr	r3, [r7, #4]
+ 80037a6:	899a      	ldrh	r2, [r3, #12]
+ 80037a8:	687b      	ldr	r3, [r7, #4]
+ 80037aa:	89db      	ldrh	r3, [r3, #14]
+ 80037ac:	4313      	orrs	r3, r2
+ 80037ae:	b29b      	uxth	r3, r3
+ 80037b0:	2200      	movs	r2, #0
+ 80037b2:	4619      	mov	r1, r3
+ 80037b4:	f7fd fe30 	bl	8001418 <HAL_GPIO_WritePin>
+ 80037b8:	e024      	b.n	8003804 <MotorDriver_Set+0x19c>
+    } else if (next > 0) {          // TH tiến
+ 80037ba:	f997 3013 	ldrsb.w	r3, [r7, #19]
+ 80037be:	2b00      	cmp	r3, #0
+ 80037c0:	dd10      	ble.n	80037e4 <MotorDriver_Set+0x17c>
         HAL_GPIO_WritePin(m->port, m->in1, GPIO_PIN_SET);
- 80037f2:	687b      	ldr	r3, [r7, #4]
- 80037f4:	6898      	ldr	r0, [r3, #8]
- 80037f6:	687b      	ldr	r3, [r7, #4]
- 80037f8:	899b      	ldrh	r3, [r3, #12]
- 80037fa:	2201      	movs	r2, #1
- 80037fc:	4619      	mov	r1, r3
- 80037fe:	f7fd fe0b 	bl	8001418 <HAL_GPIO_WritePin>
- 8003802:	e00f      	b.n	8003824 <MotorDriver_Set+0x19c>
-    } else {
+ 80037c2:	687b      	ldr	r3, [r7, #4]
+ 80037c4:	6898      	ldr	r0, [r3, #8]
+ 80037c6:	687b      	ldr	r3, [r7, #4]
+ 80037c8:	899b      	ldrh	r3, [r3, #12]
+ 80037ca:	2201      	movs	r2, #1
+ 80037cc:	4619      	mov	r1, r3
+ 80037ce:	f7fd fe23 	bl	8001418 <HAL_GPIO_WritePin>
+        HAL_GPIO_WritePin(m->port, m->in2, GPIO_PIN_RESET);
+ 80037d2:	687b      	ldr	r3, [r7, #4]
+ 80037d4:	6898      	ldr	r0, [r3, #8]
+ 80037d6:	687b      	ldr	r3, [r7, #4]
+ 80037d8:	89db      	ldrh	r3, [r3, #14]
+ 80037da:	2200      	movs	r2, #0
+ 80037dc:	4619      	mov	r1, r3
+ 80037de:	f7fd fe1b 	bl	8001418 <HAL_GPIO_WritePin>
+ 80037e2:	e00f      	b.n	8003804 <MotorDriver_Set+0x19c>
+    } else {                        // TH lùi
         HAL_GPIO_WritePin(m->port, m->in1, GPIO_PIN_RESET);
- 8003804:	687b      	ldr	r3, [r7, #4]
- 8003806:	6898      	ldr	r0, [r3, #8]
- 8003808:	687b      	ldr	r3, [r7, #4]
- 800380a:	899b      	ldrh	r3, [r3, #12]
- 800380c:	2200      	movs	r2, #0
- 800380e:	4619      	mov	r1, r3
- 8003810:	f7fd fe02 	bl	8001418 <HAL_GPIO_WritePin>
+ 80037e4:	687b      	ldr	r3, [r7, #4]
+ 80037e6:	6898      	ldr	r0, [r3, #8]
+ 80037e8:	687b      	ldr	r3, [r7, #4]
+ 80037ea:	899b      	ldrh	r3, [r3, #12]
+ 80037ec:	2200      	movs	r2, #0
+ 80037ee:	4619      	mov	r1, r3
+ 80037f0:	f7fd fe12 	bl	8001418 <HAL_GPIO_WritePin>
         HAL_GPIO_WritePin(m->port, m->in2, GPIO_PIN_SET);
- 8003814:	687b      	ldr	r3, [r7, #4]
- 8003816:	6898      	ldr	r0, [r3, #8]
- 8003818:	687b      	ldr	r3, [r7, #4]
- 800381a:	89db      	ldrh	r3, [r3, #14]
- 800381c:	2201      	movs	r2, #1
- 800381e:	4619      	mov	r1, r3
- 8003820:	f7fd fdfa 	bl	8001418 <HAL_GPIO_WritePin>
+ 80037f4:	687b      	ldr	r3, [r7, #4]
+ 80037f6:	6898      	ldr	r0, [r3, #8]
+ 80037f8:	687b      	ldr	r3, [r7, #4]
+ 80037fa:	89db      	ldrh	r3, [r3, #14]
+ 80037fc:	2201      	movs	r2, #1
+ 80037fe:	4619      	mov	r1, r3
+ 8003800:	f7fd fe0a 	bl	8001418 <HAL_GPIO_WritePin>
     }
 
+    /* Ghi giá trị compare (PWM) để điều khiển tốc độ động cơ */
     __HAL_TIM_SET_COMPARE(m->tim, m->channel, compare);
- 8003824:	687b      	ldr	r3, [r7, #4]
- 8003826:	685b      	ldr	r3, [r3, #4]
- 8003828:	2b00      	cmp	r3, #0
- 800382a:	d105      	bne.n	8003838 <MotorDriver_Set+0x1b0>
+ 8003804:	687b      	ldr	r3, [r7, #4]
+ 8003806:	685b      	ldr	r3, [r3, #4]
+ 8003808:	2b00      	cmp	r3, #0
+ 800380a:	d105      	bne.n	8003818 <MotorDriver_Set+0x1b0>
+ 800380c:	687b      	ldr	r3, [r7, #4]
+ 800380e:	681b      	ldr	r3, [r3, #0]
+ 8003810:	681b      	ldr	r3, [r3, #0]
+ 8003812:	68ba      	ldr	r2, [r7, #8]
+ 8003814:	635a      	str	r2, [r3, #52]	; 0x34
+ 8003816:	e018      	b.n	800384a <MotorDriver_Set+0x1e2>
+ 8003818:	687b      	ldr	r3, [r7, #4]
+ 800381a:	685b      	ldr	r3, [r3, #4]
+ 800381c:	2b04      	cmp	r3, #4
+ 800381e:	d105      	bne.n	800382c <MotorDriver_Set+0x1c4>
+ 8003820:	687b      	ldr	r3, [r7, #4]
+ 8003822:	681b      	ldr	r3, [r3, #0]
+ 8003824:	681a      	ldr	r2, [r3, #0]
+ 8003826:	68bb      	ldr	r3, [r7, #8]
+ 8003828:	6393      	str	r3, [r2, #56]	; 0x38
+ 800382a:	e00e      	b.n	800384a <MotorDriver_Set+0x1e2>
  800382c:	687b      	ldr	r3, [r7, #4]
- 800382e:	681b      	ldr	r3, [r3, #0]
- 8003830:	681b      	ldr	r3, [r3, #0]
- 8003832:	68ba      	ldr	r2, [r7, #8]
- 8003834:	635a      	str	r2, [r3, #52]	; 0x34
- 8003836:	e018      	b.n	800386a <MotorDriver_Set+0x1e2>
- 8003838:	687b      	ldr	r3, [r7, #4]
- 800383a:	685b      	ldr	r3, [r3, #4]
- 800383c:	2b04      	cmp	r3, #4
- 800383e:	d105      	bne.n	800384c <MotorDriver_Set+0x1c4>
+ 800382e:	685b      	ldr	r3, [r3, #4]
+ 8003830:	2b08      	cmp	r3, #8
+ 8003832:	d105      	bne.n	8003840 <MotorDriver_Set+0x1d8>
+ 8003834:	687b      	ldr	r3, [r7, #4]
+ 8003836:	681b      	ldr	r3, [r3, #0]
+ 8003838:	681a      	ldr	r2, [r3, #0]
+ 800383a:	68bb      	ldr	r3, [r7, #8]
+ 800383c:	63d3      	str	r3, [r2, #60]	; 0x3c
+ 800383e:	e004      	b.n	800384a <MotorDriver_Set+0x1e2>
  8003840:	687b      	ldr	r3, [r7, #4]
  8003842:	681b      	ldr	r3, [r3, #0]
  8003844:	681a      	ldr	r2, [r3, #0]
  8003846:	68bb      	ldr	r3, [r7, #8]
- 8003848:	6393      	str	r3, [r2, #56]	; 0x38
- 800384a:	e00e      	b.n	800386a <MotorDriver_Set+0x1e2>
- 800384c:	687b      	ldr	r3, [r7, #4]
- 800384e:	685b      	ldr	r3, [r3, #4]
- 8003850:	2b08      	cmp	r3, #8
- 8003852:	d105      	bne.n	8003860 <MotorDriver_Set+0x1d8>
- 8003854:	687b      	ldr	r3, [r7, #4]
- 8003856:	681b      	ldr	r3, [r3, #0]
- 8003858:	681a      	ldr	r2, [r3, #0]
- 800385a:	68bb      	ldr	r3, [r7, #8]
- 800385c:	63d3      	str	r3, [r2, #60]	; 0x3c
- 800385e:	e004      	b.n	800386a <MotorDriver_Set+0x1e2>
- 8003860:	687b      	ldr	r3, [r7, #4]
- 8003862:	681b      	ldr	r3, [r3, #0]
- 8003864:	681a      	ldr	r2, [r3, #0]
- 8003866:	68bb      	ldr	r3, [r7, #8]
- 8003868:	6413      	str	r3, [r2, #64]	; 0x40
-    m->direction = next;
- 800386a:	687b      	ldr	r3, [r7, #4]
- 800386c:	7cfa      	ldrb	r2, [r7, #19]
- 800386e:	745a      	strb	r2, [r3, #17]
-    m->duty = next ? copysignf(100.0f * compare / period, duty) : 0.0f;
- 8003870:	f997 3013 	ldrsb.w	r3, [r7, #19]
- 8003874:	2b00      	cmp	r3, #0
- 8003876:	d018      	beq.n	80038aa <MotorDriver_Set+0x222>
- 8003878:	68b8      	ldr	r0, [r7, #8]
- 800387a:	f7fc fd1d 	bl	80002b8 <__aeabi_ui2f>
- 800387e:	4603      	mov	r3, r0
- 8003880:	490d      	ldr	r1, [pc, #52]	; (80038b8 <MotorDriver_Set+0x230>)
- 8003882:	4618      	mov	r0, r3
- 8003884:	f7fc fd70 	bl	8000368 <__aeabi_fmul>
- 8003888:	4603      	mov	r3, r0
- 800388a:	461c      	mov	r4, r3
- 800388c:	68f8      	ldr	r0, [r7, #12]
- 800388e:	f7fc fd13 	bl	80002b8 <__aeabi_ui2f>
- 8003892:	4603      	mov	r3, r0
- 8003894:	4619      	mov	r1, r3
- 8003896:	4620      	mov	r0, r4
- 8003898:	f7fc fe1a 	bl	80004d0 <__aeabi_fdiv>
- 800389c:	4603      	mov	r3, r0
- 800389e:	6839      	ldr	r1, [r7, #0]
- 80038a0:	4618      	mov	r0, r3
- 80038a2:	f000 f97d 	bl	8003ba0 <copysignf>
- 80038a6:	4603      	mov	r3, r0
- 80038a8:	e001      	b.n	80038ae <MotorDriver_Set+0x226>
- 80038aa:	f04f 0300 	mov.w	r3, #0
- 80038ae:	687a      	ldr	r2, [r7, #4]
- 80038b0:	6153      	str	r3, [r2, #20]
-}
- 80038b2:	371c      	adds	r7, #28
- 80038b4:	46bd      	mov	sp, r7
- 80038b6:	bd90      	pop	{r4, r7, pc}
- 80038b8:	42c80000 	.word	0x42c80000
- 80038bc:	c2c80000 	.word	0xc2c80000
+ 8003848:	6413      	str	r3, [r2, #64]	; 0x40
 
-080038c0 <MotorDriver_Stop>:
+    // Lưu chiều vật lý hiện tại để lần gọi tiếp theo phát hiện đảo chiều
+    m->direction = next;   
+ 800384a:	687b      	ldr	r3, [r7, #4]
+ 800384c:	7cfa      	ldrb	r2, [r7, #19]
+ 800384e:	745a      	strb	r2, [r3, #17]
+
+    // Chuyển compare sang duty cycle(%) 
+    m->duty = next ? copysignf(100.0f * compare / period, duty) : 0.0f;
+ 8003850:	f997 3013 	ldrsb.w	r3, [r7, #19]
+ 8003854:	2b00      	cmp	r3, #0
+ 8003856:	d018      	beq.n	800388a <MotorDriver_Set+0x222>
+ 8003858:	68b8      	ldr	r0, [r7, #8]
+ 800385a:	f7fc fd2d 	bl	80002b8 <__aeabi_ui2f>
+ 800385e:	4603      	mov	r3, r0
+ 8003860:	490d      	ldr	r1, [pc, #52]	; (8003898 <MotorDriver_Set+0x230>)
+ 8003862:	4618      	mov	r0, r3
+ 8003864:	f7fc fd80 	bl	8000368 <__aeabi_fmul>
+ 8003868:	4603      	mov	r3, r0
+ 800386a:	461c      	mov	r4, r3
+ 800386c:	68f8      	ldr	r0, [r7, #12]
+ 800386e:	f7fc fd23 	bl	80002b8 <__aeabi_ui2f>
+ 8003872:	4603      	mov	r3, r0
+ 8003874:	4619      	mov	r1, r3
+ 8003876:	4620      	mov	r0, r4
+ 8003878:	f7fc fe2a 	bl	80004d0 <__aeabi_fdiv>
+ 800387c:	4603      	mov	r3, r0
+ 800387e:	6839      	ldr	r1, [r7, #0]
+ 8003880:	4618      	mov	r0, r3
+ 8003882:	f000 f97d 	bl	8003b80 <copysignf>
+ 8003886:	4603      	mov	r3, r0
+ 8003888:	e001      	b.n	800388e <MotorDriver_Set+0x226>
+ 800388a:	f04f 0300 	mov.w	r3, #0
+ 800388e:	687a      	ldr	r2, [r7, #4]
+ 8003890:	6153      	str	r3, [r2, #20]
+}
+ 8003892:	371c      	adds	r7, #28
+ 8003894:	46bd      	mov	sp, r7
+ 8003896:	bd90      	pop	{r4, r7, pc}
+ 8003898:	42c80000 	.word	0x42c80000
+ 800389c:	c2c80000 	.word	0xc2c80000
+
+080038a0 <MotorDriver_Stop>:
 
 void MotorDriver_Stop(MotorDriver *m)
 {
- 80038c0:	b580      	push	{r7, lr}
- 80038c2:	b082      	sub	sp, #8
- 80038c4:	af00      	add	r7, sp, #0
- 80038c6:	6078      	str	r0, [r7, #4]
+ 80038a0:	b580      	push	{r7, lr}
+ 80038a2:	b082      	sub	sp, #8
+ 80038a4:	af00      	add	r7, sp, #0
+ 80038a6:	6078      	str	r0, [r7, #4]
     MotorDriver_Set(m, 0.0f);
- 80038c8:	f04f 0100 	mov.w	r1, #0
- 80038cc:	6878      	ldr	r0, [r7, #4]
- 80038ce:	f7ff fedb 	bl	8003688 <MotorDriver_Set>
+ 80038a8:	f04f 0100 	mov.w	r1, #0
+ 80038ac:	6878      	ldr	r0, [r7, #4]
+ 80038ae:	f7ff fedb 	bl	8003668 <MotorDriver_Set>
 }
- 80038d2:	bf00      	nop
- 80038d4:	3708      	adds	r7, #8
- 80038d6:	46bd      	mov	sp, r7
- 80038d8:	bd80      	pop	{r7, pc}
+ 80038b2:	bf00      	nop
+ 80038b4:	3708      	adds	r7, #8
+ 80038b6:	46bd      	mov	sp, r7
+ 80038b8:	bd80      	pop	{r7, pc}
 
-080038da <DiffDrive_Init>:
+080038ba <DiffDrive_Init>:
 #include <math.h>
 
 #define PI 3.14159265358979323846f
 
 void DiffDrive_Init(DiffDrive *d, float radius, float track, float max_rpm)
 {
- 80038da:	b480      	push	{r7}
- 80038dc:	b085      	sub	sp, #20
- 80038de:	af00      	add	r7, sp, #0
- 80038e0:	60f8      	str	r0, [r7, #12]
- 80038e2:	60b9      	str	r1, [r7, #8]
- 80038e4:	607a      	str	r2, [r7, #4]
- 80038e6:	603b      	str	r3, [r7, #0]
+ 80038ba:	b480      	push	{r7}
+ 80038bc:	b085      	sub	sp, #20
+ 80038be:	af00      	add	r7, sp, #0
+ 80038c0:	60f8      	str	r0, [r7, #12]
+ 80038c2:	60b9      	str	r1, [r7, #8]
+ 80038c4:	607a      	str	r2, [r7, #4]
+ 80038c6:	603b      	str	r3, [r7, #0]
     d->radius = radius;
- 80038e8:	68fb      	ldr	r3, [r7, #12]
- 80038ea:	68ba      	ldr	r2, [r7, #8]
- 80038ec:	601a      	str	r2, [r3, #0]
+ 80038c8:	68fb      	ldr	r3, [r7, #12]
+ 80038ca:	68ba      	ldr	r2, [r7, #8]
+ 80038cc:	601a      	str	r2, [r3, #0]
     d->track = track;
- 80038ee:	68fb      	ldr	r3, [r7, #12]
- 80038f0:	687a      	ldr	r2, [r7, #4]
- 80038f2:	605a      	str	r2, [r3, #4]
+ 80038ce:	68fb      	ldr	r3, [r7, #12]
+ 80038d0:	687a      	ldr	r2, [r7, #4]
+ 80038d2:	605a      	str	r2, [r3, #4]
     d->max_rpm = max_rpm;
- 80038f4:	68fb      	ldr	r3, [r7, #12]
- 80038f6:	683a      	ldr	r2, [r7, #0]
- 80038f8:	609a      	str	r2, [r3, #8]
+ 80038d4:	68fb      	ldr	r3, [r7, #12]
+ 80038d6:	683a      	ldr	r2, [r7, #0]
+ 80038d8:	609a      	str	r2, [r3, #8]
 }
- 80038fa:	bf00      	nop
- 80038fc:	3714      	adds	r7, #20
- 80038fe:	46bd      	mov	sp, r7
- 8003900:	bc80      	pop	{r7}
- 8003902:	4770      	bx	lr
+ 80038da:	bf00      	nop
+ 80038dc:	3714      	adds	r7, #20
+ 80038de:	46bd      	mov	sp, r7
+ 80038e0:	bc80      	pop	{r7}
+ 80038e2:	4770      	bx	lr
 
-08003904 <DiffDrive_ToWheels>:
+080038e4 <DiffDrive_ToWheels>:
 
 /* Dong hoc nghich: Chuyen doi v, w thanh RPM */
 void DiffDrive_ToWheels(const DiffDrive *d, float v, float w, float *left_rpm, float *right_rpm)
 {
- 8003904:	b580      	push	{r7, lr}
- 8003906:	b08a      	sub	sp, #40	; 0x28
- 8003908:	af00      	add	r7, sp, #0
- 800390a:	60f8      	str	r0, [r7, #12]
- 800390c:	60b9      	str	r1, [r7, #8]
- 800390e:	607a      	str	r2, [r7, #4]
- 8003910:	603b      	str	r3, [r7, #0]
+ 80038e4:	b580      	push	{r7, lr}
+ 80038e6:	b08a      	sub	sp, #40	; 0x28
+ 80038e8:	af00      	add	r7, sp, #0
+ 80038ea:	60f8      	str	r0, [r7, #12]
+ 80038ec:	60b9      	str	r1, [r7, #8]
+ 80038ee:	607a      	str	r2, [r7, #4]
+ 80038f0:	603b      	str	r3, [r7, #0]
     // He so vong quay
     float k = 60.0f / (2.0f * PI * d->radius);
- 8003912:	68fb      	ldr	r3, [r7, #12]
- 8003914:	681b      	ldr	r3, [r3, #0]
- 8003916:	493f      	ldr	r1, [pc, #252]	; (8003a14 <DiffDrive_ToWheels+0x110>)
- 8003918:	4618      	mov	r0, r3
- 800391a:	f7fc fd25 	bl	8000368 <__aeabi_fmul>
- 800391e:	4603      	mov	r3, r0
- 8003920:	4619      	mov	r1, r3
- 8003922:	483d      	ldr	r0, [pc, #244]	; (8003a18 <DiffDrive_ToWheels+0x114>)
- 8003924:	f7fc fdd4 	bl	80004d0 <__aeabi_fdiv>
- 8003928:	4603      	mov	r3, r0
- 800392a:	627b      	str	r3, [r7, #36]	; 0x24
+ 80038f2:	68fb      	ldr	r3, [r7, #12]
+ 80038f4:	681b      	ldr	r3, [r3, #0]
+ 80038f6:	493f      	ldr	r1, [pc, #252]	; (80039f4 <DiffDrive_ToWheels+0x110>)
+ 80038f8:	4618      	mov	r0, r3
+ 80038fa:	f7fc fd35 	bl	8000368 <__aeabi_fmul>
+ 80038fe:	4603      	mov	r3, r0
+ 8003900:	4619      	mov	r1, r3
+ 8003902:	483d      	ldr	r0, [pc, #244]	; (80039f8 <DiffDrive_ToWheels+0x114>)
+ 8003904:	f7fc fde4 	bl	80004d0 <__aeabi_fdiv>
+ 8003908:	4603      	mov	r3, r0
+ 800390a:	627b      	str	r3, [r7, #36]	; 0x24
 
     // Tinh toan RPM cho 2 banh xe
     *left_rpm = (v - 0.5f * d->track * w) * k;
- 800392c:	68fb      	ldr	r3, [r7, #12]
- 800392e:	685b      	ldr	r3, [r3, #4]
- 8003930:	f04f 517c 	mov.w	r1, #1056964608	; 0x3f000000
- 8003934:	4618      	mov	r0, r3
- 8003936:	f7fc fd17 	bl	8000368 <__aeabi_fmul>
- 800393a:	4603      	mov	r3, r0
- 800393c:	6879      	ldr	r1, [r7, #4]
- 800393e:	4618      	mov	r0, r3
- 8003940:	f7fc fd12 	bl	8000368 <__aeabi_fmul>
- 8003944:	4603      	mov	r3, r0
- 8003946:	4619      	mov	r1, r3
- 8003948:	68b8      	ldr	r0, [r7, #8]
- 800394a:	f7fc fc03 	bl	8000154 <__aeabi_fsub>
+ 800390c:	68fb      	ldr	r3, [r7, #12]
+ 800390e:	685b      	ldr	r3, [r3, #4]
+ 8003910:	f04f 517c 	mov.w	r1, #1056964608	; 0x3f000000
+ 8003914:	4618      	mov	r0, r3
+ 8003916:	f7fc fd27 	bl	8000368 <__aeabi_fmul>
+ 800391a:	4603      	mov	r3, r0
+ 800391c:	6879      	ldr	r1, [r7, #4]
+ 800391e:	4618      	mov	r0, r3
+ 8003920:	f7fc fd22 	bl	8000368 <__aeabi_fmul>
+ 8003924:	4603      	mov	r3, r0
+ 8003926:	4619      	mov	r1, r3
+ 8003928:	68b8      	ldr	r0, [r7, #8]
+ 800392a:	f7fc fc13 	bl	8000154 <__aeabi_fsub>
+ 800392e:	4603      	mov	r3, r0
+ 8003930:	6a79      	ldr	r1, [r7, #36]	; 0x24
+ 8003932:	4618      	mov	r0, r3
+ 8003934:	f7fc fd18 	bl	8000368 <__aeabi_fmul>
+ 8003938:	4603      	mov	r3, r0
+ 800393a:	461a      	mov	r2, r3
+ 800393c:	683b      	ldr	r3, [r7, #0]
+ 800393e:	601a      	str	r2, [r3, #0]
+    *right_rpm = (v + 0.5f * d->track * w) * k;
+ 8003940:	68fb      	ldr	r3, [r7, #12]
+ 8003942:	685b      	ldr	r3, [r3, #4]
+ 8003944:	f04f 517c 	mov.w	r1, #1056964608	; 0x3f000000
+ 8003948:	4618      	mov	r0, r3
+ 800394a:	f7fc fd0d 	bl	8000368 <__aeabi_fmul>
  800394e:	4603      	mov	r3, r0
- 8003950:	6a79      	ldr	r1, [r7, #36]	; 0x24
+ 8003950:	6879      	ldr	r1, [r7, #4]
  8003952:	4618      	mov	r0, r3
  8003954:	f7fc fd08 	bl	8000368 <__aeabi_fmul>
  8003958:	4603      	mov	r3, r0
- 800395a:	461a      	mov	r2, r3
- 800395c:	683b      	ldr	r3, [r7, #0]
- 800395e:	601a      	str	r2, [r3, #0]
-    *right_rpm = (v + 0.5f * d->track * w) * k;
- 8003960:	68fb      	ldr	r3, [r7, #12]
- 8003962:	685b      	ldr	r3, [r3, #4]
- 8003964:	f04f 517c 	mov.w	r1, #1056964608	; 0x3f000000
- 8003968:	4618      	mov	r0, r3
- 800396a:	f7fc fcfd 	bl	8000368 <__aeabi_fmul>
- 800396e:	4603      	mov	r3, r0
- 8003970:	6879      	ldr	r1, [r7, #4]
- 8003972:	4618      	mov	r0, r3
- 8003974:	f7fc fcf8 	bl	8000368 <__aeabi_fmul>
- 8003978:	4603      	mov	r3, r0
- 800397a:	68b9      	ldr	r1, [r7, #8]
- 800397c:	4618      	mov	r0, r3
- 800397e:	f7fc fbeb 	bl	8000158 <__addsf3>
- 8003982:	4603      	mov	r3, r0
- 8003984:	6a79      	ldr	r1, [r7, #36]	; 0x24
- 8003986:	4618      	mov	r0, r3
- 8003988:	f7fc fcee 	bl	8000368 <__aeabi_fmul>
- 800398c:	4603      	mov	r3, r0
- 800398e:	461a      	mov	r2, r3
- 8003990:	6b3b      	ldr	r3, [r7, #48]	; 0x30
- 8003992:	601a      	str	r2, [r3, #0]
+ 800395a:	68b9      	ldr	r1, [r7, #8]
+ 800395c:	4618      	mov	r0, r3
+ 800395e:	f7fc fbfb 	bl	8000158 <__addsf3>
+ 8003962:	4603      	mov	r3, r0
+ 8003964:	6a79      	ldr	r1, [r7, #36]	; 0x24
+ 8003966:	4618      	mov	r0, r3
+ 8003968:	f7fc fcfe 	bl	8000368 <__aeabi_fmul>
+ 800396c:	4603      	mov	r3, r0
+ 800396e:	461a      	mov	r2, r3
+ 8003970:	6b3b      	ldr	r3, [r7, #48]	; 0x30
+ 8003972:	601a      	str	r2, [r3, #0]
 
     float left_abs = fabsf(*left_rpm);
- 8003994:	683b      	ldr	r3, [r7, #0]
- 8003996:	681b      	ldr	r3, [r3, #0]
- 8003998:	f023 4300 	bic.w	r3, r3, #2147483648	; 0x80000000
- 800399c:	623b      	str	r3, [r7, #32]
+ 8003974:	683b      	ldr	r3, [r7, #0]
+ 8003976:	681b      	ldr	r3, [r3, #0]
+ 8003978:	f023 4300 	bic.w	r3, r3, #2147483648	; 0x80000000
+ 800397c:	623b      	str	r3, [r7, #32]
     float right_abs = fabsf(*right_rpm);
- 800399e:	6b3b      	ldr	r3, [r7, #48]	; 0x30
- 80039a0:	681b      	ldr	r3, [r3, #0]
- 80039a2:	f023 4300 	bic.w	r3, r3, #2147483648	; 0x80000000
- 80039a6:	61fb      	str	r3, [r7, #28]
+ 800397e:	6b3b      	ldr	r3, [r7, #48]	; 0x30
+ 8003980:	681b      	ldr	r3, [r3, #0]
+ 8003982:	f023 4300 	bic.w	r3, r3, #2147483648	; 0x80000000
+ 8003986:	61fb      	str	r3, [r7, #28]
 
     // Kiem tra va dieu chinh neu vuot qua gioi han max_rpm
     float peak = left_abs > right_abs ? left_abs : right_abs;
- 80039a8:	69f9      	ldr	r1, [r7, #28]
- 80039aa:	6a38      	ldr	r0, [r7, #32]
- 80039ac:	f7fc fe98 	bl	80006e0 <__aeabi_fcmpgt>
- 80039b0:	4603      	mov	r3, r0
- 80039b2:	2b00      	cmp	r3, #0
- 80039b4:	d001      	beq.n	80039ba <DiffDrive_ToWheels+0xb6>
- 80039b6:	6a3b      	ldr	r3, [r7, #32]
- 80039b8:	e000      	b.n	80039bc <DiffDrive_ToWheels+0xb8>
- 80039ba:	69fb      	ldr	r3, [r7, #28]
- 80039bc:	61bb      	str	r3, [r7, #24]
+ 8003988:	69f9      	ldr	r1, [r7, #28]
+ 800398a:	6a38      	ldr	r0, [r7, #32]
+ 800398c:	f7fc fea8 	bl	80006e0 <__aeabi_fcmpgt>
+ 8003990:	4603      	mov	r3, r0
+ 8003992:	2b00      	cmp	r3, #0
+ 8003994:	d001      	beq.n	800399a <DiffDrive_ToWheels+0xb6>
+ 8003996:	6a3b      	ldr	r3, [r7, #32]
+ 8003998:	e000      	b.n	800399c <DiffDrive_ToWheels+0xb8>
+ 800399a:	69fb      	ldr	r3, [r7, #28]
+ 800399c:	61bb      	str	r3, [r7, #24]
     if (peak > d->max_rpm) {
- 80039be:	68fb      	ldr	r3, [r7, #12]
- 80039c0:	689b      	ldr	r3, [r3, #8]
- 80039c2:	4619      	mov	r1, r3
- 80039c4:	69b8      	ldr	r0, [r7, #24]
- 80039c6:	f7fc fe8b 	bl	80006e0 <__aeabi_fcmpgt>
- 80039ca:	4603      	mov	r3, r0
- 80039cc:	2b00      	cmp	r3, #0
- 80039ce:	d100      	bne.n	80039d2 <DiffDrive_ToWheels+0xce>
+ 800399e:	68fb      	ldr	r3, [r7, #12]
+ 80039a0:	689b      	ldr	r3, [r3, #8]
+ 80039a2:	4619      	mov	r1, r3
+ 80039a4:	69b8      	ldr	r0, [r7, #24]
+ 80039a6:	f7fc fe9b 	bl	80006e0 <__aeabi_fcmpgt>
+ 80039aa:	4603      	mov	r3, r0
+ 80039ac:	2b00      	cmp	r3, #0
+ 80039ae:	d100      	bne.n	80039b2 <DiffDrive_ToWheels+0xce>
         float scale = d->max_rpm / peak;
         *left_rpm *= scale;
         *right_rpm *= scale;
     }
 }
- 80039d0:	e01b      	b.n	8003a0a <DiffDrive_ToWheels+0x106>
+ 80039b0:	e01b      	b.n	80039ea <DiffDrive_ToWheels+0x106>
         float scale = d->max_rpm / peak;
- 80039d2:	68fb      	ldr	r3, [r7, #12]
- 80039d4:	689b      	ldr	r3, [r3, #8]
- 80039d6:	69b9      	ldr	r1, [r7, #24]
- 80039d8:	4618      	mov	r0, r3
- 80039da:	f7fc fd79 	bl	80004d0 <__aeabi_fdiv>
- 80039de:	4603      	mov	r3, r0
- 80039e0:	617b      	str	r3, [r7, #20]
+ 80039b2:	68fb      	ldr	r3, [r7, #12]
+ 80039b4:	689b      	ldr	r3, [r3, #8]
+ 80039b6:	69b9      	ldr	r1, [r7, #24]
+ 80039b8:	4618      	mov	r0, r3
+ 80039ba:	f7fc fd89 	bl	80004d0 <__aeabi_fdiv>
+ 80039be:	4603      	mov	r3, r0
+ 80039c0:	617b      	str	r3, [r7, #20]
         *left_rpm *= scale;
- 80039e2:	683b      	ldr	r3, [r7, #0]
- 80039e4:	681b      	ldr	r3, [r3, #0]
- 80039e6:	6979      	ldr	r1, [r7, #20]
- 80039e8:	4618      	mov	r0, r3
- 80039ea:	f7fc fcbd 	bl	8000368 <__aeabi_fmul>
- 80039ee:	4603      	mov	r3, r0
- 80039f0:	461a      	mov	r2, r3
- 80039f2:	683b      	ldr	r3, [r7, #0]
- 80039f4:	601a      	str	r2, [r3, #0]
+ 80039c2:	683b      	ldr	r3, [r7, #0]
+ 80039c4:	681b      	ldr	r3, [r3, #0]
+ 80039c6:	6979      	ldr	r1, [r7, #20]
+ 80039c8:	4618      	mov	r0, r3
+ 80039ca:	f7fc fccd 	bl	8000368 <__aeabi_fmul>
+ 80039ce:	4603      	mov	r3, r0
+ 80039d0:	461a      	mov	r2, r3
+ 80039d2:	683b      	ldr	r3, [r7, #0]
+ 80039d4:	601a      	str	r2, [r3, #0]
         *right_rpm *= scale;
- 80039f6:	6b3b      	ldr	r3, [r7, #48]	; 0x30
- 80039f8:	681b      	ldr	r3, [r3, #0]
- 80039fa:	6979      	ldr	r1, [r7, #20]
- 80039fc:	4618      	mov	r0, r3
- 80039fe:	f7fc fcb3 	bl	8000368 <__aeabi_fmul>
- 8003a02:	4603      	mov	r3, r0
- 8003a04:	461a      	mov	r2, r3
- 8003a06:	6b3b      	ldr	r3, [r7, #48]	; 0x30
- 8003a08:	601a      	str	r2, [r3, #0]
+ 80039d6:	6b3b      	ldr	r3, [r7, #48]	; 0x30
+ 80039d8:	681b      	ldr	r3, [r3, #0]
+ 80039da:	6979      	ldr	r1, [r7, #20]
+ 80039dc:	4618      	mov	r0, r3
+ 80039de:	f7fc fcc3 	bl	8000368 <__aeabi_fmul>
+ 80039e2:	4603      	mov	r3, r0
+ 80039e4:	461a      	mov	r2, r3
+ 80039e6:	6b3b      	ldr	r3, [r7, #48]	; 0x30
+ 80039e8:	601a      	str	r2, [r3, #0]
 }
- 8003a0a:	bf00      	nop
- 8003a0c:	3728      	adds	r7, #40	; 0x28
- 8003a0e:	46bd      	mov	sp, r7
- 8003a10:	bd80      	pop	{r7, pc}
- 8003a12:	bf00      	nop
- 8003a14:	40c90fdb 	.word	0x40c90fdb
- 8003a18:	42700000 	.word	0x42700000
+ 80039ea:	bf00      	nop
+ 80039ec:	3728      	adds	r7, #40	; 0x28
+ 80039ee:	46bd      	mov	sp, r7
+ 80039f0:	bd80      	pop	{r7, pc}
+ 80039f2:	bf00      	nop
+ 80039f4:	40c90fdb 	.word	0x40c90fdb
+ 80039f8:	42700000 	.word	0x42700000
 
-08003a1c <DiffDrive_ToBody>:
+080039fc <DiffDrive_ToBody>:
 
 /* Dong hoc thuan: Chuyen doi RPM thanh v, w */
 void DiffDrive_ToBody(const DiffDrive *d, float left_rpm, float right_rpm, float *v, float *w)
 {
- 8003a1c:	b580      	push	{r7, lr}
- 8003a1e:	b086      	sub	sp, #24
- 8003a20:	af00      	add	r7, sp, #0
- 8003a22:	60f8      	str	r0, [r7, #12]
- 8003a24:	60b9      	str	r1, [r7, #8]
- 8003a26:	607a      	str	r2, [r7, #4]
- 8003a28:	603b      	str	r3, [r7, #0]
+ 80039fc:	b580      	push	{r7, lr}
+ 80039fe:	b086      	sub	sp, #24
+ 8003a00:	af00      	add	r7, sp, #0
+ 8003a02:	60f8      	str	r0, [r7, #12]
+ 8003a04:	60b9      	str	r1, [r7, #8]
+ 8003a06:	607a      	str	r2, [r7, #4]
+ 8003a08:	603b      	str	r3, [r7, #0]
     // He so vong quay
     float k = 2.0f * PI * d->radius / 60.0f;
- 8003a2a:	68fb      	ldr	r3, [r7, #12]
- 8003a2c:	681b      	ldr	r3, [r3, #0]
- 8003a2e:	491b      	ldr	r1, [pc, #108]	; (8003a9c <DiffDrive_ToBody+0x80>)
- 8003a30:	4618      	mov	r0, r3
- 8003a32:	f7fc fc99 	bl	8000368 <__aeabi_fmul>
- 8003a36:	4603      	mov	r3, r0
- 8003a38:	4919      	ldr	r1, [pc, #100]	; (8003aa0 <DiffDrive_ToBody+0x84>)
- 8003a3a:	4618      	mov	r0, r3
- 8003a3c:	f7fc fd48 	bl	80004d0 <__aeabi_fdiv>
- 8003a40:	4603      	mov	r3, r0
- 8003a42:	617b      	str	r3, [r7, #20]
+ 8003a0a:	68fb      	ldr	r3, [r7, #12]
+ 8003a0c:	681b      	ldr	r3, [r3, #0]
+ 8003a0e:	491b      	ldr	r1, [pc, #108]	; (8003a7c <DiffDrive_ToBody+0x80>)
+ 8003a10:	4618      	mov	r0, r3
+ 8003a12:	f7fc fca9 	bl	8000368 <__aeabi_fmul>
+ 8003a16:	4603      	mov	r3, r0
+ 8003a18:	4919      	ldr	r1, [pc, #100]	; (8003a80 <DiffDrive_ToBody+0x84>)
+ 8003a1a:	4618      	mov	r0, r3
+ 8003a1c:	f7fc fd58 	bl	80004d0 <__aeabi_fdiv>
+ 8003a20:	4603      	mov	r3, r0
+ 8003a22:	617b      	str	r3, [r7, #20]
 
     // Tinh toan van toc dai va van toc goc
     *v = 0.5f * (left_rpm + right_rpm) * k;
- 8003a44:	6879      	ldr	r1, [r7, #4]
- 8003a46:	68b8      	ldr	r0, [r7, #8]
- 8003a48:	f7fc fb86 	bl	8000158 <__addsf3>
- 8003a4c:	4603      	mov	r3, r0
- 8003a4e:	f04f 517c 	mov.w	r1, #1056964608	; 0x3f000000
- 8003a52:	4618      	mov	r0, r3
- 8003a54:	f7fc fc88 	bl	8000368 <__aeabi_fmul>
- 8003a58:	4603      	mov	r3, r0
- 8003a5a:	6979      	ldr	r1, [r7, #20]
- 8003a5c:	4618      	mov	r0, r3
- 8003a5e:	f7fc fc83 	bl	8000368 <__aeabi_fmul>
- 8003a62:	4603      	mov	r3, r0
- 8003a64:	461a      	mov	r2, r3
- 8003a66:	683b      	ldr	r3, [r7, #0]
- 8003a68:	601a      	str	r2, [r3, #0]
+ 8003a24:	6879      	ldr	r1, [r7, #4]
+ 8003a26:	68b8      	ldr	r0, [r7, #8]
+ 8003a28:	f7fc fb96 	bl	8000158 <__addsf3>
+ 8003a2c:	4603      	mov	r3, r0
+ 8003a2e:	f04f 517c 	mov.w	r1, #1056964608	; 0x3f000000
+ 8003a32:	4618      	mov	r0, r3
+ 8003a34:	f7fc fc98 	bl	8000368 <__aeabi_fmul>
+ 8003a38:	4603      	mov	r3, r0
+ 8003a3a:	6979      	ldr	r1, [r7, #20]
+ 8003a3c:	4618      	mov	r0, r3
+ 8003a3e:	f7fc fc93 	bl	8000368 <__aeabi_fmul>
+ 8003a42:	4603      	mov	r3, r0
+ 8003a44:	461a      	mov	r2, r3
+ 8003a46:	683b      	ldr	r3, [r7, #0]
+ 8003a48:	601a      	str	r2, [r3, #0]
     *w = (right_rpm - left_rpm) * k / d->track;
- 8003a6a:	68b9      	ldr	r1, [r7, #8]
- 8003a6c:	6878      	ldr	r0, [r7, #4]
- 8003a6e:	f7fc fb71 	bl	8000154 <__aeabi_fsub>
- 8003a72:	4603      	mov	r3, r0
- 8003a74:	6979      	ldr	r1, [r7, #20]
- 8003a76:	4618      	mov	r0, r3
- 8003a78:	f7fc fc76 	bl	8000368 <__aeabi_fmul>
- 8003a7c:	4603      	mov	r3, r0
- 8003a7e:	461a      	mov	r2, r3
- 8003a80:	68fb      	ldr	r3, [r7, #12]
- 8003a82:	685b      	ldr	r3, [r3, #4]
- 8003a84:	4619      	mov	r1, r3
- 8003a86:	4610      	mov	r0, r2
- 8003a88:	f7fc fd22 	bl	80004d0 <__aeabi_fdiv>
- 8003a8c:	4603      	mov	r3, r0
- 8003a8e:	461a      	mov	r2, r3
- 8003a90:	6a3b      	ldr	r3, [r7, #32]
- 8003a92:	601a      	str	r2, [r3, #0]
+ 8003a4a:	68b9      	ldr	r1, [r7, #8]
+ 8003a4c:	6878      	ldr	r0, [r7, #4]
+ 8003a4e:	f7fc fb81 	bl	8000154 <__aeabi_fsub>
+ 8003a52:	4603      	mov	r3, r0
+ 8003a54:	6979      	ldr	r1, [r7, #20]
+ 8003a56:	4618      	mov	r0, r3
+ 8003a58:	f7fc fc86 	bl	8000368 <__aeabi_fmul>
+ 8003a5c:	4603      	mov	r3, r0
+ 8003a5e:	461a      	mov	r2, r3
+ 8003a60:	68fb      	ldr	r3, [r7, #12]
+ 8003a62:	685b      	ldr	r3, [r3, #4]
+ 8003a64:	4619      	mov	r1, r3
+ 8003a66:	4610      	mov	r0, r2
+ 8003a68:	f7fc fd32 	bl	80004d0 <__aeabi_fdiv>
+ 8003a6c:	4603      	mov	r3, r0
+ 8003a6e:	461a      	mov	r2, r3
+ 8003a70:	6a3b      	ldr	r3, [r7, #32]
+ 8003a72:	601a      	str	r2, [r3, #0]
 }
- 8003a94:	bf00      	nop
- 8003a96:	3718      	adds	r7, #24
- 8003a98:	46bd      	mov	sp, r7
- 8003a9a:	bd80      	pop	{r7, pc}
- 8003a9c:	40c90fdb 	.word	0x40c90fdb
- 8003aa0:	42700000 	.word	0x42700000
+ 8003a74:	bf00      	nop
+ 8003a76:	3718      	adds	r7, #24
+ 8003a78:	46bd      	mov	sp, r7
+ 8003a7a:	bd80      	pop	{r7, pc}
+ 8003a7c:	40c90fdb 	.word	0x40c90fdb
+ 8003a80:	42700000 	.word	0x42700000
 
-08003aa4 <Safety_Init>:
+08003a84 <Safety_Init>:
 #include "safety.h"
 
 #include <math.h>
 
 void Safety_Init(Safety *s)
 {
- 8003aa4:	b480      	push	{r7}
- 8003aa6:	b083      	sub	sp, #12
- 8003aa8:	af00      	add	r7, sp, #0
- 8003aaa:	6078      	str	r0, [r7, #4]
+ 8003a84:	b480      	push	{r7}
+ 8003a86:	b083      	sub	sp, #12
+ 8003a88:	af00      	add	r7, sp, #0
+ 8003a8a:	6078      	str	r0, [r7, #4]
     s->fault = DRIVE_OK;
- 8003aac:	687b      	ldr	r3, [r7, #4]
- 8003aae:	2200      	movs	r2, #0
- 8003ab0:	701a      	strb	r2, [r3, #0]
+ 8003a8c:	687b      	ldr	r3, [r7, #4]
+ 8003a8e:	2200      	movs	r2, #0
+ 8003a90:	701a      	strb	r2, [r3, #0]
 }
- 8003ab2:	bf00      	nop
- 8003ab4:	370c      	adds	r7, #12
- 8003ab6:	46bd      	mov	sp, r7
- 8003ab8:	bc80      	pop	{r7}
- 8003aba:	4770      	bx	lr
+ 8003a92:	bf00      	nop
+ 8003a94:	370c      	adds	r7, #12
+ 8003a96:	46bd      	mov	sp, r7
+ 8003a98:	bc80      	pop	{r7}
+ 8003a9a:	4770      	bx	lr
 
-08003abc <Safety_Check>:
+08003a9c <Safety_Check>:
 
 uint8_t Safety_Check(Safety *s, uint32_t elapsed_ms, float cmd_v, float cmd_w)
 {
- 8003abc:	b590      	push	{r4, r7, lr}
- 8003abe:	b085      	sub	sp, #20
- 8003ac0:	af00      	add	r7, sp, #0
- 8003ac2:	60f8      	str	r0, [r7, #12]
- 8003ac4:	60b9      	str	r1, [r7, #8]
- 8003ac6:	607a      	str	r2, [r7, #4]
- 8003ac8:	603b      	str	r3, [r7, #0]
+ 8003a9c:	b590      	push	{r4, r7, lr}
+ 8003a9e:	b085      	sub	sp, #20
+ 8003aa0:	af00      	add	r7, sp, #0
+ 8003aa2:	60f8      	str	r0, [r7, #12]
+ 8003aa4:	60b9      	str	r1, [r7, #8]
+ 8003aa6:	607a      	str	r2, [r7, #4]
+ 8003aa8:	603b      	str	r3, [r7, #0]
     if (s->fault != DRIVE_OK) 
- 8003aca:	68fb      	ldr	r3, [r7, #12]
- 8003acc:	781b      	ldrb	r3, [r3, #0]
- 8003ace:	2b00      	cmp	r3, #0
- 8003ad0:	d001      	beq.n	8003ad6 <Safety_Check+0x1a>
+ 8003aaa:	68fb      	ldr	r3, [r7, #12]
+ 8003aac:	781b      	ldrb	r3, [r3, #0]
+ 8003aae:	2b00      	cmp	r3, #0
+ 8003ab0:	d001      	beq.n	8003ab6 <Safety_Check+0x1a>
     {
         return 0;
- 8003ad2:	2300      	movs	r3, #0
- 8003ad4:	e032      	b.n	8003b3c <Safety_Check+0x80>
+ 8003ab2:	2300      	movs	r3, #0
+ 8003ab4:	e032      	b.n	8003b1c <Safety_Check+0x80>
     }
 
     if (elapsed_ms > 50U) 
- 8003ad6:	68bb      	ldr	r3, [r7, #8]
- 8003ad8:	2b32      	cmp	r3, #50	; 0x32
- 8003ada:	d903      	bls.n	8003ae4 <Safety_Check+0x28>
+ 8003ab6:	68bb      	ldr	r3, [r7, #8]
+ 8003ab8:	2b32      	cmp	r3, #50	; 0x32
+ 8003aba:	d903      	bls.n	8003ac4 <Safety_Check+0x28>
     {
         s->fault = DRIVE_LOOP_OVERRUN;
- 8003adc:	68fb      	ldr	r3, [r7, #12]
- 8003ade:	2201      	movs	r2, #1
- 8003ae0:	701a      	strb	r2, [r3, #0]
- 8003ae2:	e024      	b.n	8003b2e <Safety_Check+0x72>
+ 8003abc:	68fb      	ldr	r3, [r7, #12]
+ 8003abe:	2201      	movs	r2, #1
+ 8003ac0:	701a      	strb	r2, [r3, #0]
+ 8003ac2:	e024      	b.n	8003b0e <Safety_Check+0x72>
     }
     else if (!isfinite(cmd_v) || !isfinite(cmd_w)) 
- 8003ae4:	687b      	ldr	r3, [r7, #4]
- 8003ae6:	f023 4400 	bic.w	r4, r3, #2147483648	; 0x80000000
- 8003aea:	4916      	ldr	r1, [pc, #88]	; (8003b44 <Safety_Check+0x88>)
- 8003aec:	4620      	mov	r0, r4
- 8003aee:	f7fc fe01 	bl	80006f4 <__aeabi_fcmpun>
- 8003af2:	4603      	mov	r3, r0
- 8003af4:	2b00      	cmp	r3, #0
- 8003af6:	d117      	bne.n	8003b28 <Safety_Check+0x6c>
- 8003af8:	4912      	ldr	r1, [pc, #72]	; (8003b44 <Safety_Check+0x88>)
- 8003afa:	4620      	mov	r0, r4
- 8003afc:	f7fc fdf0 	bl	80006e0 <__aeabi_fcmpgt>
- 8003b00:	4603      	mov	r3, r0
- 8003b02:	2b00      	cmp	r3, #0
- 8003b04:	d110      	bne.n	8003b28 <Safety_Check+0x6c>
- 8003b06:	683b      	ldr	r3, [r7, #0]
- 8003b08:	f023 4400 	bic.w	r4, r3, #2147483648	; 0x80000000
- 8003b0c:	490d      	ldr	r1, [pc, #52]	; (8003b44 <Safety_Check+0x88>)
- 8003b0e:	4620      	mov	r0, r4
- 8003b10:	f7fc fdf0 	bl	80006f4 <__aeabi_fcmpun>
- 8003b14:	4603      	mov	r3, r0
- 8003b16:	2b00      	cmp	r3, #0
- 8003b18:	d106      	bne.n	8003b28 <Safety_Check+0x6c>
- 8003b1a:	490a      	ldr	r1, [pc, #40]	; (8003b44 <Safety_Check+0x88>)
- 8003b1c:	4620      	mov	r0, r4
- 8003b1e:	f7fc fddf 	bl	80006e0 <__aeabi_fcmpgt>
- 8003b22:	4603      	mov	r3, r0
- 8003b24:	2b00      	cmp	r3, #0
- 8003b26:	d002      	beq.n	8003b2e <Safety_Check+0x72>
+ 8003ac4:	687b      	ldr	r3, [r7, #4]
+ 8003ac6:	f023 4400 	bic.w	r4, r3, #2147483648	; 0x80000000
+ 8003aca:	4916      	ldr	r1, [pc, #88]	; (8003b24 <Safety_Check+0x88>)
+ 8003acc:	4620      	mov	r0, r4
+ 8003ace:	f7fc fe11 	bl	80006f4 <__aeabi_fcmpun>
+ 8003ad2:	4603      	mov	r3, r0
+ 8003ad4:	2b00      	cmp	r3, #0
+ 8003ad6:	d117      	bne.n	8003b08 <Safety_Check+0x6c>
+ 8003ad8:	4912      	ldr	r1, [pc, #72]	; (8003b24 <Safety_Check+0x88>)
+ 8003ada:	4620      	mov	r0, r4
+ 8003adc:	f7fc fe00 	bl	80006e0 <__aeabi_fcmpgt>
+ 8003ae0:	4603      	mov	r3, r0
+ 8003ae2:	2b00      	cmp	r3, #0
+ 8003ae4:	d110      	bne.n	8003b08 <Safety_Check+0x6c>
+ 8003ae6:	683b      	ldr	r3, [r7, #0]
+ 8003ae8:	f023 4400 	bic.w	r4, r3, #2147483648	; 0x80000000
+ 8003aec:	490d      	ldr	r1, [pc, #52]	; (8003b24 <Safety_Check+0x88>)
+ 8003aee:	4620      	mov	r0, r4
+ 8003af0:	f7fc fe00 	bl	80006f4 <__aeabi_fcmpun>
+ 8003af4:	4603      	mov	r3, r0
+ 8003af6:	2b00      	cmp	r3, #0
+ 8003af8:	d106      	bne.n	8003b08 <Safety_Check+0x6c>
+ 8003afa:	490a      	ldr	r1, [pc, #40]	; (8003b24 <Safety_Check+0x88>)
+ 8003afc:	4620      	mov	r0, r4
+ 8003afe:	f7fc fdef 	bl	80006e0 <__aeabi_fcmpgt>
+ 8003b02:	4603      	mov	r3, r0
+ 8003b04:	2b00      	cmp	r3, #0
+ 8003b06:	d002      	beq.n	8003b0e <Safety_Check+0x72>
     {
         s->fault = DRIVE_BAD_COMMAND;
- 8003b28:	68fb      	ldr	r3, [r7, #12]
- 8003b2a:	2202      	movs	r2, #2
- 8003b2c:	701a      	strb	r2, [r3, #0]
+ 8003b08:	68fb      	ldr	r3, [r7, #12]
+ 8003b0a:	2202      	movs	r2, #2
+ 8003b0c:	701a      	strb	r2, [r3, #0]
     }
 
     return s->fault == DRIVE_OK;
- 8003b2e:	68fb      	ldr	r3, [r7, #12]
- 8003b30:	781b      	ldrb	r3, [r3, #0]
- 8003b32:	2b00      	cmp	r3, #0
- 8003b34:	bf0c      	ite	eq
- 8003b36:	2301      	moveq	r3, #1
- 8003b38:	2300      	movne	r3, #0
- 8003b3a:	b2db      	uxtb	r3, r3
+ 8003b0e:	68fb      	ldr	r3, [r7, #12]
+ 8003b10:	781b      	ldrb	r3, [r3, #0]
+ 8003b12:	2b00      	cmp	r3, #0
+ 8003b14:	bf0c      	ite	eq
+ 8003b16:	2301      	moveq	r3, #1
+ 8003b18:	2300      	movne	r3, #0
+ 8003b1a:	b2db      	uxtb	r3, r3
 }
- 8003b3c:	4618      	mov	r0, r3
- 8003b3e:	3714      	adds	r7, #20
- 8003b40:	46bd      	mov	sp, r7
- 8003b42:	bd90      	pop	{r4, r7, pc}
- 8003b44:	7f7fffff 	.word	0x7f7fffff
+ 8003b1c:	4618      	mov	r0, r3
+ 8003b1e:	3714      	adds	r7, #20
+ 8003b20:	46bd      	mov	sp, r7
+ 8003b22:	bd90      	pop	{r4, r7, pc}
+ 8003b24:	7f7fffff 	.word	0x7f7fffff
 
-08003b48 <__libc_init_array>:
- 8003b48:	b570      	push	{r4, r5, r6, lr}
- 8003b4a:	2600      	movs	r6, #0
- 8003b4c:	4d0c      	ldr	r5, [pc, #48]	; (8003b80 <__libc_init_array+0x38>)
- 8003b4e:	4c0d      	ldr	r4, [pc, #52]	; (8003b84 <__libc_init_array+0x3c>)
- 8003b50:	1b64      	subs	r4, r4, r5
- 8003b52:	10a4      	asrs	r4, r4, #2
- 8003b54:	42a6      	cmp	r6, r4
- 8003b56:	d109      	bne.n	8003b6c <__libc_init_array+0x24>
- 8003b58:	f000 f866 	bl	8003c28 <_init>
- 8003b5c:	2600      	movs	r6, #0
- 8003b5e:	4d0a      	ldr	r5, [pc, #40]	; (8003b88 <__libc_init_array+0x40>)
- 8003b60:	4c0a      	ldr	r4, [pc, #40]	; (8003b8c <__libc_init_array+0x44>)
- 8003b62:	1b64      	subs	r4, r4, r5
- 8003b64:	10a4      	asrs	r4, r4, #2
- 8003b66:	42a6      	cmp	r6, r4
- 8003b68:	d105      	bne.n	8003b76 <__libc_init_array+0x2e>
- 8003b6a:	bd70      	pop	{r4, r5, r6, pc}
- 8003b6c:	f855 3b04 	ldr.w	r3, [r5], #4
- 8003b70:	4798      	blx	r3
- 8003b72:	3601      	adds	r6, #1
- 8003b74:	e7ee      	b.n	8003b54 <__libc_init_array+0xc>
- 8003b76:	f855 3b04 	ldr.w	r3, [r5], #4
- 8003b7a:	4798      	blx	r3
- 8003b7c:	3601      	adds	r6, #1
- 8003b7e:	e7f2      	b.n	8003b66 <__libc_init_array+0x1e>
- 8003b80:	08003c80 	.word	0x08003c80
- 8003b84:	08003c80 	.word	0x08003c80
- 8003b88:	08003c80 	.word	0x08003c80
- 8003b8c:	08003c84 	.word	0x08003c84
+08003b28 <__libc_init_array>:
+ 8003b28:	b570      	push	{r4, r5, r6, lr}
+ 8003b2a:	2600      	movs	r6, #0
+ 8003b2c:	4d0c      	ldr	r5, [pc, #48]	; (8003b60 <__libc_init_array+0x38>)
+ 8003b2e:	4c0d      	ldr	r4, [pc, #52]	; (8003b64 <__libc_init_array+0x3c>)
+ 8003b30:	1b64      	subs	r4, r4, r5
+ 8003b32:	10a4      	asrs	r4, r4, #2
+ 8003b34:	42a6      	cmp	r6, r4
+ 8003b36:	d109      	bne.n	8003b4c <__libc_init_array+0x24>
+ 8003b38:	f000 f854 	bl	8003be4 <_init>
+ 8003b3c:	2600      	movs	r6, #0
+ 8003b3e:	4d0a      	ldr	r5, [pc, #40]	; (8003b68 <__libc_init_array+0x40>)
+ 8003b40:	4c0a      	ldr	r4, [pc, #40]	; (8003b6c <__libc_init_array+0x44>)
+ 8003b42:	1b64      	subs	r4, r4, r5
+ 8003b44:	10a4      	asrs	r4, r4, #2
+ 8003b46:	42a6      	cmp	r6, r4
+ 8003b48:	d105      	bne.n	8003b56 <__libc_init_array+0x2e>
+ 8003b4a:	bd70      	pop	{r4, r5, r6, pc}
+ 8003b4c:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8003b50:	4798      	blx	r3
+ 8003b52:	3601      	adds	r6, #1
+ 8003b54:	e7ee      	b.n	8003b34 <__libc_init_array+0xc>
+ 8003b56:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8003b5a:	4798      	blx	r3
+ 8003b5c:	3601      	adds	r6, #1
+ 8003b5e:	e7f2      	b.n	8003b46 <__libc_init_array+0x1e>
+ 8003b60:	08003c20 	.word	0x08003c20
+ 8003b64:	08003c20 	.word	0x08003c20
+ 8003b68:	08003c20 	.word	0x08003c20
+ 8003b6c:	08003c24 	.word	0x08003c24
 
-08003b90 <memset>:
- 8003b90:	4603      	mov	r3, r0
- 8003b92:	4402      	add	r2, r0
- 8003b94:	4293      	cmp	r3, r2
- 8003b96:	d100      	bne.n	8003b9a <memset+0xa>
- 8003b98:	4770      	bx	lr
- 8003b9a:	f803 1b01 	strb.w	r1, [r3], #1
- 8003b9e:	e7f9      	b.n	8003b94 <memset+0x4>
+08003b70 <memset>:
+ 8003b70:	4603      	mov	r3, r0
+ 8003b72:	4402      	add	r2, r0
+ 8003b74:	4293      	cmp	r3, r2
+ 8003b76:	d100      	bne.n	8003b7a <memset+0xa>
+ 8003b78:	4770      	bx	lr
+ 8003b7a:	f803 1b01 	strb.w	r1, [r3], #1
+ 8003b7e:	e7f9      	b.n	8003b74 <memset+0x4>
 
-08003ba0 <copysignf>:
- 8003ba0:	f001 4100 	and.w	r1, r1, #2147483648	; 0x80000000
- 8003ba4:	f020 4000 	bic.w	r0, r0, #2147483648	; 0x80000000
- 8003ba8:	4308      	orrs	r0, r1
- 8003baa:	4770      	bx	lr
+08003b80 <copysignf>:
+ 8003b80:	f001 4100 	and.w	r1, r1, #2147483648	; 0x80000000
+ 8003b84:	f020 4000 	bic.w	r0, r0, #2147483648	; 0x80000000
+ 8003b88:	4308      	orrs	r0, r1
+ 8003b8a:	4770      	bx	lr
 
-08003bac <fmaxf>:
- 8003bac:	b538      	push	{r3, r4, r5, lr}
- 8003bae:	4604      	mov	r4, r0
- 8003bb0:	460d      	mov	r5, r1
- 8003bb2:	f000 f81f 	bl	8003bf4 <__fpclassifyf>
- 8003bb6:	b140      	cbz	r0, 8003bca <fmaxf+0x1e>
- 8003bb8:	4628      	mov	r0, r5
- 8003bba:	f000 f81b 	bl	8003bf4 <__fpclassifyf>
- 8003bbe:	b128      	cbz	r0, 8003bcc <fmaxf+0x20>
- 8003bc0:	4629      	mov	r1, r5
- 8003bc2:	4620      	mov	r0, r4
- 8003bc4:	f7fc fd8c 	bl	80006e0 <__aeabi_fcmpgt>
- 8003bc8:	b900      	cbnz	r0, 8003bcc <fmaxf+0x20>
- 8003bca:	462c      	mov	r4, r5
- 8003bcc:	4620      	mov	r0, r4
- 8003bce:	bd38      	pop	{r3, r4, r5, pc}
+08003b8c <fminf>:
+ 8003b8c:	b538      	push	{r3, r4, r5, lr}
+ 8003b8e:	4604      	mov	r4, r0
+ 8003b90:	460d      	mov	r5, r1
+ 8003b92:	f000 f80d 	bl	8003bb0 <__fpclassifyf>
+ 8003b96:	b140      	cbz	r0, 8003baa <fminf+0x1e>
+ 8003b98:	4628      	mov	r0, r5
+ 8003b9a:	f000 f809 	bl	8003bb0 <__fpclassifyf>
+ 8003b9e:	b128      	cbz	r0, 8003bac <fminf+0x20>
+ 8003ba0:	4629      	mov	r1, r5
+ 8003ba2:	4620      	mov	r0, r4
+ 8003ba4:	f7fc fd7e 	bl	80006a4 <__aeabi_fcmplt>
+ 8003ba8:	b900      	cbnz	r0, 8003bac <fminf+0x20>
+ 8003baa:	462c      	mov	r4, r5
+ 8003bac:	4620      	mov	r0, r4
+ 8003bae:	bd38      	pop	{r3, r4, r5, pc}
 
-08003bd0 <fminf>:
- 8003bd0:	b538      	push	{r3, r4, r5, lr}
- 8003bd2:	4604      	mov	r4, r0
- 8003bd4:	460d      	mov	r5, r1
- 8003bd6:	f000 f80d 	bl	8003bf4 <__fpclassifyf>
- 8003bda:	b140      	cbz	r0, 8003bee <fminf+0x1e>
- 8003bdc:	4628      	mov	r0, r5
- 8003bde:	f000 f809 	bl	8003bf4 <__fpclassifyf>
- 8003be2:	b128      	cbz	r0, 8003bf0 <fminf+0x20>
- 8003be4:	4629      	mov	r1, r5
- 8003be6:	4620      	mov	r0, r4
- 8003be8:	f7fc fd5c 	bl	80006a4 <__aeabi_fcmplt>
- 8003bec:	b900      	cbnz	r0, 8003bf0 <fminf+0x20>
- 8003bee:	462c      	mov	r4, r5
- 8003bf0:	4620      	mov	r0, r4
- 8003bf2:	bd38      	pop	{r3, r4, r5, pc}
+08003bb0 <__fpclassifyf>:
+ 8003bb0:	f030 4000 	bics.w	r0, r0, #2147483648	; 0x80000000
+ 8003bb4:	d00d      	beq.n	8003bd2 <__fpclassifyf+0x22>
+ 8003bb6:	f5a0 0300 	sub.w	r3, r0, #8388608	; 0x800000
+ 8003bba:	f1b3 4ffe 	cmp.w	r3, #2130706432	; 0x7f000000
+ 8003bbe:	d30a      	bcc.n	8003bd6 <__fpclassifyf+0x26>
+ 8003bc0:	4b07      	ldr	r3, [pc, #28]	; (8003be0 <__fpclassifyf+0x30>)
+ 8003bc2:	1e42      	subs	r2, r0, #1
+ 8003bc4:	429a      	cmp	r2, r3
+ 8003bc6:	d908      	bls.n	8003bda <__fpclassifyf+0x2a>
+ 8003bc8:	f1a0 43ff 	sub.w	r3, r0, #2139095040	; 0x7f800000
+ 8003bcc:	4258      	negs	r0, r3
+ 8003bce:	4158      	adcs	r0, r3
+ 8003bd0:	4770      	bx	lr
+ 8003bd2:	2002      	movs	r0, #2
+ 8003bd4:	4770      	bx	lr
+ 8003bd6:	2004      	movs	r0, #4
+ 8003bd8:	4770      	bx	lr
+ 8003bda:	2003      	movs	r0, #3
+ 8003bdc:	4770      	bx	lr
+ 8003bde:	bf00      	nop
+ 8003be0:	007ffffe 	.word	0x007ffffe
 
-08003bf4 <__fpclassifyf>:
- 8003bf4:	f030 4000 	bics.w	r0, r0, #2147483648	; 0x80000000
- 8003bf8:	d00d      	beq.n	8003c16 <__fpclassifyf+0x22>
- 8003bfa:	f5a0 0300 	sub.w	r3, r0, #8388608	; 0x800000
- 8003bfe:	f1b3 4ffe 	cmp.w	r3, #2130706432	; 0x7f000000
- 8003c02:	d30a      	bcc.n	8003c1a <__fpclassifyf+0x26>
- 8003c04:	4b07      	ldr	r3, [pc, #28]	; (8003c24 <__fpclassifyf+0x30>)
- 8003c06:	1e42      	subs	r2, r0, #1
- 8003c08:	429a      	cmp	r2, r3
- 8003c0a:	d908      	bls.n	8003c1e <__fpclassifyf+0x2a>
- 8003c0c:	f1a0 43ff 	sub.w	r3, r0, #2139095040	; 0x7f800000
- 8003c10:	4258      	negs	r0, r3
- 8003c12:	4158      	adcs	r0, r3
- 8003c14:	4770      	bx	lr
- 8003c16:	2002      	movs	r0, #2
- 8003c18:	4770      	bx	lr
- 8003c1a:	2004      	movs	r0, #4
- 8003c1c:	4770      	bx	lr
- 8003c1e:	2003      	movs	r0, #3
- 8003c20:	4770      	bx	lr
- 8003c22:	bf00      	nop
- 8003c24:	007ffffe 	.word	0x007ffffe
+08003be4 <_init>:
+ 8003be4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8003be6:	bf00      	nop
+ 8003be8:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8003bea:	bc08      	pop	{r3}
+ 8003bec:	469e      	mov	lr, r3
+ 8003bee:	4770      	bx	lr
 
-08003c28 <_init>:
- 8003c28:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8003c2a:	bf00      	nop
- 8003c2c:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 8003c2e:	bc08      	pop	{r3}
- 8003c30:	469e      	mov	lr, r3
- 8003c32:	4770      	bx	lr
-
-08003c34 <_fini>:
- 8003c34:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8003c36:	bf00      	nop
- 8003c38:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 8003c3a:	bc08      	pop	{r3}
- 8003c3c:	469e      	mov	lr, r3
- 8003c3e:	4770      	bx	lr
+08003bf0 <_fini>:
+ 8003bf0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8003bf2:	bf00      	nop
+ 8003bf4:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8003bf6:	bc08      	pop	{r3}
+ 8003bf8:	469e      	mov	lr, r3
+ 8003bfa:	4770      	bx	lr

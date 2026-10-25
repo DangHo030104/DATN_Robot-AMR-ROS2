@@ -47,8 +47,10 @@ TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 
 /* USER CODE BEGIN PV */
+
 DriveBase drive;
 static uint32_t last_tick;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -99,7 +101,12 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   DriveBase_Init(&drive, &htim3, &htim2, &htim4);
-  if (DriveBase_Start(&drive) != HAL_OK) Error_Handler();
+
+  if (DriveBase_Start(&drive) != HAL_OK)
+  {
+	  Error_Handler();
+  }
+
   last_tick = HAL_GetTick();
 
   /* USER CODE END 2 */
@@ -112,10 +119,12 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
     uint32_t now = HAL_GetTick();
+
     uint32_t elapsed = now - last_tick;
+    
     if (elapsed >= CTRL_PERIOD_MS) {
-      last_tick = now;
-      DriveBase_Update(&drive, elapsed);
+    	last_tick = now;
+    	DriveBase_Update(&drive, elapsed);
     }
   }
   /* USER CODE END 3 */
@@ -331,24 +340,26 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1 | GPIO_PIN_2, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(MOTOR_LEFT_IN1_GPIO_Port,
+                    MOTOR_LEFT_IN1_Pin | MOTOR_LEFT_IN2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(MOTOR_RIGHT_IN1_GPIO_Port,
+                    MOTOR_RIGHT_IN1_Pin | MOTOR_RIGHT_IN2_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA1 PA2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1 | GPIO_PIN_2;
+  /*Configure GPIO pins : MOTOR_LEFT_IN1_Pin MOTOR_LEFT_IN2_Pin */
+  GPIO_InitStruct.Pin = MOTOR_LEFT_IN1_Pin | MOTOR_LEFT_IN2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(MOTOR_LEFT_IN1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB0 PB1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1;
+  /*Configure GPIO pins : MOTOR_RIGHT_IN1_Pin MOTOR_RIGHT_IN2_Pin */
+  GPIO_InitStruct.Pin = MOTOR_RIGHT_IN1_Pin | MOTOR_RIGHT_IN2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(MOTOR_RIGHT_IN1_GPIO_Port, &GPIO_InitStruct);
 }
 
 /* USER CODE BEGIN 4 */

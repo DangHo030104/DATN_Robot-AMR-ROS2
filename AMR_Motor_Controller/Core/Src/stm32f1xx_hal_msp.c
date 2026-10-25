@@ -106,12 +106,12 @@ void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* htim_encoder)
     PA15     ------> TIM2_CH1
     PB3     ------> TIM2_CH2
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_15;
+    GPIO_InitStruct.Pin = ENCODER_RIGHT_A_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_3;
+    GPIO_InitStruct.Pin = ENCODER_RIGHT_B_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -135,7 +135,7 @@ void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* htim_encoder)
     PA6     ------> TIM3_CH1
     PA7     ------> TIM3_CH2
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+    GPIO_InitStruct.Pin = ENCODER_LEFT_A_Pin|ENCODER_LEFT_B_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -183,7 +183,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
     PB6     ------> TIM4_CH1
     PB7     ------> TIM4_CH2
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+    GPIO_InitStruct.Pin = MOTOR_LEFT_PWM_Pin|MOTOR_RIGHT_PWM_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -214,9 +214,9 @@ void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* htim_encoder)
     PA15     ------> TIM2_CH1
     PB3     ------> TIM2_CH2
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_15);
+    HAL_GPIO_DeInit(ENCODER_RIGHT_A_GPIO_Port, ENCODER_RIGHT_A_Pin);
 
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_3);
+    HAL_GPIO_DeInit(ENCODER_RIGHT_B_GPIO_Port, ENCODER_RIGHT_B_Pin);
 
   /* USER CODE BEGIN TIM2_MspDeInit 1 */
 
@@ -234,7 +234,7 @@ void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* htim_encoder)
     PA6     ------> TIM3_CH1
     PA7     ------> TIM3_CH2
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_6|GPIO_PIN_7);
+    HAL_GPIO_DeInit(GPIOA, ENCODER_LEFT_A_Pin|ENCODER_LEFT_B_Pin);
 
   /* USER CODE BEGIN TIM3_MspDeInit 1 */
 

@@ -1,4 +1,4 @@
 drive_base.c:9:6:DriveBase_Init	128	static
-drive_base.c:45:19:DriveBase_Start	16	static
-drive_base.c:55:6:DriveBase_Update	56	static
-drive_base.c:79:6:DriveBase_Stop	16	static
+drive_base.c:62:19:DriveBase_Start	16	static
+drive_base.c:72:6:DriveBase_Update	56	static
+drive_base.c:96:6:DriveBase_Stop	16	static

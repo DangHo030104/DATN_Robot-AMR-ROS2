@@ -6,6 +6,7 @@ void Encoder_Init(Encoder *enc, TIM_HandleTypeDef *tim, int8_t sign)
     enc->prev = 0;
     enc->sign = sign;
     enc->total = 0;
+
     __HAL_TIM_SET_COUNTER(tim, 0);
 }
 
@@ -18,10 +19,16 @@ int32_t Encoder_Read(Encoder *enc)
 {
     uint16_t now = (uint16_t)__HAL_TIM_GET_COUNTER(enc->tim);
     int32_t delta = (int32_t)now - (int32_t)enc->prev;
+
+    /* Xử lý tràn CNT */
     if (delta > 32767) delta -= 65536;
     if (delta < -32768) delta += 65536;
+
     enc->prev = now;
-    delta *= enc->sign;
+
+    delta *= enc->sign;     
+
     enc->total += delta;
+
     return delta;
 }

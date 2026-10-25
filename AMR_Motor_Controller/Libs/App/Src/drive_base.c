@@ -10,19 +10,36 @@ void DriveBase_Init(DriveBase *base, TIM_HandleTypeDef *left_enc, TIM_HandleType
 {
     /* Cau hinh phan cung cho 2 banh xe */ 
     const WheelHw left_hw = {
-        left_enc, 1, pwm, TIM_CHANNEL_1,
-        GPIOA, GPIO_PIN_1, GPIO_PIN_2, 1
+        left_enc,
+        1,
+        pwm,
+        TIM_CHANNEL_1,
+        MOTOR_LEFT_IN1_GPIO_Port,
+        MOTOR_LEFT_IN1_Pin,
+        MOTOR_LEFT_IN2_Pin,
+        1
     };
 
     const WheelHw right_hw = {
-        right_enc, -1, pwm, TIM_CHANNEL_2,
-        GPIOB, GPIO_PIN_0, GPIO_PIN_1, -1
+        right_enc,
+        -1,
+        pwm,
+        TIM_CHANNEL_2,
+        MOTOR_RIGHT_IN1_GPIO_Port,
+        MOTOR_RIGHT_IN1_Pin,
+        MOTOR_RIGHT_IN2_Pin,
+        -1
     };
 
     /* Cau hinh PID */
-    const PidCfg pid_cfg = {
-        PID_KP, PID_KP_FINE, PID_KI, PID_KD,
-        PID_FINE_BAND, -100.0f, 100.0f
+    const Pid pid_cfg = {
+        .kp = PID_KP,
+        .kp_fine = PID_KP_FINE,
+        .ki = PID_KI,
+        .kd = PID_KD,
+        .fine_band = PID_FINE_BAND,
+        .min = -100.0f,
+        .max = 100.0f
     };
 
     /* Khoi tao cac thanh phan */

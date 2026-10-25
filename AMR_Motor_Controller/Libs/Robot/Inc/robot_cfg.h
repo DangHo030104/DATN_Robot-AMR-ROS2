@@ -17,10 +17,10 @@
 #define DRIVE_ACC_W     0.80f
 
 // Thong so PID
-#define PID_KP          0.60f       // He so Kp chinh
-#define PID_KP_FINE     0.15f       // He so Kp phu dung khi sai so gan setpoint
-#define PID_KI          1.00f       // He so Ki
-#define PID_KD          0.00f       // He so Kd
-#define PID_FINE_BAND   2.00f       // Vung sai so nho (±2 RPM)
+#define PID_KP          0.60f       // Error lớn: Kp lớn để motor nhanh đạt setpoint
+#define PID_KP_FINE     0.15f       // Error nhỏ: Kp nhỏ để giảm rung quanh setpoint
+#define PID_KI          1.00f       
+#define PID_KD          0.00f       
+#define PID_FINE_BAND   2.00f       // Vùng error nhỏ (±2 RPM)
 
 #endif

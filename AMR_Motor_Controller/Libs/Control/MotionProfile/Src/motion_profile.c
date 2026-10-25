@@ -32,6 +32,7 @@ void MotionProfile_Update(MotionProfile *p, float cmd_v, float cmd_w, float dt)
 {
     cmd_v = Clamp(cmd_v, -p->max_v, p->max_v);
     cmd_w = Clamp(cmd_w, -p->max_w, p->max_w);
+    
     p->v = Slew(p->v, cmd_v, p->acc_v * dt);
     p->w = Slew(p->w, cmd_w, p->acc_w * dt);
 }

@@ -39,10 +39,10 @@ typedef struct
     uint16_t filter_count;  // So luong gia tri da loc 
     int32_t report_ticks;   // So xung da dem duoc trong 1 chu ky
     uint32_t report_ms;     // Thoi gian da dem duoc trong 1 chu ky (ms)
-    int8_t target_sign;     
+    int8_t target_sign;     // Dấu của target_rpm (1: dương, -1: âm, 0: dừng)
 } WheelCtrl;
 
-void Wheel_Init(WheelCtrl *w, const WheelHw *hw, float cpr, const PidCfg *pid_cfg);
+void Wheel_Init(WheelCtrl *w, const WheelHw *hw, float cpr, const Pid *pid_cfg);
 HAL_StatusTypeDef Wheel_Start(WheelCtrl *w);
 void Wheel_Update(WheelCtrl *w, float target_rpm, uint32_t elapsed_ms);
 void Wheel_Stop(WheelCtrl *w);
