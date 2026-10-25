@@ -1,0 +1,2 @@
+safety.c:5:6:Safety_Init	16	static
+safety.c:10:9:Safety_Check	32	static

@@ -1,0 +1,4 @@
+pid.c:5:14:Clamp	24	static
+pid.c:10:6:Pid_Init	16	static
+pid.c:22:6:Pid_Reset	16	static
+pid.c:28:7:Pid_Update	72	static

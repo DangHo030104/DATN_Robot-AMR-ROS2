@@ -1,0 +1,3 @@
+diff_drive.c:7:6:DiffDrive_Init	24	static
+diff_drive.c:15:6:DiffDrive_ToWheels	48	static
+diff_drive.c:37:6:DiffDrive_ToBody	32	static

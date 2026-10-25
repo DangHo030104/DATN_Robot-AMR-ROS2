@@ -1,0 +1,5 @@
+motion_profile.c:4:14:Clamp	24	static
+motion_profile.c:10:14:Slew	24	static
+motion_profile.c:15:6:MotionProfile_Init	24	static
+motion_profile.c:24:6:MotionProfile_Reset	16	static
+motion_profile.c:31:6:MotionProfile_Update	32	static

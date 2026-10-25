@@ -1,0 +1,5 @@
+motor_driver.c:5:14:Clamp	24	static
+motor_driver.c:10:6:MotorDriver_Init	24	static
+motor_driver.c:25:19:MotorDriver_Start	16	static
+motor_driver.c:30:6:MotorDriver_Set	40	static
+motor_driver.c:62:6:MotorDriver_Stop	16	static
