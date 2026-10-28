@@ -1,7 +1,7 @@
 #ifndef DRIVE_BASE_H
 #define DRIVE_BASE_H
 
-/* Dieu phoi toan bo he thong */
+/* Module điều phối toàn bộ hệ thống */
 
 #include "diff_drive.h"
 #include "motion_profile.h"
@@ -31,5 +31,7 @@ HAL_StatusTypeDef DriveBase_Start(DriveBase *base);
 void DriveBase_Update(DriveBase *base, uint32_t elapsed_ms);
 
 void DriveBase_Stop(DriveBase *base);
+
+void DriveBase_SafeStop(DriveBase *base);
 
 #endif

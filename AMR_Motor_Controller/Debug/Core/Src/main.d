@@ -23,6 +23,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Libs/App/Inc/drive_base.h \
  ../Libs/Robot/DifferentialDrive/Inc/diff_drive.h \
  ../Libs/Control/MotionProfile/Inc/motion_profile.h \
@@ -30,7 +31,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Libs/Control/WheelController/Inc/wheel_ctrl.h \
  ../Libs/Drivers/Encoder/Inc/encoder.h \
  ../Libs/Drivers/MotorDriver/Inc/motor_driver.h \
- ../Libs/Control/PID/Inc/pid.h ../Libs/Robot/Inc/robot_cfg.h
+ ../Libs/Control/PID/Inc/pid.h ../Libs/Robot/Inc/robot_cfg.h \
+ ../Libs/Communication/Inc/serial_comm.h \
+ ../Libs/Safety/Inc/command_watchdog.h
 
 ../Core/Inc/main.h:
 
@@ -82,6 +85,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
+
 ../Libs/App/Inc/drive_base.h:
 
 ../Libs/Robot/DifferentialDrive/Inc/diff_drive.h:
@@ -99,3 +104,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Libs/Control/PID/Inc/pid.h:
 
 ../Libs/Robot/Inc/robot_cfg.h:
+
+../Libs/Communication/Inc/serial_comm.h:
+
+../Libs/Safety/Inc/command_watchdog.h:

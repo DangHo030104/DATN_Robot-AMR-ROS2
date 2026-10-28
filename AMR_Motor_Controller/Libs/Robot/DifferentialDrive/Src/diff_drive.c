@@ -4,10 +4,10 @@
 
 #define PI 3.14159265358979323846f
 
-void DiffDrive_Init(DiffDrive *d, float radius, float track, float max_rpm)
+void DiffDrive_Init(DiffDrive *d, float radius, float wheelbase, float max_rpm)
 {
     d->radius = radius;
-    d->track = track;
+    d->wheelbase = wheelbase;
     d->max_rpm = max_rpm;
 }
 
@@ -18,8 +18,8 @@ void DiffDrive_ToWheels(const DiffDrive *d, float v, float w, float *left_rpm, f
     float k = 60.0f / (2.0f * PI * d->radius);
 
     // Tinh toan RPM cho 2 banh xe
-    *left_rpm = (v - 0.5f * d->track * w) * k;
-    *right_rpm = (v + 0.5f * d->track * w) * k;
+    *left_rpm = (v - 0.5f * d->wheelbase * w) * k;
+    *right_rpm = (v + 0.5f * d->wheelbase * w) * k;
 
     float left_abs = fabsf(*left_rpm);
     float right_abs = fabsf(*right_rpm);
@@ -41,5 +41,5 @@ void DiffDrive_ToBody(const DiffDrive *d, float left_rpm, float right_rpm, float
 
     // Tinh toan van toc dai va van toc goc
     *v = 0.5f * (left_rpm + right_rpm) * k;
-    *w = (right_rpm - left_rpm) * k / d->track;
+    *w = (right_rpm - left_rpm) * k / d->wheelbase;
 }

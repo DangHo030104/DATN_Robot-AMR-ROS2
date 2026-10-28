@@ -26,6 +26,7 @@ Libs/Control/WheelController/Src/wheel_ctrl.o: \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Libs/Drivers/MotorDriver/Inc/motor_driver.h \
  ../Libs/Control/PID/Inc/pid.h
 
@@ -82,6 +83,8 @@ Libs/Control/WheelController/Src/wheel_ctrl.o: \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
+
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 
 ../Libs/Drivers/MotorDriver/Inc/motor_driver.h:
 

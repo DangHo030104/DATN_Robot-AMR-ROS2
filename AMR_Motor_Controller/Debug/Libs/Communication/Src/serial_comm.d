@@ -1,5 +1,6 @@
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.o: \
- ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c \
+Libs/Communication/Src/serial_comm.o: \
+ ../Libs/Communication/Src/serial_comm.c \
+ ../Libs/Communication/Inc/serial_comm.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -23,7 +24,10 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.o: \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
- ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+
+../Libs/Communication/Inc/serial_comm.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 
@@ -72,3 +76,5 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.o: \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
+
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:

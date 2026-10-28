@@ -1,0 +1,5 @@
+command_watchdog.c:4:6:CommandWatchdog_Init	16	static
+command_watchdog.c:16:6:CommandWatchdog_Arm	16	static
+command_watchdog.c:27:6:CommandWatchdog_Disarm	16	static
+command_watchdog.c:37:6:CommandWatchdog_Refresh	16	static
+command_watchdog.c:49:9:CommandWatchdog_Update	24	static

@@ -4,7 +4,7 @@
 volatile float cmd_v;                // Lenh van toc dai (m/s)
 volatile float cmd_w;                // Lenh van toc goc (rad/s)
 volatile uint8_t drive_enable;       // Trang thai dieu khien (0: stop, 1: enable)
-volatile uint8_t drive_fault;        // Trang thai loi (0: ok, 1: loop overrun, 2: bad command)
+volatile uint8_t drive_fault;        // Trang thai loi
 
 void DriveBase_Init(DriveBase *base, TIM_HandleTypeDef *left_enc, TIM_HandleTypeDef *right_enc, TIM_HandleTypeDef *pwm)
 {
@@ -14,7 +14,7 @@ void DriveBase_Init(DriveBase *base, TIM_HandleTypeDef *left_enc, TIM_HandleType
         1,
         pwm,
         TIM_CHANNEL_1,
-        MOTOR_LEFT_IN1_GPIO_Port,
+        MOTOR_LEFT_GPIO_Port,
         MOTOR_LEFT_IN1_Pin,
         MOTOR_LEFT_IN2_Pin,
         1
@@ -25,7 +25,7 @@ void DriveBase_Init(DriveBase *base, TIM_HandleTypeDef *left_enc, TIM_HandleType
         -1,
         pwm,
         TIM_CHANNEL_2,
-        MOTOR_RIGHT_IN1_GPIO_Port,
+		MOTOR_RIGHT_GPIO_Port,
         MOTOR_RIGHT_IN1_Pin,
         MOTOR_RIGHT_IN2_Pin,
         -1
@@ -46,13 +46,15 @@ void DriveBase_Init(DriveBase *base, TIM_HandleTypeDef *left_enc, TIM_HandleType
     Wheel_Init(&base->left, &left_hw, WHEEL_CPR, &pid_cfg);
     Wheel_Init(&base->right, &right_hw, WHEEL_CPR, &pid_cfg);
 
-    DiffDrive_Init(&base->model, WHEEL_RADIUS_M, WHEEL_TRACK_M, WHEEL_MAX_RPM);
+    DiffDrive_Init(&base->model, WHEEL_RADIUS_M, WHEEL_BASE_M, WHEEL_MAX_RPM);
     
     MotionProfile_Init(&base->motion, DRIVE_MAX_V, DRIVE_MAX_W, DRIVE_ACC_V, DRIVE_ACC_W);
     
     Safety_Init(&base->safety);
 
     /* Khoi tao trang thai dieu khien */
+    cmd_v = 0.0f;
+    cmd_w = 0.0f;
     base->v = 0.0f;
     base->w = 0.0f;
     drive_enable = 0;
@@ -87,7 +89,7 @@ void DriveBase_Update(DriveBase *base, uint32_t elapsed_ms)
         MotionProfile_Reset(&base->motion);
     }
  
-    /* Điều khiển bánh xe */
+    /* Điều khiển tốc độ bánh xe */
     Wheel_Update(&base->left, left_target, elapsed_ms);
     Wheel_Update(&base->right, right_target, elapsed_ms);
     DiffDrive_ToBody(&base->model, base->left.rpm, base->right.rpm, &base->v, &base->w);
@@ -99,4 +101,20 @@ void DriveBase_Stop(DriveBase *base)
     MotionProfile_Reset(&base->motion);
     Wheel_Stop(&base->left);
     Wheel_Stop(&base->right);
+}
+
+
+void DriveBase_SafeStop(DriveBase *base)
+{
+    if (base == NULL)
+        return;
+
+    /* Huy lenh van toc */
+    cmd_v = 0.0f;
+    cmd_w = 0.0f;
+    base->v = 0.0f;
+    base->w = 0.0f;
+
+    /* Vo hieu hoa dieu khien */
+    DriveBase_Stop(base);
 }

@@ -16,6 +16,7 @@ RM := rm -rf
 -include Libs/Control/WheelController/Src/subdir.mk
 -include Libs/Control/PID/Src/subdir.mk
 -include Libs/Control/MotionProfile/Src/subdir.mk
+-include Libs/Communication/Src/subdir.mk
 -include Libs/App/Src/subdir.mk
 -include Drivers/STM32F1xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk

@@ -24,6 +24,7 @@ Core/Src \
 Core/Startup \
 Drivers/STM32F1xx_HAL_Driver/Src \
 Libs/App/Src \
+Libs/Communication/Src \
 Libs/Control/MotionProfile/Src \
 Libs/Control/PID/Src \
 Libs/Control/WheelController/Src \

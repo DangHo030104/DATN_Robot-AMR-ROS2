@@ -372,7 +372,7 @@ Các thông số được tập trung trong `Robot/Inc/robot_cfg.h`:
 |---|---:|---|
 | `CTRL_PERIOD_MS` | 10 ms | Chu kỳ điều khiển |
 | `WHEEL_RADIUS_M` | 0.0325 m | Bán kính bánh xe |
-| `WHEEL_TRACK_M` | 0.215 m | Khoảng cách giữa hai bánh |
+| `WHEEL_BASE_M` | 0.215 m | Khoảng cách giữa hai bánh |
 | `WHEEL_CPR` | 1320 | Số xung trên một vòng bánh |
 | `WHEEL_MAX_RPM` | 60 RPM | RPM tối đa của mỗi bánh |
 | `DRIVE_MAX_V` | 0.10 m/s | Vận tốc tuyến tính tối đa |
@@ -393,9 +393,9 @@ quadrature của timer.
 
 | Chức năng | Bánh trái | Bánh phải |
 |---|---|---|
-| Timer encoder | TIM3 | TIM2 |
-| Encoder A | `ENCODER_LEFT_A` (PA6) | `ENCODER_RIGHT_A` (PA15) |
-| Encoder B | `ENCODER_LEFT_B` (PA7) | `ENCODER_RIGHT_B` (PB3) |
+| Timer encoder | TIM2 | TIM3 |
+| Encoder A | `ENCODER_LEFT_A` (PA15) | `ENCODER_RIGHT_A` (PA6) |
+| Encoder B | `ENCODER_LEFT_B` (PB3) | `ENCODER_RIGHT_B` (PA7) |
 | Dấu encoder | +1 | -1 |
 | PWM | TIM4 Channel 1 | TIM4 Channel 2 |
 | Chân PWM | `MOTOR_LEFT_PWM` (PB6) | `MOTOR_RIGHT_PWM` (PB7) |

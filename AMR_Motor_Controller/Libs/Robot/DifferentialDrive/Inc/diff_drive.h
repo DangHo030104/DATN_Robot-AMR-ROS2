@@ -1,12 +1,12 @@
 #ifndef DIFF_DRIVE_H
 #define DIFF_DRIVE_H
 
-/* Dong hoc robot 2 banh vi sai - Differential Drive Robot */
+/* Động học robot 2 bánh vi sai - Differential Drive Robot */
 
 typedef struct
 {
     float radius;
-    float track;
+    float wheelbase;
     float max_rpm;
 } DiffDrive;
 
