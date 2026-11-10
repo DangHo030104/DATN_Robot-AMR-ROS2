@@ -5,4 +5,4 @@ mpu6050.c:41:16:Mpu6050_ClampInt16	16	static
 mpu6050.c:59:26:Mpu6050_ReadRaw	40	static
 mpu6050.c:87:19:Mpu6050_Init	32	static
 mpu6050.c:128:19:Mpu6050_Read	16	static
-mpu6050.c:145:19:Mpu6050_CalibrateGyro	96	static
+mpu6050.c:146:19:Mpu6050_CalibrateGyro	96	static

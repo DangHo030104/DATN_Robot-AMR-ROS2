@@ -133,6 +133,7 @@ HAL_StatusTypeDef Mpu6050_Read(Mpu6050 *imu, Mpu6050Sample *sample)
     if (Mpu6050_ReadRaw(imu, sample) != HAL_OK)
         return HAL_ERROR;
 
+    // Trừ bias gyro đo được khi robot đứng yên
     sample->gyro_x = Mpu6050_ClampInt16((int32_t)sample->gyro_x - imu->gyro_bias_x);
     sample->gyro_y = Mpu6050_ClampInt16((int32_t)sample->gyro_y - imu->gyro_bias_y);
     sample->gyro_z = Mpu6050_ClampInt16((int32_t)sample->gyro_z - imu->gyro_bias_z);
@@ -163,6 +164,7 @@ HAL_StatusTypeDef Mpu6050_CalibrateGyro(Mpu6050 *imu, uint16_t sample_count)
         HAL_Delay(MPU6050_CALIBRATION_MS);
     }
 
+    // Tính bias gyro bằng trung bình cộng của các mẫu
     imu->gyro_bias_x = (int32_t)(sum_x / sample_count);
     imu->gyro_bias_y = (int32_t)(sum_y / sample_count);
     imu->gyro_bias_z = (int32_t)(sum_z / sample_count);

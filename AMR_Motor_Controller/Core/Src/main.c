@@ -37,6 +37,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+#define MPU6050_INIT_RETRY_MS     100U
+#define MPU6050_INIT_MAX_ATTEMPTS 10U
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -127,10 +131,23 @@ int main(void)
 
   imu_available = 0;
   imu_sample.valid = 0;
+  imu_read_failures = 0;
 
-  if (Mpu6050_Init(&imu, &hi2c2, 0x68U) == HAL_OK && Mpu6050_CalibrateGyro(&imu, 500U) == HAL_OK)
+  // Chờ MPU6050 ổn định nguồn
+//  HAL_Delay(MPU6050_STARTUP_DELAY_MS);
+
+  for (uint8_t attempt = 0; attempt < MPU6050_INIT_MAX_ATTEMPTS; ++attempt)
   {
-      imu_available = 1;
+      if (Mpu6050_Init(&imu, &hi2c2, 0x68U) == HAL_OK)
+      {
+          if (Mpu6050_CalibrateGyro(&imu, 500U) == HAL_OK)
+          {
+              imu_available = 1;
+              break;
+          }
+      }
+
+      HAL_Delay(MPU6050_INIT_RETRY_MS);
   }
 
   DriveBase_Init(&drive, &htim2, &htim3, &htim4);
