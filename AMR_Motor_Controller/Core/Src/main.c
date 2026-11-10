@@ -27,6 +27,7 @@
 #include "robot_cfg.h"
 #include "serial_comm.h"
 #include "command_watchdog.h"
+#include "mpu6050.h"
 
 /* USER CODE END Includes */
 
@@ -44,6 +45,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+I2C_HandleTypeDef hi2c2;
+
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
@@ -57,6 +60,13 @@ DriveBase drive;
 static uint32_t last_tick;
 static uint32_t elapsed;
 static uint32_t last_encoder_tx_tick;
+static uint32_t last_imu_read_tick;
+static uint32_t last_imu_tx_tick;
+
+static Mpu6050 imu;
+static Mpu6050Sample imu_sample;
+static uint8_t imu_available;
+static uint8_t imu_read_failures;
 
 static CommandWatchdog command_wd;
 
@@ -71,6 +81,7 @@ static void MX_TIM3_Init(void);
 static void MX_TIM4_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_I2C2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -111,7 +122,16 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM2_Init();
   MX_USART1_UART_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
+
+  imu_available = 0;
+  imu_sample.valid = 0;
+
+  if (Mpu6050_Init(&imu, &hi2c2, 0x68U) == HAL_OK && Mpu6050_CalibrateGyro(&imu, 500U) == HAL_OK)
+  {
+      imu_available = 1;
+  }
 
   DriveBase_Init(&drive, &htim2, &htim3, &htim4);
 
@@ -126,6 +146,8 @@ int main(void)
 
   last_tick = HAL_GetTick();
   last_encoder_tx_tick = HAL_GetTick();
+  last_imu_read_tick = HAL_GetTick();
+  last_imu_tx_tick = HAL_GetTick();
 
   /* USER CODE END 2 */
 
@@ -179,6 +201,30 @@ int main(void)
     {
         last_tick = now;
         DriveBase_Update(&drive, elapsed);
+    }
+
+    /* Doc MPU6050 moi 10ms ~ 100Hz. Vo hieu hoa IMU sau 5 loi lien tiep. */
+    if (imu_available && now - last_imu_read_tick >= 10U)
+    {
+        last_imu_read_tick = now;
+
+        if (Mpu6050_Read(&imu, &imu_sample) == HAL_OK)
+        {
+            imu_read_failures = 0;
+        }
+        else
+        {
+            imu_sample.valid = 0;
+            if (++imu_read_failures >= 5)
+                imu_available = 0;
+        }
+    }
+
+    /* Gui mau moi nhat moi 20ms ~ 50Hz; khong gui lai mau loi. */
+    if (imu_available && imu_sample.valid && now - last_imu_tx_tick >= 20U)
+    {
+        last_imu_tx_tick = now;
+        Serial_Comm_SendImu(&imu_sample);
     }
 
     /* Gui Encoder moi 100 ms */
@@ -242,6 +288,40 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief I2C2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C2_Init(void)
+{
+
+  /* USER CODE BEGIN I2C2_Init 0 */
+
+  /* USER CODE END I2C2_Init 0 */
+
+  /* USER CODE BEGIN I2C2_Init 1 */
+
+  /* USER CODE END I2C2_Init 1 */
+  hi2c2.Instance = I2C2;
+  hi2c2.Init.ClockSpeed = 100000;
+  hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c2.Init.OwnAddress1 = 0;
+  hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c2.Init.OwnAddress2 = 0;
+  hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C2_Init 2 */
+
+  /* USER CODE END I2C2_Init 2 */
+
 }
 
 /**

@@ -12,6 +12,7 @@ RM := rm -rf
 -include Libs/Safety/Src/subdir.mk
 -include Libs/Robot/DifferentialDrive/Src/subdir.mk
 -include Libs/Drivers/MotorDriver/Src/subdir.mk
+-include Libs/Drivers/MPU6050/Src/subdir.mk
 -include Libs/Drivers/Encoder/Src/subdir.mk
 -include Libs/Control/WheelController/Src/subdir.mk
 -include Libs/Control/PID/Src/subdir.mk

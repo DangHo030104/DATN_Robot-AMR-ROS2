@@ -2,6 +2,7 @@
 #define SERIAL_COMM_H
 
 #include "stm32f1xx_hal.h"
+#include "mpu6050.h"
 #include <stdint.h>
 
 /* Kieu lenh serial */
@@ -38,6 +39,7 @@ void Serial_Comm_RxCpltCallback(UART_HandleTypeDef *huart);
 void Serial_Comm_ErrorCallback(UART_HandleTypeDef *huart);
 
 HAL_StatusTypeDef Serial_Comm_SendEncoder(int32_t left_count, int32_t right_count);
+HAL_StatusTypeDef Serial_Comm_SendImu(const Mpu6050Sample *sample);
 
 #endif
 

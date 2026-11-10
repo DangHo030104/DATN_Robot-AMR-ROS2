@@ -48,6 +48,7 @@
 									<listOptionValue builtIn="false" value="../Libs/Control/MotionProfile/Inc"/>
 									<listOptionValue builtIn="false" value="../Libs/Drivers/Encoder/Inc"/>
 									<listOptionValue builtIn="false" value="../Libs/Drivers/MotorDriver/Inc"/>
+									<listOptionValue builtIn="false" value="../Libs/Drivers/MPU6050/Inc"/>
 									<listOptionValue builtIn="false" value="../Libs/Robot/Inc"/>
 									<listOptionValue builtIn="false" value="../Libs/Robot/DifferentialDrive/Inc"/>
 									<listOptionValue builtIn="false" value="../Libs/Safety/Inc"/>
@@ -131,6 +132,7 @@
 									<listOptionValue builtIn="false" value="../Libs/Control/MotionProfile/Inc"/>
 									<listOptionValue builtIn="false" value="../Libs/Drivers/Encoder/Inc"/>
 									<listOptionValue builtIn="false" value="../Libs/Drivers/MotorDriver/Inc"/>
+									<listOptionValue builtIn="false" value="../Libs/Drivers/MPU6050/Inc"/>
 									<listOptionValue builtIn="false" value="../Libs/Robot/Inc"/>
 									<listOptionValue builtIn="false" value="../Libs/Robot/DifferentialDrive/Inc"/>
 									<listOptionValue builtIn="false" value="../Libs/Safety/Inc"/>

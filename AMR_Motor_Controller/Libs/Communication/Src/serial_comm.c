@@ -10,8 +10,8 @@
 #define SERIAL_RX_BUFFER_SIZE 128U
 #define SERIAL_LINE_SIZE      64U
 
-#define SERIAL_MAX_LINEAR   0.10f
-#define SERIAL_MAX_ANGULAR  0.50f
+#define SERIAL_MAX_LINEAR   0.20f
+#define SERIAL_MAX_ANGULAR  0.80f
 
 
 static UART_HandleTypeDef *serial_uart = NULL;
@@ -178,6 +178,31 @@ HAL_StatusTypeDef Serial_Comm_SendEncoder(int32_t left_count, int32_t right_coun
     }
 
     return HAL_UART_Transmit(serial_uart, (uint8_t *)tx_buffer, (uint16_t)length, 5);
+}
+
+
+/* Gui mau MPU6050 da tru gyro bias. Cac gia tri van o don vi raw. */
+HAL_StatusTypeDef Serial_Comm_SendImu(const Mpu6050Sample *sample)
+{
+    if (serial_uart == NULL || sample == NULL || !sample->valid)
+    {
+        return HAL_ERROR;
+    }
+
+    char tx_buffer[96];
+
+    int length = snprintf(tx_buffer, sizeof(tx_buffer),
+                          "IMU,%lu,%d,%d,%d,%d,%d,%d\n",
+                          (unsigned long)sample->sample_ms,
+                          sample->accel_x, sample->accel_y, sample->accel_z,
+                          sample->gyro_x, sample->gyro_y, sample->gyro_z);
+
+    if (length <= 0 || length >= (int)sizeof(tx_buffer))
+    {
+        return HAL_ERROR;
+    }
+
+    return HAL_UART_Transmit(serial_uart, (uint8_t *)tx_buffer, (uint16_t)length, 10);
 }
 
 

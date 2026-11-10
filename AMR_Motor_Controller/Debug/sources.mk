@@ -29,6 +29,7 @@ Libs/Control/MotionProfile/Src \
 Libs/Control/PID/Src \
 Libs/Control/WheelController/Src \
 Libs/Drivers/Encoder/Src \
+Libs/Drivers/MPU6050/Src \
 Libs/Drivers/MotorDriver/Src \
 Libs/Robot/DifferentialDrive/Src \
 Libs/Safety/Src \

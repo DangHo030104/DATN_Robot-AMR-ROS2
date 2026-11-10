@@ -9,11 +9,11 @@
 #define WHEEL_RADIUS_M       0.0325f     // Ban kinh banh xe (m)
 #define WHEEL_BASE_M   	     0.215f      // Khoang cach giua 2 banh xe (m)
 #define WHEEL_CPR            1320.0f     // So xung encoder/1 vong quay
-#define WHEEL_MAX_RPM        60.0f       // Toc do toi da cua dong co (RPM)
+#define WHEEL_MAX_RPM        100.0f      // Toc do toi da cua dong co (RPM)
 
 // Gioi han chuyen dong cua robot
-#define DRIVE_MAX_V          0.10f
-#define DRIVE_MAX_W          0.50f
+#define DRIVE_MAX_V          0.20f
+#define DRIVE_MAX_W          0.80f
 #define DRIVE_ACC_V          0.15f
 #define DRIVE_ACC_W          0.80f
 
