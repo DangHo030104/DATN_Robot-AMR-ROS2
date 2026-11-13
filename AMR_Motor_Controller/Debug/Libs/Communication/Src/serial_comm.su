@@ -5,8 +5,4 @@ serial_comm.c:99:6:Serial_Comm_Process	40	static
 serial_comm.c:164:19:Serial_Comm_SendEncoder	96	static
 serial_comm.c:185:19:Serial_Comm_SendImu	160	static
 serial_comm.c:209:9:Serial_Comm_GetCommand	16	static
-serial_comm.c:220:10:Serial_Comm_GetValidCmdCount	4	static
-serial_comm.c:225:10:Serial_Comm_GetInvalidCmdCount	4	static
-serial_comm.c:230:10:Serial_Comm_GetRxOverflowCount	4	static
-serial_comm.c:235:10:Serial_Comm_GetRxErrorCount	4	static
-serial_comm.c:241:16:Serial_ParseCommand	40	static
+serial_comm.c:220:16:Serial_ParseCommand	40	static

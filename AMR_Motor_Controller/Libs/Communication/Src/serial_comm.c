@@ -217,27 +217,6 @@ uint8_t Serial_Comm_GetCommand(SerialVelocityCommand *command)
     return 1;
 }
 
-uint32_t Serial_Comm_GetValidCmdCount(void)
-{
-    return valid_cmd_count;
-}
-
-uint32_t Serial_Comm_GetInvalidCmdCount(void)
-{
-    return invalid_cmd_count;
-}
-
-uint32_t Serial_Comm_GetRxOverflowCount(void)
-{
-    return rx_overflow_count;
-}
-
-uint32_t Serial_Comm_GetRxErrorCount(void)
-{
-    return rx_error_count;
-}
-
-
 static uint8_t Serial_ParseCommand(const char *line, SerialVelocityCommand *command)
 {
     if (line == NULL || command == NULL)

@@ -15,4 +15,4 @@ accelerometer range +/-2 g (`16384 LSB/g`) and gyro range +/-250 deg/s
 (`131 LSB/(deg/s)`). Gyro bias is removed during firmware startup; the serial
 bridge must convert the remaining raw counts to ROS SI units.
 
-Receive overflow, UART errors, valid commands, and invalid commands have debugger counters exposed through `Serial_Comm_Get*Count()` functions. No command acknowledgment or status frame is transmitted.
+Receive overflow, UART errors, valid commands, and invalid commands remain available as debugger counters in `serial_comm.c`. No command acknowledgment or status frame is transmitted.

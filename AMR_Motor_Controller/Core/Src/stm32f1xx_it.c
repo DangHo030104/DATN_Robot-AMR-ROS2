@@ -25,6 +25,22 @@
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
 
+/* Private defines -----------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* Keep this path independent of HAL state: fault handlers must stop PWM even
+ * when the stack or a peripheral handle is corrupted. */
+#define EMERGENCY_MOTOR_STOP()                                    \
+  do                                                              \
+  {                                                               \
+    TIM4->CCR1 = 0U;                                              \
+    TIM4->CCR2 = 0U;                                              \
+    GPIOA->BRR = MOTOR_LEFT_IN1_Pin | MOTOR_LEFT_IN2_Pin;         \
+    GPIOB->BRR = MOTOR_RIGHT_IN1_Pin | MOTOR_RIGHT_IN2_Pin;       \
+  } while (0)
+
+/* USER CODE END PD */
+
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
 
@@ -57,6 +73,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern UART_HandleTypeDef huart1;
+extern I2C_HandleTypeDef hi2c2;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -70,7 +87,7 @@ extern UART_HandleTypeDef huart1;
 void NMI_Handler(void)
 {
   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
-
+  EMERGENCY_MOTOR_STOP();
   /* USER CODE END NonMaskableInt_IRQn 0 */
   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
   while (1)
@@ -85,7 +102,7 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
-
+  EMERGENCY_MOTOR_STOP();
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
@@ -100,7 +117,7 @@ void HardFault_Handler(void)
 void MemManage_Handler(void)
 {
   /* USER CODE BEGIN MemoryManagement_IRQn 0 */
-
+  EMERGENCY_MOTOR_STOP();
   /* USER CODE END MemoryManagement_IRQn 0 */
   while (1)
   {
@@ -115,7 +132,7 @@ void MemManage_Handler(void)
 void BusFault_Handler(void)
 {
   /* USER CODE BEGIN BusFault_IRQn 0 */
-
+  EMERGENCY_MOTOR_STOP();
   /* USER CODE END BusFault_IRQn 0 */
   while (1)
   {
@@ -130,7 +147,7 @@ void BusFault_Handler(void)
 void UsageFault_Handler(void)
 {
   /* USER CODE BEGIN UsageFault_IRQn 0 */
-
+  EMERGENCY_MOTOR_STOP();
   /* USER CODE END UsageFault_IRQn 0 */
   while (1)
   {
@@ -198,6 +215,22 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f1xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles I2C2 event interrupt.
+  */
+void I2C2_EV_IRQHandler(void)
+{
+  HAL_I2C_EV_IRQHandler(&hi2c2);
+}
+
+/**
+  * @brief This function handles I2C2 error interrupt.
+  */
+void I2C2_ER_IRQHandler(void)
+{
+  HAL_I2C_ER_IRQHandler(&hi2c2);
+}
 
 /**
   * @brief This function handles USART1 global interrupt.

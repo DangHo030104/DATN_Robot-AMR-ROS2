@@ -41,6 +41,12 @@
 #define MPU6050_INIT_RETRY_MS     100U
 #define MPU6050_INIT_MAX_ATTEMPTS 10U
 
+/* IWDG timeout nominal: (1249 + 1) * 64 / 40 kHz = 2 seconds. */
+#define IWDG_RELOAD_VALUE         1249U
+#define IWDG_WRITE_ACCESS_KEY     0x5555U
+#define IWDG_RELOAD_KEY           0xAAAAU
+#define IWDG_START_KEY            0xCCCCU
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -62,19 +68,15 @@ UART_HandleTypeDef huart1;
 DriveBase drive;
 
 static uint32_t last_tick;
-static uint32_t elapsed;
 static uint32_t last_encoder_tx_tick;
-static uint32_t last_imu_read_tick;
 static uint32_t last_imu_tx_tick;
 
 static Mpu6050 imu;
 static Mpu6050Sample imu_sample;
-static uint8_t imu_available;
-static uint8_t imu_read_failures;
+
+volatile uint32_t reset_cause_flags;
 
 static CommandWatchdog command_wd;
-
-static SerialVelocityCommand received_cmd;
 
 /* USER CODE END PV */
 
@@ -92,6 +94,27 @@ static void MX_I2C2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+static void HardwareWatchdog_Init(void)
+{
+  /* Start first so a stalled register update also causes a reset. */
+  IWDG->KR = IWDG_START_KEY;
+  IWDG->KR = IWDG_WRITE_ACCESS_KEY;
+  IWDG->PR = IWDG_PR_PR_2;  			/* LSI / 64 */
+  IWDG->RLR = IWDG_RELOAD_VALUE;
+
+  while (IWDG->SR != 0U)
+  {
+  }
+
+  IWDG->KR = IWDG_RELOAD_KEY;
+}
+
+static void HardwareWatchdog_Refresh(void)
+{
+  IWDG->KR = IWDG_RELOAD_KEY;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -108,6 +131,9 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+
+  reset_cause_flags = RCC->CSR;
+  __HAL_RCC_CLEAR_RESET_FLAGS();
 
   /* USER CODE BEGIN Init */
 
@@ -129,23 +155,13 @@ int main(void)
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
 
-  imu_available = 0;
   imu_sample.valid = 0;
-  imu_read_failures = 0;
-
-  // Chờ MPU6050 ổn định nguồn
-//  HAL_Delay(MPU6050_STARTUP_DELAY_MS);
 
   for (uint8_t attempt = 0; attempt < MPU6050_INIT_MAX_ATTEMPTS; ++attempt)
   {
-      if (Mpu6050_Init(&imu, &hi2c2, 0x68U) == HAL_OK)
-      {
-          if (Mpu6050_CalibrateGyro(&imu, 500U) == HAL_OK)
-          {
-              imu_available = 1;
-              break;
-          }
-      }
+      if (Mpu6050_Init(&imu, &hi2c2, GPIOB, GPIO_PIN_10, GPIO_PIN_11, 0x68U) == HAL_OK &&
+          Mpu6050_CalibrateGyro(&imu, 500U) == HAL_OK)
+          break;
 
       HAL_Delay(MPU6050_INIT_RETRY_MS);
   }
@@ -163,8 +179,10 @@ int main(void)
 
   last_tick = HAL_GetTick();
   last_encoder_tx_tick = HAL_GetTick();
-  last_imu_read_tick = HAL_GetTick();
   last_imu_tx_tick = HAL_GetTick();
+
+  /* Enable only after the potentially long IMU startup calibration. */
+  HardwareWatchdog_Init();
 
   /* USER CODE END 2 */
 
@@ -188,6 +206,7 @@ int main(void)
     }
 
     /* Lay lenh CMD moi nhat neu co */
+    SerialVelocityCommand received_cmd;
     if (Serial_Comm_GetCommand(&received_cmd))
     {
         if (received_cmd.type == SERIAL_CMD_DISARM) 
@@ -212,7 +231,7 @@ int main(void)
     }
 
     /* Dieu khien dong co */
-    elapsed = now - last_tick;
+    uint32_t elapsed = now - last_tick;
 
     if (elapsed >= CTRL_PERIOD_MS)
     {
@@ -220,25 +239,10 @@ int main(void)
         DriveBase_Update(&drive, elapsed);
     }
 
-    /* Doc MPU6050 moi 10ms ~ 100Hz. Vo hieu hoa IMU sau 5 loi lien tiep. */
-    if (imu_available && now - last_imu_read_tick >= 10U)
-    {
-        last_imu_read_tick = now;
+    Mpu6050_Service(&imu, &imu_sample, now);
 
-        if (Mpu6050_Read(&imu, &imu_sample) == HAL_OK)
-        {
-            imu_read_failures = 0;
-        }
-        else
-        {
-            imu_sample.valid = 0;
-            if (++imu_read_failures >= 5)
-                imu_available = 0;
-        }
-    }
-
-    /* Gui mau moi nhat moi 20ms ~ 50Hz; khong gui lai mau loi. */
-    if (imu_available && imu_sample.valid && now - last_imu_tx_tick >= 20U)
+    /* Gui mau moi nhat moi 20ms ~ 50Hz */
+    if (imu_sample.valid && now - last_imu_tx_tick >= 20U)
     {
         last_imu_tx_tick = now;
         Serial_Comm_SendImu(&imu_sample);
@@ -264,7 +268,8 @@ int main(void)
         DriveBase_SafeStop(&drive);
     }
 
-
+    /* Refresh only after the complete main-loop safety and control path ran. */
+    HardwareWatchdog_Refresh();
   }
   /* USER CODE END 3 */
 }
@@ -323,7 +328,7 @@ static void MX_I2C2_Init(void)
 
   /* USER CODE END I2C2_Init 1 */
   hi2c2.Instance = I2C2;
-  hi2c2.Init.ClockSpeed = 100000;
+  hi2c2.Init.ClockSpeed = 80000;
   hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c2.Init.OwnAddress1 = 0;
   hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -597,6 +602,8 @@ void Error_Handler(void)
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 0);
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 0);
   }
+  HAL_GPIO_WritePin(MOTOR_LEFT_GPIO_Port, MOTOR_LEFT_IN1_Pin | MOTOR_LEFT_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(MOTOR_RIGHT_GPIO_Port, MOTOR_RIGHT_IN1_Pin | MOTOR_RIGHT_IN2_Pin, GPIO_PIN_RESET);
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)

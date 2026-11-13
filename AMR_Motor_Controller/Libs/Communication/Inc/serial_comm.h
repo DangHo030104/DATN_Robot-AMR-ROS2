@@ -24,15 +24,6 @@ typedef struct
 /* Lay lenh ARM, DISARM hoac CMD hop le moi nhat */
 uint8_t Serial_Comm_GetCommand(SerialVelocityCommand *command);
 
-/* So lenh CMD hop le da nhan */
-uint32_t Serial_Comm_GetValidCmdCount(void);
-
-/* So lenh CMD bi tu choi */
-uint32_t Serial_Comm_GetInvalidCmdCount(void);
-uint32_t Serial_Comm_GetRxOverflowCount(void);
-uint32_t Serial_Comm_GetRxErrorCount(void);
-
-
 void Serial_Comm_Init(UART_HandleTypeDef *huart);
 void Serial_Comm_Process(void);
 void Serial_Comm_RxCpltCallback(UART_HandleTypeDef *huart);
