@@ -14,8 +14,8 @@
 // Gioi han chuyen dong cua robot
 #define DRIVE_MAX_V          0.20f
 #define DRIVE_MAX_W          0.80f
-#define DRIVE_ACC_V          0.15f
-#define DRIVE_ACC_W          0.80f
+#define DRIVE_ACC_V          2.50f
+#define DRIVE_ACC_W          3.20f
 
 // Thong so PID
 #define PID_KP               0.60f       // Error lớn: Kp lớn để motor nhanh đạt setpoint

@@ -197,7 +197,8 @@ int main(void)
     /* Xu ly du lieu UART nhan duoc */
     Serial_Comm_Process();
 
-    uint32_t now = HAL_GetTick();
+    /* now: đồng bộ thời gian Encoder và IMU */
+    uint32_t now = HAL_GetTick();   
 
     if (CommandWatchdog_Update(&command_wd, now))
     {
@@ -241,14 +242,14 @@ int main(void)
 
     Mpu6050_Service(&imu, &imu_sample, now);
 
-    /* Gui mau moi nhat moi 20ms ~ 50Hz */
+    /* Gui IMU moi 20ms ~ 50Hz */
     if (imu_sample.valid && now - last_imu_tx_tick >= 20U)
     {
         last_imu_tx_tick = now;
         Serial_Comm_SendImu(&imu_sample);
     }
 
-    /* Gui Encoder moi 100 ms */
+    /* Gui Encoder moi 100 ms ~ 10Hz*/
     if (now - last_encoder_tx_tick >= 100)
     {
         last_encoder_tx_tick = now;
@@ -257,8 +258,7 @@ int main(void)
         int32_t left_count = drive.left.enc.total;
         int32_t right_count = drive.right.enc.total;
 
-        /* Truyen Encoder qua USART1 */
-        Serial_Comm_SendEncoder(left_count, right_count);
+        Serial_Comm_SendEncoder(now, left_count, right_count);
     }
 
 

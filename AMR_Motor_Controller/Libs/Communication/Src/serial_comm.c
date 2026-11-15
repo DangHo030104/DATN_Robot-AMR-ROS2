@@ -159,9 +159,9 @@ void Serial_Comm_Process(void)
 }
 
 
-/* Gui tong xung Encoder cua 2 banh.
- * Dinh dang: ENC,left,right\n */
-HAL_StatusTypeDef Serial_Comm_SendEncoder(int32_t left_count, int32_t right_count)
+/* Gui tong xung Encoder cua 2 banh va thoi diem lay mau.
+ * ENC,time_ms,left_count,right_count\n */
+HAL_StatusTypeDef Serial_Comm_SendEncoder(uint32_t sample_ms, int32_t left_count, int32_t right_count)
 {
     if (serial_uart == NULL)
     {
@@ -170,7 +170,9 @@ HAL_StatusTypeDef Serial_Comm_SendEncoder(int32_t left_count, int32_t right_coun
 
     char tx_buffer[64];
 
-    int length = snprintf(tx_buffer, sizeof(tx_buffer), "ENC,%ld,%ld\n", (long)left_count, (long)right_count);
+    int length = snprintf(tx_buffer, sizeof(tx_buffer), "ENC,%lu,%ld,%ld\n",
+                          (unsigned long)sample_ms,
+                          (long)left_count, (long)right_count);
 
     if (length <= 0 || length >= (int)sizeof(tx_buffer))
     {
