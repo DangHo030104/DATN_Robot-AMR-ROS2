@@ -27,7 +27,7 @@ Libs/Communication/Src/serial_comm.o: \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- ../Libs/Drivers/MPU6050/Inc/mpu6050.h
+ ../Libs/Drivers/MPU6050/Inc/mpu6050.h ../Libs/Robot/Inc/robot_cfg.h
 
 ../Libs/Communication/Inc/serial_comm.h:
 
@@ -84,3 +84,5 @@ Libs/Communication/Src/serial_comm.o: \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 
 ../Libs/Drivers/MPU6050/Inc/mpu6050.h:
+
+../Libs/Robot/Inc/robot_cfg.h:

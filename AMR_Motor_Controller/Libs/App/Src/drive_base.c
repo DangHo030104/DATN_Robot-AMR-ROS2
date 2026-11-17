@@ -118,3 +118,13 @@ void DriveBase_SafeStop(DriveBase *base)
     /* Vo hieu hoa dieu khien */
     DriveBase_Stop(base);
 }
+
+void DriveBase_ResetEncoders(DriveBase *base)
+{
+    if (base == NULL)
+        return;
+
+    DriveBase_SafeStop(base);
+    Wheel_ResetEncoder(&base->left);
+    Wheel_ResetEncoder(&base->right);
+}

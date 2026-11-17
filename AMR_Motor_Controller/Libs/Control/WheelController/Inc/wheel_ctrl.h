@@ -46,5 +46,6 @@ void Wheel_Init(WheelCtrl *w, const WheelHw *hw, float cpr, const Pid *pid_cfg);
 HAL_StatusTypeDef Wheel_Start(WheelCtrl *w);
 void Wheel_Update(WheelCtrl *w, float target_rpm, uint32_t elapsed_ms);
 void Wheel_Stop(WheelCtrl *w);
+void Wheel_ResetEncoder(WheelCtrl *w);
 
 #endif

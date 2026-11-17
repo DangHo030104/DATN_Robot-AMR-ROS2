@@ -95,3 +95,22 @@ void Wheel_Stop(WheelCtrl *w)
     Pid_Reset(&w->pid);
     MotorDriver_Stop(&w->motor);
 }
+
+void Wheel_ResetEncoder(WheelCtrl *w)
+{
+    if (w == 0)
+        return;
+
+    Wheel_Stop(w);
+    Encoder_Reset(&w->enc);
+
+    w->raw_rpm = 0.0f;
+    w->rpm = 0.0f;
+    w->avg_rpm = 0.0f;
+    w->filter_sum = 0.0f;
+    w->filter_pos = 0;
+    w->filter_count = 0;
+    w->report_ticks = 0;
+    w->report_ms = 0;
+    for (uint16_t i = 0; i < WHEEL_FILTER_LEN; ++i) w->filter[i] = 0.0f;
+}

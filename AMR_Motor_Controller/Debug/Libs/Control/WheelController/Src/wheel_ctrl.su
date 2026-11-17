@@ -3,3 +3,4 @@ wheel_ctrl.c:18:6:Wheel_Init	64	static
 wheel_ctrl.c:40:19:Wheel_Start	16	static
 wheel_ctrl.c:47:6:Wheel_Update	48	static
 wheel_ctrl.c:90:6:Wheel_Stop	16	static
+wheel_ctrl.c:99:6:Wheel_ResetEncoder	24	static

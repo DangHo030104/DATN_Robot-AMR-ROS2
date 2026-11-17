@@ -1,8 +1,9 @@
-serial_comm.c:44:6:Serial_Comm_Init	16	static
-serial_comm.c:64:6:Serial_Comm_RxCpltCallback	24	static
-serial_comm.c:88:6:Serial_Comm_ErrorCallback	16	static
-serial_comm.c:99:6:Serial_Comm_Process	40	static
-serial_comm.c:164:19:Serial_Comm_SendEncoder	104	static
-serial_comm.c:187:19:Serial_Comm_SendImu	160	static
-serial_comm.c:211:9:Serial_Comm_GetCommand	16	static
-serial_comm.c:222:16:Serial_ParseCommand	40	static
+serial_comm.c:41:6:Serial_Comm_Init	16	static
+serial_comm.c:61:6:Serial_Comm_RxCpltCallback	24	static
+serial_comm.c:85:6:Serial_Comm_ErrorCallback	16	static
+serial_comm.c:96:6:Serial_Comm_Process	40	static
+serial_comm.c:161:19:Serial_Comm_SendEncoder	104	static
+serial_comm.c:182:19:Serial_Comm_SendEncoderReset	56	static
+serial_comm.c:199:19:Serial_Comm_SendImu	160	static
+serial_comm.c:223:9:Serial_Comm_GetCommand	16	static
+serial_comm.c:234:16:Serial_ParseCommand	40	static

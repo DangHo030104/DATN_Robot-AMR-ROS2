@@ -3,3 +3,4 @@ drive_base.c:64:19:DriveBase_Start	16	static
 drive_base.c:74:6:DriveBase_Update	56	static
 drive_base.c:98:6:DriveBase_Stop	16	static
 drive_base.c:107:6:DriveBase_SafeStop	16	static
+drive_base.c:122:6:DriveBase_ResetEncoders	16	static

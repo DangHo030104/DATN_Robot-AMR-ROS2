@@ -1,4 +1,5 @@
 #include "serial_comm.h"
+#include "robot_cfg.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -9,10 +10,6 @@
 
 #define SERIAL_RX_BUFFER_SIZE 128U
 #define SERIAL_LINE_SIZE      64U
-
-#define SERIAL_MAX_LINEAR   0.20f
-#define SERIAL_MAX_ANGULAR  0.80f
-
 
 static UART_HandleTypeDef *serial_uart = NULL;
 
@@ -182,6 +179,21 @@ HAL_StatusTypeDef Serial_Comm_SendEncoder(uint32_t sample_ms, int32_t left_count
     return HAL_UART_Transmit(serial_uart, (uint8_t *)tx_buffer, (uint16_t)length, 5);
 }
 
+HAL_StatusTypeDef Serial_Comm_SendEncoderReset(uint32_t sample_ms)
+{
+    if (serial_uart == NULL)
+        return HAL_ERROR;
+
+    char tx_buffer[32];
+    int length = snprintf(tx_buffer, sizeof(tx_buffer), "ENC_RESET,%lu\n",
+                          (unsigned long)sample_ms);
+
+    if (length <= 0 || length >= (int)sizeof(tx_buffer))
+        return HAL_ERROR;
+
+    return HAL_UART_Transmit(serial_uart, (uint8_t *)tx_buffer, (uint16_t)length, 5);
+}
+
 
 /* Gui mau MPU6050 da tru gyro bias. Cac gia tri van o don vi raw. */
 HAL_StatusTypeDef Serial_Comm_SendImu(const Mpu6050Sample *sample)
@@ -242,6 +254,15 @@ static uint8_t Serial_ParseCommand(const char *line, SerialVelocityCommand *comm
         return 1;
     }
 
+    if (strcmp(line, "RESET_ENCODERS") == 0)
+    {
+        command->type = SERIAL_CMD_RESET_ENCODERS;
+        command->linear_x = 0.0f;
+        command->angular_z = 0.0f;
+        command->received_ms = HAL_GetTick();
+        return 1;
+    }
+
     if (strncmp(line, "CMD,", 4) != 0)
         return 0;
 
@@ -266,7 +287,7 @@ static uint8_t Serial_ParseCommand(const char *line, SerialVelocityCommand *comm
     if (!isfinite(v) || !isfinite(w))
         return 0;
 
-    if (fabsf(v) > SERIAL_MAX_LINEAR || fabsf(w) > SERIAL_MAX_ANGULAR)
+    if (fabsf(v) > DRIVE_MAX_V || fabsf(w) > DRIVE_MAX_W)
         return 0;
 
     command->type = SERIAL_CMD_VELOCITY;

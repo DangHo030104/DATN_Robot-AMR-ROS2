@@ -215,6 +215,11 @@ int main(void)
             CommandWatchdog_Disarm(&command_wd);
             DriveBase_SafeStop(&drive);
         }
+        else if (received_cmd.type == SERIAL_CMD_RESET_ENCODERS && !command_wd.armed && !drive_enable)
+        {
+            DriveBase_ResetEncoders(&drive);
+            Serial_Comm_SendEncoderReset(now);
+        }
         else if (received_cmd.type == SERIAL_CMD_ARM && drive_fault == DRIVE_OK)
         {
             DriveBase_SafeStop(&drive);

@@ -17,5 +17,6 @@ typedef struct
 void Encoder_Init(Encoder *enc, TIM_HandleTypeDef *tim, int8_t sign);
 HAL_StatusTypeDef Encoder_Start(Encoder *enc);
 int32_t Encoder_Read(Encoder *enc);
+void Encoder_Reset(Encoder *enc);
 
 #endif

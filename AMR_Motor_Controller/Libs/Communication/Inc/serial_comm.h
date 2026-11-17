@@ -5,12 +5,13 @@
 #include "mpu6050.h"
 #include <stdint.h>
 
-/* Kieu lenh serial */
+/* Command Type Serial */
 typedef enum
 {
     SERIAL_CMD_VELOCITY = 0,    // Lenh van toc (linear_x, angular_z)
     SERIAL_CMD_ARM,             // Kích hoạt động cơ
-    SERIAL_CMD_DISARM           // Vô hiệu hóa động cơ
+    SERIAL_CMD_DISARM,          // Vô hiệu hóa động cơ
+    SERIAL_CMD_RESET_ENCODERS   // Reset bộ đếm encoder khi đã DISARM
 } SerialCommandType;
 
 typedef struct
@@ -30,6 +31,7 @@ void Serial_Comm_RxCpltCallback(UART_HandleTypeDef *huart);
 void Serial_Comm_ErrorCallback(UART_HandleTypeDef *huart);
 
 HAL_StatusTypeDef Serial_Comm_SendEncoder(uint32_t sample_ms, int32_t left_count, int32_t right_count);
+HAL_StatusTypeDef Serial_Comm_SendEncoderReset(uint32_t sample_ms);
 HAL_StatusTypeDef Serial_Comm_SendImu(const Mpu6050Sample *sample);
 
 #endif

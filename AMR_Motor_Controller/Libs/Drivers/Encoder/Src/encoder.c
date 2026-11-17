@@ -32,3 +32,13 @@ int32_t Encoder_Read(Encoder *enc)
 
     return delta;
 }
+
+void Encoder_Reset(Encoder *enc)
+{
+    if (enc == 0 || enc->tim == 0)
+        return;
+
+    __HAL_TIM_SET_COUNTER(enc->tim, 0);
+    enc->prev = 0;
+    enc->total = 0;
+}

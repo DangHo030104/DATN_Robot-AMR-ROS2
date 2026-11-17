@@ -374,11 +374,11 @@ Các thông số được tập trung trong `Robot/Inc/robot_cfg.h`:
 | `WHEEL_RADIUS_M` | 0.0325 m | Bán kính bánh xe |
 | `WHEEL_BASE_M` | 0.215 m | Khoảng cách giữa hai bánh |
 | `WHEEL_CPR` | 1320 | Số xung trên một vòng bánh |
-| `WHEEL_MAX_RPM` | 60 RPM | RPM tối đa của mỗi bánh |
-| `DRIVE_MAX_V` | 0.10 m/s | Vận tốc tuyến tính tối đa |
-| `DRIVE_MAX_W` | 0.50 rad/s | Vận tốc góc tối đa |
-| `DRIVE_ACC_V` | 0.15 m/s² | Gia tốc tuyến tính tối đa |
-| `DRIVE_ACC_W` | 0.80 rad/s² | Gia tốc góc tối đa |
+| `WHEEL_MAX_RPM` | 120 RPM | RPM tối đa của mỗi bánh |
+| `DRIVE_MAX_V` | 0.26 m/s | Vận tốc tuyến tính tối đa |
+| `DRIVE_MAX_W` | 1.00 rad/s | Vận tốc góc tối đa |
+| `DRIVE_ACC_V` | 2.50 m/s² | Gia tốc tuyến tính tối đa |
+| `DRIVE_ACC_W` | 3.20 rad/s² | Gia tốc góc tối đa |
 | `PID_KP` | 0.60 | Hệ số P chính |
 | `PID_KP_FINE` | 0.15 | Hệ số P trong vùng sai số nhỏ |
 | `PID_KI` | 1.00 | Hệ số tích phân |

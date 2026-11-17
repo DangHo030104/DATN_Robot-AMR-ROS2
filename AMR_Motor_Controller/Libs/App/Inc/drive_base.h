@@ -34,4 +34,6 @@ void DriveBase_Stop(DriveBase *base);
 
 void DriveBase_SafeStop(DriveBase *base);
 
+void DriveBase_ResetEncoders(DriveBase *base);
+
 #endif

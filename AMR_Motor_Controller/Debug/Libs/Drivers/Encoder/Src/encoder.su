@@ -1,3 +1,4 @@
 encoder.c:3:6:Encoder_Init	24	static
 encoder.c:13:19:Encoder_Start	16	static
 encoder.c:18:9:Encoder_Read	24	static
+encoder.c:36:6:Encoder_Reset	16	static
